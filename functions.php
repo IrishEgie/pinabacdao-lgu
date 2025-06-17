@@ -45,14 +45,3 @@ add_action('wp_enqueue_scripts', 'theme_assets');
 require get_template_directory() . '/inc/header-customizer.php';
 
 
-// functions.php - Add this after your existing code
-if (function_exists('acf_add_options_page')) {
-    acf_add_options_page(array(
-        'page_title'    => 'Theme Settings',
-        'menu_title'    => 'Theme Settings',
-        'menu_slug'     => 'theme-settings',
-        'capability'    => 'edit_theme_options',
-        'redirect'      => false,
-        'icon_url'      => 'dashicons-admin-appearance'
-    ));
-}

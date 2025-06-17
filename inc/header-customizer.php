@@ -57,6 +57,40 @@ function theme_header_customizer($wp_customize) {
         'section' => 'header_settings',
         'type' => 'checkbox',
     ));
+
+        // Add color settings
+    $wp_customize->add_setting('header_bg_color', array(
+        'default' => '#ffffff',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    
+    $wp_customize->add_control(new WP_Customize_Color_Control(
+        $wp_customize,
+        'header_bg_color',
+        array(
+            'label' => __('Header Background Color', 'text_domain'),
+            'section' => 'header_settings',
+            'settings' => 'header_bg_color',
+        )
+    ));
+    
+    $wp_customize->add_setting('primary_color', array(
+        'default' => '#40986c',
+        'sanitize_callback' => 'sanitize_hex_color',
+    ));
+    
+    $wp_customize->add_control(new WP_Customize_Color_Control(
+        $wp_customize,
+        'primary_color',
+        array(
+            'label' => __('Primary Color', 'text_domain'),
+            'section' => 'header_settings',
+            'settings' => 'primary_color',
+        )
+    ));
+    
+    // Add more color controls as needed
+
 }
 add_action('customize_register', 'theme_header_customizer');
 
