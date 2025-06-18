@@ -1,8 +1,4 @@
 <?php
-/**
- * Template Name: Custom Homepage
- */
-
 get_header();
 ?>
 

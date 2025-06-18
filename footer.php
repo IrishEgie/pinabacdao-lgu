@@ -122,7 +122,7 @@
             </div>
 
             <!-- GOVERNMENT AGENCY LINKS COLUMN -->
-            <div class="text-left"> <!-- Added text-left -->
+            <div class="text-left">
                 <h3 class="text-sm font-bold text-primary-text mb-2">Government Links</h3>
                 <div class="flex flex-wrap gap-4">
                     <?php
@@ -130,9 +130,9 @@
                     foreach ($agencies as $agency):
                         if ($url = get_theme_mod('footer_' . $agency . '_url')):
                             ?>
-                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer">
-                                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/img/' . $agency . '-logo.png'); ?>"
-                                    alt="<?php echo esc_attr(strtoupper($agency)); ?>" class="h-8 w-auto">
+                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
+                                class="text-blue-600 hover:underline">
+                                <?php echo strtoupper($agency); ?>
                             </a>
                             <?php
                         endif;
@@ -140,6 +140,7 @@
                     ?>
                 </div>
             </div>
+
         </div>
 
         <!-- COPYRIGHT SECTION -->

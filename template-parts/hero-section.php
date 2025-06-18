@@ -5,11 +5,11 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
       <div class="space-y-8">
         <div class="space-y-4">
-          <h1 class="text-4xl lg:text-6xl font-bold leading-tight">
+          <h1 class="text-4xl lg:text-6xl font-bold leading-tight text-secondary-200">
             Welcome to
-            <span class="block text-secondary-300">Pinabacdao</span>
+            <span class="block text-white">Pinabacdao</span>
           </h1>
-          <p class="text-xl lg:text-2xl text-primary-100">
+          <p class="text-xl lg:text-2xl text-secondary-200">
             Municipality of Samar, Philippines
           </p>
         </div>

@@ -17,6 +17,14 @@ function theme_setup() {
     require_once get_template_directory() . '/inc/class-header-nav-walker.php';
     require_once get_template_directory() . '/inc/class-mobile-nav-walker.php';
     require_once get_template_directory() . '/inc/class-simple-footer-menu-walker.php';
+        // Include customizer settings
+    require_once get_template_directory() . '/inc/header-customizer.php';
+    require_once get_template_directory() . '/inc/footer-customizer.php';
+    // Load breadcrumbs functionality
+    require_once get_template_directory() . '/inc/breadcrumbs.php';
+    require_once get_template_directory() . '/inc/breadcrumbs-template.php';
+    require_once get_template_directory() . '/inc/page-banner.php';
+
 }
 add_action('after_setup_theme', 'theme_setup');
 
@@ -62,9 +70,6 @@ function theme_assets() {
 }
 add_action('wp_enqueue_scripts', 'theme_assets');
 
-// Include customizer settings
-require_once get_template_directory() . '/inc/header-customizer.php';
-require_once get_template_directory() . '/inc/footer-customizer.php';
 
 /**
  * Helper function to get Font Awesome icon classes for social media
