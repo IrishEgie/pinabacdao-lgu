@@ -6,12 +6,17 @@ function theme_setup() {
     
     register_nav_menus([
         'primary' => __('Primary Menu', 'text_domain'),
-        'mobile' => __('Mobile Menu', 'text_domain')
+        'mobile' => __('Mobile Menu', 'text_domain'),
+        'footer_menu_1' => __('Footer Menu 1 (Site Map)', 'text_domain'),
+        'footer_menu_2' => __('Footer Menu 2 (Archive)', 'text_domain'),
+        'footer_menu_3' => __('Footer Menu 3 (Transparency)', 'text_domain'),
+        'footer_menu_4' => __('Footer Menu 4 (Legal)', 'text_domain')
     ]);
     
     // Include walker classes
     require_once get_template_directory() . '/inc/class-header-nav-walker.php';
     require_once get_template_directory() . '/inc/class-mobile-nav-walker.php';
+    require_once get_template_directory() . '/inc/class-simple-footer-menu-walker.php';
 }
 add_action('after_setup_theme', 'theme_setup');
 
@@ -39,56 +44,40 @@ function theme_assets() {
         'homeUrl' => home_url('/')
     ]);
 
-        // Enqueue Lucide Icons
+    // Enqueue Google Fonts
     wp_enqueue_style(
-        'lucide-icons',
-        'https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/font/lucide.css',
+        'google-fonts',
+        'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap',
         [],
-        '0.16.29',
-        'google-fonts', 'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap',
+        null
+    );
+    
+    // Enqueue Font Awesome 6 (Free version)
+    wp_enqueue_style(
+        'font-awesome',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
+        [],
+        '6.4.0'
     );
 }
 add_action('wp_enqueue_scripts', 'theme_assets');
 
-// Customizer settings
-require get_template_directory() . '/inc/header-customizer.php';
-
-
-// Register footer menus
-register_nav_menus([
-    'primary' => __('Primary Menu', 'text_domain'),
-    'mobile' => __('Mobile Menu', 'text_domain'),
-    'footer_menu_1' => __('Footer Menu 1 (Site Map)', 'text_domain'),
-    'footer_menu_2' => __('Footer Menu 2 (Archive)', 'text_domain'),
-    'footer_menu_3' => __('Footer Menu 3 (Transparency)', 'text_domain'),
-    'footer_menu_4' => __('Footer Menu 4 (Legal)', 'text_domain')
-]);
-
-// Include footer customizer
+// Include customizer settings
+require_once get_template_directory() . '/inc/header-customizer.php';
 require_once get_template_directory() . '/inc/footer-customizer.php';
 
-// Include footer menu walker
-require_once get_template_directory() . '/inc/class-simple-footer-menu-walker.php';
-
-// Add footer menu title settings
-function footer_menu_customizer_settings($wp_customize) {
-    $wp_customize->add_section('footer_menu_settings', [
-        'title' => __('Footer Menu Titles', 'text_domain'),
-        'priority' => 121,
-    ]);
-
-    for ($i = 1; $i <= 4; $i++) {
-        $wp_customize->add_setting('footer_menu_' . $i . '_title', [
-            'default' => $i == 1 ? 'Site Map' : ($i == 2 ? 'Archive' : ($i == 3 ? 'Transparency' : 'Legal')),
-            'sanitize_callback' => 'sanitize_text_field'
-        ]);
-
-        $wp_customize->add_control('footer_menu_' . $i . '_title_control', [
-            'label' => __('Footer Menu ' . $i . ' Title', 'text_domain'),
-            'section' => 'footer_menu_settings',
-            'settings' => 'footer_menu_' . $i . '_title',
-            'type' => 'text'
-        ]);
-    }
+/**
+ * Helper function to get Font Awesome icon classes for social media
+ */
+function get_social_icon_class($platform) {
+    $icons = [
+        'facebook' => 'fab fa-facebook-f',
+        'twitter' => 'fab fa-twitter',
+        'youtube' => 'fab fa-youtube',
+        'instagram' => 'fab fa-instagram',
+        'linkedin' => 'fab fa-linkedin-in',
+        'pinterest' => 'fab fa-pinterest-p'
+    ];
+    
+    return $icons[strtolower($platform)] ?? 'fas fa-share-alt';
 }
-add_action('customize_register', 'footer_menu_customizer_settings');

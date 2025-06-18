@@ -83,6 +83,10 @@ module.exports = {
         warning: "#f3c344",
         info: "#ffffff",
       },
+      selection: {
+        backgroundColor: '#28e060', // or use your primary color variable
+        color: '#384e58',          // or use your secondary-text color variable
+      },
     },
   },
   plugins: [],

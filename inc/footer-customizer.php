@@ -39,7 +39,7 @@ function footer_customizer_settings($wp_customize) {
     ]);
 
     // Social Media
-    $socials = ['facebook', 'twitter', 'youtube'];
+    $socials = ['facebook', 'twitter', 'youtube', 'instagram'];
     foreach ($socials as $social) {
         $wp_customize->add_setting('footer_' . $social . '_url', [
             'sanitize_callback' => 'esc_url_raw'
@@ -59,6 +59,14 @@ function footer_customizer_settings($wp_customize) {
         'default' => '© 2024 Municipality of Pinabacdao. All rights reserved.',
         'sanitize_callback' => 'sanitize_text_field'
     ]);
+
+    // Footer Menu Titles
+    for ($i = 1; $i <= 4; $i++) {
+        $wp_customize->add_setting('footer_menu_' . $i . '_title', [
+            'default' => $i == 1 ? 'Site Map' : ($i == 2 ? 'Archive' : ($i == 3 ? 'Transparency' : 'Legal')),
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+    }
 
     // Add Controls
     $wp_customize->add_control('footer_municipality_name_control', [
@@ -136,5 +144,15 @@ function footer_customizer_settings($wp_customize) {
         'settings' => 'footer_copyright_text',
         'type' => 'textarea'
     ]);
+
+    // Footer Menu Title Controls
+    for ($i = 1; $i <= 4; $i++) {
+        $wp_customize->add_control('footer_menu_' . $i . '_title_control', [
+            'label' => __('Footer Menu ' . $i . ' Title', 'text_domain'),
+            'section' => 'footer_settings',
+            'settings' => 'footer_menu_' . $i . '_title',
+            'type' => 'text'
+        ]);
+    }
 }
 add_action('customize_register', 'footer_customizer_settings');

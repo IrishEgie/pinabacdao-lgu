@@ -18,7 +18,8 @@ class Simple_Footer_Menu_Walker extends Walker_Nav_Menu {
         $attributes .= ! empty($item->xfn) ? ' rel="' . esc_attr($item->xfn) . '"' : '';
         $attributes .= ! empty($item->url) ? ' href="' . esc_attr($item->url) . '"' : '';
         
-        $output .= '<a' . $attributes . ' class="text-gray-400 hover:text-white transition-colors duration-300">';
+        // Changed hover:text-white to hover:text-primary
+        $output .= '<a' . $attributes . ' class="text-gray-400 hover:text-primary transition-colors duration-300">';
         $output .= esc_html($item->title);
         $output .= '</a>';
     }
