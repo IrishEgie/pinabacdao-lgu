@@ -131,7 +131,7 @@
                         if ($url = get_theme_mod('footer_' . $agency . '_url')):
                             ?>
                             <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
-                                class="text-blue-600 hover:underline">
+                                class="text-primary hover:underline">
                                 <?php echo strtoupper($agency); ?>
                             </a>
                             <?php
