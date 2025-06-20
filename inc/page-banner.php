@@ -42,7 +42,10 @@ if (!function_exists('pageBanner')) {
         ?>
 
         <div class="page-banner bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16 bg-opacity-90 <?php echo esc_attr($classes); ?>"
-            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<?php echo esc_url($background_image); ?>);">
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(<?php echo esc_url($background_image); ?>);
+           background-size: cover;
+           background-position: center;
+           background-repeat: no-repeat;">
 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <?php if ($show_back_button): ?>
@@ -68,7 +71,8 @@ if (!function_exists('pageBanner')) {
 
                         <?php if ($description): ?>
                             <p class="description text-xl text-primary-100 max-w-3xl leading-relaxed">
-                                <?php echo esc_html($description); ?></p>
+                                <?php echo esc_html($description); ?>
+                            </p>
                         <?php endif; ?>
                     </div>
 

@@ -66,82 +66,79 @@
         </div>
 
         <!-- CONTACT AND SOCIAL MEDIA SECTION -->
-        <div class="py-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-            <!-- Added items-start -->
+<div class="py-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- CONTACT INFORMATION COLUMN - LEFT ALIGNED -->
+    <div class="text-left">
+        <h3 class="text-sm font-bold text-primary-text mb-2">Contact Us</h3>
+        <ul class="space-y-1 text-sm">
+            <?php if ($address = get_theme_mod('footer_address')): ?>
+                <li class="flex items-start">
+                    <i class="icon-map-pin mt-0.5"></i>
+                    <span><?php echo esc_html($address); ?></span>
+                </li>
+            <?php endif; ?>
 
-            <!-- CONTACT INFORMATION COLUMN -->
-            <div>
-                <h3 class="text-sm font-bold text-primary-text mb-2">Contact Us</h3>
-                <ul class="space-y-1 text-sm">
-                    <?php if ($address = get_theme_mod('footer_address')): ?>
-                        <li class="flex items-start">
-                            <i class="icon-map-pin mt-0.5"></i>
-                            <span><?php echo esc_html($address); ?></span>
-                        </li>
-                    <?php endif; ?>
+            <?php if ($phone = get_theme_mod('footer_phone')): ?>
+                <li class="flex items-center">
+                    <i class="icon-phone"></i>
+                    <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $phone)); ?>"
+                        class="hover:text-primary transition-colors">
+                        <?php echo esc_html($phone); ?>
+                    </a>
+                </li>
+            <?php endif; ?>
 
-                    <?php if ($phone = get_theme_mod('footer_phone')): ?>
-                        <li class="flex items-center">
-                            <i class="icon-phone"></i>
-                            <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $phone)); ?>"
-                                class="hover:text-primary transition-colors">
-                                <?php echo esc_html($phone); ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
+            <?php if ($email = get_theme_mod('footer_email')): ?>
+                <li class="flex items-center">
+                    <i class="icon-mail"></i>
+                    <a href="mailto:<?php echo esc_attr($email); ?>" class="hover:text-primary transition-colors">
+                        <?php echo esc_html($email); ?>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
 
-                    <?php if ($email = get_theme_mod('footer_email')): ?>
-                        <li class="flex items-center">
-                            <i class="icon-mail"></i>
-                            <a href="mailto:<?php echo esc_attr($email); ?>" class="hover:text-primary transition-colors">
-                                <?php echo esc_html($email); ?>
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-
-            <!-- Social Media -->
-            <div class="text-left"> <!-- Added text-left -->
-                <h3 class="text-sm font-bold text-primary-text mb-2">Follow Us</h3>
-                <div class="flex gap-4">
-                    <?php
-                    $socials = ['facebook', 'twitter', 'youtube', 'instagram'];
-                    foreach ($socials as $social):
-                        if ($url = get_theme_mod('footer_' . $social . '_url')):
-                            ?>
-                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
-                                class="text-gray-600 hover:text-primary transition-colors text-lg">
-                                <i class="<?php echo esc_attr(get_social_icon_class($social)); ?>"></i>
-                            </a>
-                            <?php
-                        endif;
-                    endforeach;
+    <!-- Social Media - CENTER ALIGNED -->
+    <div class="text-center">
+        <h3 class="text-sm font-bold text-primary-text mb-2">Follow Us</h3>
+        <div class="flex justify-center gap-4">
+            <?php
+            $socials = ['facebook', 'twitter', 'youtube', 'instagram'];
+            foreach ($socials as $social):
+                if ($url = get_theme_mod('footer_' . $social . '_url')):
                     ?>
-                </div>
-            </div>
-
-            <!-- GOVERNMENT AGENCY LINKS COLUMN -->
-            <div class="text-left">
-                <h3 class="text-sm font-bold text-primary-text mb-2">Government Links</h3>
-                <div class="flex flex-wrap gap-4">
+                    <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
+                        class="text-gray-600 hover:text-primary transition-colors text-lg">
+                        <i class="<?php echo esc_attr(get_social_icon_class($social)); ?>"></i>
+                    </a>
                     <?php
-                    $agencies = ['dict', 'dilg', 'dbm'];
-                    foreach ($agencies as $agency):
-                        if ($url = get_theme_mod('footer_' . $agency . '_url')):
-                            ?>
-                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
-                                class="text-primary hover:underline">
-                                <?php echo strtoupper($agency); ?>
-                            </a>
-                            <?php
-                        endif;
-                    endforeach;
-                    ?>
-                </div>
-            </div>
-
+                endif;
+            endforeach;
+            ?>
         </div>
+    </div>
+
+    <!-- GOVERNMENT AGENCY LINKS COLUMN - RIGHT ALIGNED -->
+    <div class="text-right">
+        <h3 class="text-sm font-bold text-primary-text mb-2">Government Links</h3>
+        <div class="flex flex-wrap justify-end gap-4">
+            <?php
+            $agencies = ['dict', 'dilg', 'dbm'];
+            foreach ($agencies as $agency):
+                if ($url = get_theme_mod('footer_' . $agency . '_url')):
+                    ?>
+                    <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
+                        class="text-primary hover:underline">
+                        <?php echo strtoupper($agency); ?>
+                    </a>
+                    <?php
+                endif;
+            endforeach;
+            ?>
+        </div>
+    </div>
+</div>
 
         <!-- COPYRIGHT SECTION -->
         <div class="py-4 border-t border-gray-200 text-center text-xs text-gray-500">

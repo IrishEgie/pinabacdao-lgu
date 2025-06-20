@@ -46,7 +46,7 @@ get_header();
 
             foreach ($highlights as $item) {
                 echo '
-                <div class="card bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <div class="text-card-foreground border bg-card rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                     <div class="p-6">
                         <div class="flex items-center space-x-4 mb-4">
                             ' . $item['icon'] . '
