@@ -17,35 +17,43 @@ get_header();
         </div>
 
         <!-- Services Grid -->
-        <?php get_template_part('template-parts/services-section'); ?>
+        <?php
+            // Set limit for homepage display
+            $services_limit = -1; // Show only 6 services on homepage
+            include get_template_directory() . '/template-parts/services-section.php';
+        ?>
 
         <!-- Service Hours Card -->
-        <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 ">
-            <div class="p-6">
-                <h2 class="text-2xl font-bold text-gray-800">Service Hours</h2>
-                <p class="text-gray-600">When our offices are open to serve you</p>
-            </div>
-            <div class="px-6 pb-6">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Regular Hours</h3>
-                        <div class="space-y-2 text-gray-600">
-                            <p><strong>Monday - Friday:</strong> 8:00 AM - 5:00 PM</p>
-                            <p><strong>Saturday:</strong> 8:00 AM - 12:00 PM</p>
-                            <p><strong>Sunday:</strong> Closed</p>
+        <div class="px-8">
+            <div
+                class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 ">
+                <div class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Service Hours</h2>
+                    <p class="text-gray-600">When our offices are open to serve you</p>
+                </div>
+                <div class="px-6 pb-6">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Regular Hours</h3>
+                            <div class="space-y-2 text-gray-600">
+                                <p><strong>Monday - Friday:</strong> 8:00 AM - 5:00 PM</p>
+                                <p><strong>Saturday:</strong> 8:00 AM - 12:00 PM</p>
+                                <p><strong>Sunday:</strong> Closed</p>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold mb-4">Contact Information</h3>
-                        <div class="space-y-2 text-gray-600">
-                            <p><strong>Main Office:</strong> +63 (55) 123-4567</p>
-                            <p><strong>Email:</strong> services@pinabacdao.gov.ph</p>
-                            <p><strong>Emergency:</strong> 911</p>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Contact Information</h3>
+                            <div class="space-y-2 text-gray-600">
+                                <p><strong>Main Office:</strong> +63 (55) 123-4567</p>
+                                <p><strong>Email:</strong> services@pinabacdao.gov.ph</p>
+                                <p><strong>Emergency:</strong> 911</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
 
     </div>

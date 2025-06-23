@@ -49,7 +49,11 @@ get_header();
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
         <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
       </div>
-  <?php get_template_part('template-parts/services-section'); ?>
+  <?php
+              // Set limit for homepage display
+            $services_limit = 6; // Show only 6 services on homepage
+            include get_template_directory() . '/template-parts/services-section.php';
+  ?>
 
         <!-- View All -->
         <div class="text-center my-12">

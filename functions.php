@@ -17,14 +17,18 @@ function theme_setup() {
     require_once get_template_directory() . '/inc/class-header-nav-walker.php';
     require_once get_template_directory() . '/inc/class-mobile-nav-walker.php';
     require_once get_template_directory() . '/inc/class-simple-footer-menu-walker.php';
-        // Include customizer settings
+    // Include customizer settings
     require_once get_template_directory() . '/inc/header-customizer.php';
     require_once get_template_directory() . '/inc/footer-customizer.php';
+    // Include Icon functions
+    require_once get_template_directory() . '/inc/icons.php';
     // Load breadcrumbs functionality
     require_once get_template_directory() . '/inc/breadcrumbs.php';
     require_once get_template_directory() . '/inc/breadcrumbs-template.php';
     require_once get_template_directory() . '/inc/page-banner.php';
-
+    // Load custom post types
+    require_once get_template_directory() . '/inc/post-types/services.php';
+   
 }
 add_action('after_setup_theme', 'theme_setup');
 
