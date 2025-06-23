@@ -1,0 +1,70 @@
+# Core WordPress exclusions
+wp-config.php
+wp-content/uploads/*
+!wp-content/uploads/.gitkeep
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/backups-*
+wp-content/backup-*
+wp-content/cache/*
+wp-content/debug.log
+wp-content/upgrade/*
+wp-content/updraft/*
+wp-content/blogs.dir
+wp-content/backup-db/*
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
+
+# Your existing exclusions
+upgrade
+upgrade-temp-backup
+node_modules
+/themes/index.php
+/plugins/index.php
+ai1wm-backups
+
+# Common exclusions
+.DS_Store
+.idea
+*.log
+*.sql
+*.zip
+*.tar.gz
+*.7z
+*.bak
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+*.env
+*.tmp
+*.pid
+*.pid.lock
+*.cache
+*.lock
+*.seed
+*.tgz
+*.mo
+*.pot
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Dependency directories
+/vendor/
+/composer.lock
+/bower_components/
+/.npm/
+/.bower-cache/
+/.grunt/
+
+# Build and test artifacts
+/.build/
+/.nyc_output/
+/coverage/
+/reports/
+/test-results.xml
+
+# IDE specific files
+/.vscode/
+/.history/
