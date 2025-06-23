@@ -14,20 +14,20 @@ function theme_setup() {
     ]);
     
     // Include walker classes
-    require_once get_template_directory() . '/inc/class-header-nav-walker.php';
-    require_once get_template_directory() . '/inc/class-mobile-nav-walker.php';
-    require_once get_template_directory() . '/inc/class-simple-footer-menu-walker.php';
+    require_once get_template_directory() . '/includes/class-header-nav-walker.php';
+    require_once get_template_directory() . '/includes/class-mobile-nav-walker.php';
+    require_once get_template_directory() . '/includes/class-simple-footer-menu-walker.php';
     // Include customizer settings
-    require_once get_template_directory() . '/inc/header-customizer.php';
-    require_once get_template_directory() . '/inc/footer-customizer.php';
+    require_once get_template_directory() . '/includes/header-customizer.php';
+    require_once get_template_directory() . '/includes/footer-customizer.php';
     // Include Icon functions
-    require_once get_template_directory() . '/inc/icons.php';
+    require_once get_template_directory() . '/includes/icons.php';
     // Load breadcrumbs functionality
-    require_once get_template_directory() . '/inc/breadcrumbs.php';
-    require_once get_template_directory() . '/inc/breadcrumbs-template.php';
-    require_once get_template_directory() . '/inc/page-banner.php';
+    require_once get_template_directory() . '/includes/breadcrumbs.php';
+    require_once get_template_directory() . '/includes/breadcrumbs-template.php';
+    require_once get_template_directory() . '/includes/page-banner.php';
     // Load custom post types
-    require_once get_template_directory() . '/inc/post-types/services.php';
+    require_once get_template_directory() . '/includes/post-types/services.php';
    
 }
 add_action('after_setup_theme', 'theme_setup');
@@ -74,19 +74,3 @@ function theme_assets() {
 }
 add_action('wp_enqueue_scripts', 'theme_assets');
 
-
-/**
- * Helper function to get Font Awesome icon classes for social media
- */
-function get_social_icon_class($platform) {
-    $icons = [
-        'facebook' => 'fab fa-facebook-f',
-        'twitter' => 'fab fa-twitter',
-        'youtube' => 'fab fa-youtube',
-        'instagram' => 'fab fa-instagram',
-        'linkedin' => 'fab fa-linkedin-in',
-        'pinterest' => 'fab fa-pinterest-p'
-    ];
-    
-    return $icons[strtolower($platform)] ?? 'fas fa-share-alt';
-}

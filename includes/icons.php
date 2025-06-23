@@ -95,3 +95,20 @@ function get_service_icon_choices() {
     
     return $choices;
 }
+
+
+/**
+ * Helper function to get Font Awesome icon classes for social media
+ */
+function get_social_icon_class($platform) {
+    $icons = [
+        'facebook' => 'fab fa-facebook-f',
+        'twitter' => 'fab fa-twitter',
+        'youtube' => 'fab fa-youtube',
+        'instagram' => 'fab fa-instagram',
+        'linkedin' => 'fab fa-linkedin-in',
+        'pinterest' => 'fab fa-pinterest-p'
+    ];
+    
+    return $icons[strtolower($platform)] ?? 'fas fa-share-alt';
+}
