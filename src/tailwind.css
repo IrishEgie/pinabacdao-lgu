@@ -1,0 +1,67 @@
+/* src/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Brand Colors */
+        --color-primary: #28e060;
+        --color-secondary: #ffa300;
+        --color-tertiary: #66604a;
+        --color-alternate: #c8d7e4;
+
+        /* Utility Colors */
+        --color-primary-text: #0b191e;
+        --color-secondary-text: #384e58;
+        --color-primary-bg: #fff1f1;
+        --color-secondary-bg: #ffffff;
+
+        /* Accent Colors */
+        --color-accent-1: rgba(77, 219, 134, 0.42);
+        --color-accent-2: rgba(146, 129, 99, 0.42);
+        --color-accent-3: rgba(108, 96, 74, 0.42);
+        --color-accent-4: rgba(255, 255, 255, 0.80);
+
+        /* Semantic Colors */
+        --color-success: #336a4a;
+        --color-error: #c4454d;
+        --color-warning: #f3c344;
+        --color-info: #ffffff;
+    }
+
+    html {
+        font-family: "Open Sans", Arial, sans-serif;
+    }
+
+    /* You can also optionally apply it to body if needed */
+    body {
+        font-family: "Open Sans", Arial, sans-serif;
+    }
+
+    /* Utility Classes */
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+
+    .text-primary {
+        color: var(--color-primary);
+    }
+
+    .border-primary {
+        border-color: var(--color-primary);
+    }
+    
+    /* Custom text selection colors */
+    ::selection {
+        background-color: var(--color-primary);
+        color: var(--color-secondary-text);
+    }
+
+    /* For Firefox */
+    ::-moz-selection {
+        background-color: var(--color-primary);
+        color: var(--color-secondary-text);
+    }
+    /* Add similar classes for other colors */
+}

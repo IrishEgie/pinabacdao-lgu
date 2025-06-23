@@ -1,0 +1,26 @@
+{
+  "name": "pinabacdao-lgu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --watch",
+    "build": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IrishEgie/pinabacdao-lgu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IrishEgie/pinabacdao-lgu/issues"
+  },
+  "homepage": "https://github.com/IrishEgie/pinabacdao-lgu#readme",
+  "description": ""
+}
