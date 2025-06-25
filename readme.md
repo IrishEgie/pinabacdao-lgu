@@ -20,11 +20,11 @@
 
 ---
 
-## 🏛️ About This Project
+## About This Project
 
 This is the **official digital platform** for the Municipality of Pinabacdao, designed to serve as a comprehensive hub for residents, businesses, and visitors. Built with modern web technologies, it provides transparent access to government services, information, and community resources.
 
-### 🎯 Project Goals
+### Project Goals
 - **Digital Governance**: Streamline municipal services and improve citizen access
 - **Transparency**: Provide open access to government information and processes  
 - **Community Building**: Showcase local culture, events, and economic opportunities
@@ -32,44 +32,44 @@ This is the **official digital platform** for the Municipality of Pinabacdao, de
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
-### 🏢 **Government Services**
+### **Government Services**
 - **Complete Department Directory**: 25+ municipal offices with detailed information
 - **Online Service Portal**: Business permits, civil registration, building permits
 - **Document Requests**: FOI (Freedom of Information) system
 - **Transparency Portal**: Budget reports, audit findings, performance metrics
 
-### 📊 **Procurement & BAC**
+### **Procurement & BAC**
 - **Bid Management System**: Real-time procurement opportunities
 - **Contract Awards Tracking**: Complete procurement lifecycle visibility
 - **BAC Composition**: Bids and Awards Committee information
 - **Vendor Resources**: Procurement plans and guidelines
 
-### 🗞️ **News & Events**
+### **News & Events**
 - **Municipal Updates**: Latest government announcements
 - **Event Calendar**: Community events and festivals
 - **Press Releases**: Official municipal communications
 - **Photo Galleries**: Event documentation and municipal activities
 
-### 🌐 **Multilingual Support**
+### **Multilingual Support**
 - **English**: Primary interface language
 - **Filipino**: National language support
 - **Waray Integration**: Local language elements (planned)
 
 ---
 
-## 📌 About Pinabacdao
+## About Pinabacdao
 
 Pinabacdao is a **3rd class municipality** in Samar Province, home to **18,136 residents** (2020 Census) who celebrate a rich agricultural heritage and vibrant cultural traditions.
 
-### 🏆 **Municipal Achievements**
+### **Municipal Achievements**
 - **Rice Capital** of Samar Province
 - **Mayaw-Mayaw Festival** (May 10 annually)
-- 🥈 **2nd Runner-Up** - Festival Dance Competition, Aliwan Fiesta 2015
-- 🥇 **1st Place** - Float Design, Aliwan Fiesta 2015
+- **2nd Runner-Up** - Festival Dance Competition, Aliwan Fiesta 2015
+- **1st Place** - Float Design, Aliwan Fiesta 2015
 
-### 🗺️ **Geographic Overview**
+### **Geographic Overview**
 - **Location**: Along the Pan-Philippine Highway
 - **Boundaries**: Calbiga (N), Borongan (E), Villareal (W), Sta. Rita & Basey (S)
 - **Administrative Units**: 24 Barangays in East and West Districts
@@ -77,23 +77,23 @@ Pinabacdao is a **3rd class municipality** in Samar Province, home to **18,136 r
 
 ---
 
-## 🌀 Etymology & Cultural Heritage
+## Etymology & Cultural Heritage
 
 The name **Pinabacdao** derives from the Waray term *"pinabakdaw"* meaning **"asked to stand"**.
 
-### 📜 **Historical Timeline**
+### **Historical Timeline**
 - **1749**: Founded during Spanish colonial period
 - **1902**: Temporarily downgraded to barrio status under Calbiga
 - **1946**: Reestablished as municipality via Executive Order No. 2 by President Manuel A. Roxas
 - **July 16, 1946**: Official municipal status effective date
 
-### 🎭 **Local Legends**
+### **Local Legends**
 1. **Capitan Doquerez's Justice**: Unique punishment system involving ant colonies
 2. **Spanish Miscommunication**: Officers misinterpreting local responses as place names
 
 ---
 
-## 🏗️ Technical Architecture
+## Technical Architecture
 
 ### **Frontend Stack**
 ```
@@ -150,7 +150,7 @@ Deployment: Self-hosted / cPanel or Cloud / DreamHost
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### **Prerequisites**
 - Node.js 18.x or higher
@@ -160,15 +160,17 @@ Deployment: Self-hosted / cPanel or Cloud / DreamHost
 ### **Installation**
 ```bash
 # Clone the WordPress project repo
-git clone https://github.com/IrishEgie/pinabacdao-lgu/tree/master.git
+git clone https://github.com/IrishEgie/pinabacdao-lgu.git --branch master
 
 ```
-#### Navigate to the 'wp-content\themes\pinabacdao-lgu' themes path
+#### Navigate to the themes path
 ```bash
-# Clone the WordPress project repo
-git clone https://github.com/IrishEgie/pinabacdao-lgu/tree/theme.git
+# Navigate to the'wp-content\themes\pinabacdao-lgu' 
+cd wp-content\themes\pinabacdao-lgu
 
-cd official-website
+# Clone the WordPress project repo's Theme
+git clone https://github.com/IrishEgie/pinabacdao-lgu.git --branch theme
+
 npm install
 
 # Start development
@@ -180,7 +182,7 @@ npm run build
 
 ---
 
-## 🎉 Mayaw-Mayaw Festival
+## Mayaw-Mayaw Festival
 
 The crown jewel of Pinabacdao's cultural calendar, celebrated **every May 10**.
 
@@ -192,12 +194,12 @@ The crown jewel of Pinabacdao's cultural calendar, celebrated **every May 10**.
 - **Thanksgiving Rituals**: Agricultural blessing ceremonies
 
 ### **Recent Achievements**
-- 🏆 **Aliwan Fiesta 2015**: 1st Place Float Design
-- 🥈 **Aliwan Fiesta 2015**: 2nd Runner-up Festival Dance
+- **Aliwan Fiesta 2015**: 1st Place Float Design
+- **Aliwan Fiesta 2015**: 2nd Runner-up Festival Dance
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions from developers, designers, content creators, and community members!
 
@@ -209,16 +211,16 @@ We welcome contributions from developers, designers, content creators, and commu
 5. **Open** a Pull Request
 
 ### **Contribution Areas**
-- 🐛 **Bug Reports**: Help us identify and fix issues
-- 💡 **Feature Requests**: Suggest new functionality
-- 🌐 **Translations**: Waray-Waray and Filipino translations
-- 📝 **Content**: Historical information, local stories
-- 🎨 **Design**: UI/UX improvements and accessibility
-- 📸 **Media**: Photos, videos, cultural documentation
+- **Bug Reports**: Help us identify and fix issues
+- **Feature Requests**: Suggest new functionality
+- **Translations**: Waray-Waray and Filipino translations
+- **Content**: Historical information, local stories
+- **Design**: UI/UX improvements and accessibility
+- **Media**: Photos, videos, cultural documentation
 
 ---
 
-## 📱 Mobile Responsiveness
+## Mobile Responsiveness
 
 The website is fully optimized for all devices:
 
@@ -229,7 +231,7 @@ The website is fully optimized for all devices:
 
 ---
 
-## 🔒 Security & Privacy
+## Security & Privacy
 
 - **Data Protection**: Compliant with Data Privacy Act of 2012
 - **Secure Forms**: HTTPS encryption for all transactions
@@ -238,22 +240,22 @@ The website is fully optimized for all devices:
 
 ---
 
-## 📞 Contact & Support
+## Contact & Support
 
 ### **Municipality of Pinabacdao**
-- 📧 **Email**: info@pinabacdao.gov.ph
-- 📞 **Phone**: +63 (055) XXX-XXXX
-- 📍 **Address**: Municipal Hall, Pinabacdao, Samar
-- 🌐 **Website**: [www.pinabacdao.gov.ph](https://pinabacdao.gov.ph)
+- **Email**: `info@pinabacdao.gov.ph`
+- **Phone**: `+63 (055) XXX-XXXX`
+- **Address**: Municipal Hall, Pinabacdao, Samar
+- **Website**: [www.pinabacdao.gov.ph](https://pinabacdao.gov.ph)
 
 ### **Technical Support**
-- 🐛 **Issues**: [GitHub Issues](https://github.com/IrishEgie/pinabacdao-lgu/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/IrishEgie/pinabacdao-lgu/issues)
-- 📧 **Web Team**: webmaster@pinabacdao.gov.ph
+- **Issues**: [GitHub Issues](https://github.com/IrishEgie/pinabacdao-lgu/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/IrishEgie/pinabacdao-lgu/issues)
+- **Web Team**: `webmaster@pinabacdao.gov.ph`
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source and maintained for public service and educational purposes.
 
@@ -267,7 +269,7 @@ https://opensource.org/licenses/MIT
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 Special thanks to:
 - **Municipal Government of Pinabacdao** - Vision and leadership  
