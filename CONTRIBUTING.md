@@ -42,7 +42,7 @@ Help us identify and fix technical issues.
 - Test on multiple browsers/devices
 - Check if issue affects government services
 
-**Security Issues**: Report privately to `security@pinabacdao.gov.ph`
+**Security Issues**: Report privately to `ict@pinabacdao.gov.ph`
 
 ### **2. Feature Requests**
 Suggest improvements for municipal services.
@@ -103,7 +103,7 @@ Code quality, performance, and security enhancements.
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### **1. Development Environment Setup**
 
@@ -137,7 +137,7 @@ npm run dev
 
 ---
 
-## 📐 Development Standards
+## Development Standards
 
 ### **Code Quality**
 ```php
@@ -294,14 +294,13 @@ git checkout -b feature/description-of-change
 ```
 
 ### **Step 2: Documentation**
-```markdown
 ## Pull Request Template
 - **Type**: Bug fix / Feature / Content update
 - **Description**: Clear description of changes
 - **Testing**: How changes were tested
 - **Screenshots**: For UI changes
 - **Legal Compliance**: Confirmation of compliance
-```
+
 
 ### **Step 3: Submission**
 1. **Push Changes**: Push to your forked repository
@@ -311,7 +310,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 🚫 Common Rejection Reasons
+## Common Rejection Reasons
 
 ### **Technical Issues**
 - Fails security standards
@@ -333,7 +332,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 🎯 Priority Areas
+## Priority Areas
 
 ### **High Priority**
 1. **Security Improvements**: Vulnerability fixes, security hardening
@@ -354,7 +353,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 📞 Getting Help
+## Getting Help
 
 ### **Technical Support**
 - **Email**: `developer@pinabacdao.gov.ph`
@@ -371,7 +370,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 🏆 Recognition
+## Recognition
 
 ### **Contributor Recognition**
 - **Municipal Website Credits**: Listed on contributors page
@@ -387,7 +386,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 📚 Resources
+## Resources
 
 ### **Development Resources**
 - [WordPress Developer Handbook](https://developer.wordpress.org/)
@@ -406,7 +405,7 @@ git checkout -b feature/description-of-change
 
 ---
 
-## 📝 Legal Disclaimer
+## Legal Disclaimer
 
 By contributing to this repository, you:
 
@@ -419,7 +418,7 @@ By contributing to this repository, you:
 
 **Questions?** Contact us at `webmaster@pinabacdao.gov.ph`
 
-**Last Updated**: January 2025  
+**Last Updated**: June 2025  
 **Review Schedule**: Quarterly review by Municipal IT Office
 
 ---

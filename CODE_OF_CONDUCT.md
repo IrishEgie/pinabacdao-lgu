@@ -9,7 +9,7 @@ As contributors and maintainers of this official government website, we pledge t
 
 ---
 
-## 🏛️ Government Standards & Legal Compliance
+## Government Standards & Legal Compliance
 
 ### **Philippine Laws & Regulations**
 All contributions must comply with:
@@ -30,7 +30,7 @@ All contributions must comply with:
 
 ---
 
-## 📋 Expected Behavior
+## Expected Behavior
 
 Contributors are expected to:
 
@@ -63,7 +63,7 @@ Contributors are expected to:
 
 ---
 
-## 🚫 Unacceptable Behavior
+## Unacceptable Behavior
 
 The following behaviors are considered harassment and are unacceptable:
 
@@ -89,7 +89,7 @@ The following behaviors are considered harassment and are unacceptable:
 
 ---
 
-## 🛡️ Security & Privacy Guidelines
+## Security & Privacy Guidelines
 
 ### **Data Handling**
 - **Personal Data**: Never commit personally identifiable information to public repositories
@@ -105,7 +105,7 @@ The following behaviors are considered harassment and are unacceptable:
 
 ---
 
-## 📝 Content Guidelines
+## Content Guidelines
 
 ### **Official Information**
 - **Accuracy**: All information must be current, accurate, and officially verified
@@ -121,7 +121,7 @@ The following behaviors are considered harassment and are unacceptable:
 
 ---
 
-## ⚖️ Enforcement
+## Enforcement
 
 ### **Reporting Process**
 1. **Email**: Send reports to `admin@pinabacdao.gov.ph`
@@ -143,7 +143,7 @@ The following behaviors are considered harassment and are unacceptable:
 
 ---
 
-## 🌐 Scope
+## Scope
 
 This Code of Conduct applies to:
 
@@ -154,11 +154,11 @@ This Code of Conduct applies to:
 
 ---
 
-## 📞 Contact Information
+## Contact Information
 
 ### **Primary Contacts**
-- **Municipal IT Office**: `it@pinabacdao.gov.ph`
-- **Code of Conduct Team**: `conduct@pinabacdao.gov.ph`
+- **Municipal IT Office**: `ict@pinabacdao.gov.ph`
+- **Code of Conduct Team**: `admin@pinabacdao.gov.ph`
 - **Legal Office**: `legal@pinabacdao.gov.ph`
 
 ### **Emergency Contacts**
@@ -167,7 +167,7 @@ This Code of Conduct applies to:
 
 ---
 
-## 📚 Resources
+## Resources
 
 ### **Philippine Government Guidelines**
 - [DICT Digital Government Guidelines](https://dict.gov.ph)
@@ -181,7 +181,7 @@ This Code of Conduct applies to:
 
 ---
 
-## 📝 Acknowledgments
+## Acknowledgments
 
 This Code of Conduct is adapted from:
 - **Contributor Covenant** v2.1

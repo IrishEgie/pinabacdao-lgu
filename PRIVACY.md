@@ -70,7 +70,7 @@ Under the Data Privacy Act, you may:
 To exercise these rights, contact:  
 **Data Protection Officer**  
 Municipality of Pinabacdao  
-Email: [dpo@pinabacdao.gov.ph](mailto:dpo@pinabacdao.gov.ph)  
+Email: [ict@pinabacdao.gov.ph](mailto:ict@pinabacdao.gov.ph)  
 Phone: +63 (055) XXX-XXXX  
 
 ---
