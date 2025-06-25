@@ -1,159 +1,288 @@
-# Pinabacdao LGU Website Project
+# 🌾 Municipality of Pinabacdao Official Website
 
-![Pinabacdao Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Official_Seal_of_Pinabacdao.png/1024px-Official_Seal_of_Pinabacdao.png) 
+<div align="center">
 
-**A Modern Government Website Built With:**
-- WordPress (Headless CMS)
-- React (Frontend Framework)
-- Tailwind CSS (Utility-first CSS Framework)
+**Pinabacdao**, officially the *Municipality of Pinabacdao*  
+(Waray: *Bungto han Pinabacdao* | Tagalog: *Bayan ng Pinabacdao*)
 
-## About Pinabacdao
+📍 **Province of Samar, Philippines**
 
-Pinabacdao, officially the Municipality of Pinabacdao (Waray: Bungto han Pinabacdao; Tagalog: Bayan ng Pinabacdao), is a municipality in the province of Samar, Philippines. According to the 2020 census, it has a population of 18,136 people.
+> *"The Heart of Rice Production in Samar, Home of the Vibrant Mayaw-Mayaw Festival"*
 
-### Key Features:
-- Center of rice production in the province of Samar
-- Home of the Mayaw-Mayaw Festival
-  - Won second runner-up in festival dance competition
-  - First prize winner in float design competition during 2015 Aliwan Fiesta
+[![WordPress](https://img.shields.io/badge/WordPress-6.x-blue.svg)](https://wordpress.org/)
+[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.x-38B2AC.svg)](https://tailwindcss.com/)
+[![SQL](https://img.shields.io/badge/SQL-Relational%20DB-blue.svg)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-Open%20Source-green.svg)](#license)
 
-## Project Overview
 
-This website serves as the official digital platform for the Local Government Unit (LGU) of Pinabacdao, featuring:
+</div>
 
-### Core Functionalities
-- **Government Services Portal**
-- **News & Announcements**
-- **Tourism Information (Mayaw-Mayaw Festival)**
-- **Agricultural Resources**
-- **Citizen Engagement Tools**
+---
 
-## Technical Implementation
+## 🏛️ About This Project
 
-### Architecture
-└── Headless WordPress (Backend)
-└── REST API
-└── React Frontend
-├── Tailwind CSS Styling
-└── Modern UI Components
+This is the **official digital platform** for the Municipality of Pinabacdao, designed to serve as a comprehensive hub for residents, businesses, and visitors. Built with modern web technologies, it provides transparent access to government services, information, and community resources.
 
-### Technology Stack
-| Component       | Technology               |
-|-----------------|--------------------------|
-| CMS             | WordPress (Headless)     |
-| Frontend        | React.js                 |
-| Styling         | Tailwind CSS             |
-| Hosting         | [Your Hosting Provider]  |
-| CI/CD           | [Your Deployment Setup]  |
+### 🎯 Project Goals
+- **Digital Governance**: Streamline municipal services and improve citizen access
+- **Transparency**: Provide open access to government information and processes  
+- **Community Building**: Showcase local culture, events, and economic opportunities
+- **Service Delivery**: Enable efficient online transactions and information requests
 
-## Development Setup
+---
 
-### Prerequisites
-- Node.js v16+
-- WordPress 6.0+
-- PHP 8.0+
-- MySQL 5.7+
+## 🌟 Key Features
 
-### Installation
+### 🏢 **Government Services**
+- **Complete Department Directory**: 25+ municipal offices with detailed information
+- **Online Service Portal**: Business permits, civil registration, building permits
+- **Document Requests**: FOI (Freedom of Information) system
+- **Transparency Portal**: Budget reports, audit findings, performance metrics
 
-1. **WordPress Setup**
-   ```bash
-   # Download and configure WordPress
-   wp core download --path=wp
-   wp config create --dbname=pinabacdao --dbuser=root --dbpass=
-   wp core install --url=localhost --title="Pinabacdao LGU" --admin_user=admin --admin_password=password --admin_email=admin@pinabacdao.gov.ph
+### 📊 **Procurement & BAC**
+- **Bid Management System**: Real-time procurement opportunities
+- **Contract Awards Tracking**: Complete procurement lifecycle visibility
+- **BAC Composition**: Bids and Awards Committee information
+- **Vendor Resources**: Procurement plans and guidelines
 
-# WordPress ReadMe
+### 🗞️ **News & Events**
+- **Municipal Updates**: Latest government announcements
+- **Event Calendar**: Community events and festivals
+- **Press Releases**: Official municipal communications
+- **Photo Galleries**: Event documentation and municipal activities
 
-![WordPress Logo](https://wordpress.org/wp-content/uploads/2021/10/wordpress-logo.png)
+### 🌐 **Multilingual Support**
+- **English**: Primary interface language
+- **Filipino**: National language support
+- **Waray Integration**: Local language elements (planned)
 
-Semantic Personal Publishing Platform
+---
 
-## First Things First
+## 📌 About Pinabacdao
 
-Welcome. WordPress is a very special project to me. Every developer and contributor adds something unique to the mix, and together we create something beautiful that I am proud to be a part of. Thousands of hours have gone into WordPress, and we are dedicated to making it better every day. Thank you for making it part of your world.
+Pinabacdao is a **3rd class municipality** in Samar Province, home to **18,136 residents** (2020 Census) who celebrate a rich agricultural heritage and vibrant cultural traditions.
 
-— Matt Mullenweg
+### 🏆 **Municipal Achievements**
+- **Rice Capital** of Samar Province
+- **Mayaw-Mayaw Festival** (May 10 annually)
+- 🥈 **2nd Runner-Up** - Festival Dance Competition, Aliwan Fiesta 2015
+- 🥇 **1st Place** - Float Design, Aliwan Fiesta 2015
 
-## Installation: Famous 5-minute install
+### 🗺️ **Geographic Overview**
+- **Location**: Along the Pan-Philippine Highway
+- **Boundaries**: Calbiga (N), Borongan (E), Villareal (W), Sta. Rita & Basey (S)
+- **Administrative Units**: 24 Barangays in East and West Districts
+- **Terrain**: Coastal lowlands to highland agricultural areas
 
-1. Unzip the package in an empty directory and upload everything.
-2. Open `wp-admin/install.php` in your browser. It will take you through the process to set up a `wp-config.php` file with your database connection details.
-   - If for some reason this does not work, do not worry. It may not work on all web hosts. Open up `wp-config-sample.php` with a text editor like WordPad or similar and fill in your database connection details.
-   - Save the file as `wp-config.php` and upload it.
-   - Open `wp-admin/install.php` in your browser.
-3. Once the configuration file is set up, the installer will set up the tables needed for your site. If there is an error, double check your `wp-config.php` file, and try again. If it fails again, please go to the [WordPress support forums](https://wordpress.org/support/forums/) with as much data as you can gather.
-4. **If you did not enter a password, note the password given to you.** If you did not provide a username, it will be `admin`.
-5. The installer should then send you to the [login page](wp-login.php). Sign in with the username and password you chose during the installation. If a password was generated for you, you can then click on "Profile" to change the password.
+---
 
-## Updating
+## 🌀 Etymology & Cultural Heritage
 
-### Using the Automatic Updater
-1. Open `wp-admin/update-core.php` in your browser and follow the instructions.
-2. You wanted more, perhaps? That's it!
+The name **Pinabacdao** derives from the Waray term *"pinabakdaw"* meaning **"asked to stand"**.
 
-### Updating Manually
-1. Before you update anything, make sure you have backup copies of any files you may have modified such as `index.php`.
-2. Delete your old WordPress files, saving ones you've modified.
-3. Upload the new files.
-4. Point your browser to `/wp-admin/upgrade.php`.
+### 📜 **Historical Timeline**
+- **1749**: Founded during Spanish colonial period
+- **1902**: Temporarily downgraded to barrio status under Calbiga
+- **1946**: Reestablished as municipality via Executive Order No. 2 by President Manuel A. Roxas
+- **July 16, 1946**: Official municipal status effective date
 
-## Migrating from other systems
+### 🎭 **Local Legends**
+1. **Capitan Doquerez's Justice**: Unique punishment system involving ant colonies
+2. **Spanish Miscommunication**: Officers misinterpreting local responses as place names
 
-WordPress can [import from a number of systems](https://developer.wordpress.org/advanced-administration/wordpress/import/). First you need to get WordPress installed and working as described above, before using [our import tools](wp-admin/import.php).
+---
 
-## System Requirements
+## 🏗️ Technical Architecture
 
-- [PHP](https://www.php.net/) version **7.2.24** or greater.
-- [MySQL](https://www.mysql.com/) version **5.5.5** or greater.
+### **Frontend Stack**
+```
+Frontend: React 18.x + Tailwind CSS
+Backend / CMS: WordPress (REST API)
+Database: SQL (MySQL/MariaDB)
+Deployment: Self-hosted / cPanel or Cloud / DreamHost
+```
 
-### Recommendations
+### **Key Components**
+- **header.php**: Comprehensive navigation with dropdown menus
+- **search-overlay**: Advanced search functionality
+- **Responsive Design**: Mobile-first approach
+- **Accessibility**: WCAG 2.1 compliance focus
 
-- [PHP](https://www.php.net/) version **7.4** or greater.
-- [MySQL](https://www.mysql.com/) version **8.0** or greater OR [MariaDB](https://mariadb.org/) version **10.5** or greater.
-- The [mod_rewrite](https://httpd.apache.org/docs/2.2/mod/mod_rewrite.html) Apache module.
-- [HTTPS](https://wordpress.org/news/2016/12/moving-toward-ssl/) support.
-- A link to [wordpress.org](https://wordpress.org/) on your site.
 
-## Online Resources
+### **Site Structure**
+```
+📁 Municipal Website
+├── 🏠 Home
+├── ℹ️ About
+│   ├── Municipal Profile
+│   ├── History
+│   ├── Geography
+│   └── Demographics
+├── 🏛️ Government
+│   ├── Municipal Officials
+│   ├── Executive Offices (Mayor, Vice Mayor)
+│   ├── Legislative (Sangguniang Bayan)
+│   ├── Administrative Offices (12+ departments)
+│   ├── Public Safety & Order
+│   └── Specialized Offices
+├── 🛎️ Services
+│   ├── Business Permits
+│   ├── Civil Registration
+│   ├── Building Permits
+│   └── Social Services
+├── 📰 News & Events
+│   ├── Municipal News
+│   ├── Event Calendar
+│   └── Announcements
+├── 📋 BAC (Bids & Awards)
+│   ├── Procurement Plans
+│   ├── Bid Invitations
+│   ├── Results & Awards
+│   └── BAC Composition
+└── 🔍 Transparency
+    ├── Full Disclosure Policy
+    ├── Budget & Finance
+    ├── FOI Requests
+    ├── Audit Reports
+    └── Performance Metrics
+```
 
-If you have any questions that are not addressed in this document, please take advantage of WordPress' numerous online resources:
+---
 
-- **[HelpHub](https://wordpress.org/documentation/)**  
-  HelpHub is the encyclopedia of all things WordPress. It is the most comprehensive source of information for WordPress available.
+## 🚀 Getting Started
 
-- **[The WordPress Blog](https://wordpress.org/news/)**  
-  This is where you'll find the latest updates and news related to WordPress. Recent WordPress news appears in your administrative dashboard by default.
+### **Prerequisites**
+- Node.js 18.x or higher
+- npm or yarn package manager
+- Modern web browser
 
-- **[WordPress Planet](https://planet.wordpress.org/)**  
-  The WordPress Planet is a news aggregator that brings together posts from WordPress blogs around the web.
+### **Installation**
+```bash
+# Clone the WordPress project repo
+git clone https://github.com/IrishEgie/pinabacdao-lgu/tree/master.git
 
-- **[WordPress Support Forums](https://wordpress.org/support/forums/)**  
-  If you've looked everywhere and still cannot find an answer, the support forums are very active and have a large community ready to help.
+```
+#### Navigate to the 'wp-content\themes\pinabacdao-lgu' themes path
+```bash
+# Clone the WordPress project repo
+git clone https://github.com/IrishEgie/pinabacdao-lgu/tree/theme.git
 
-- **[WordPress IRC Channel](https://make.wordpress.org/support/handbook/appendix/other-support-locations/introduction-to-irc/)**  
-  There is an online chat channel that is used for discussion among people who use WordPress and occasionally support topics.
+cd official-website
+npm install
 
-## Final Notes
+# Start development
+npm run dev
 
-- If you have any suggestions, ideas, or comments, or if you (gasp!) found a bug, join us in the [Support Forums](https://wordpress.org/support/forums/).
-- WordPress has a robust plugin API that makes extending the code easy. If you are a developer interested in utilizing this, see the [Plugin Developer Handbook](https://developer.wordpress.org/plugins/). You shouldn't modify any of the core code.
+# Build for production
+npm run build
+```
 
-## Share the Love
+---
 
-WordPress has no multi-million dollar marketing campaign or celebrity sponsors, but we do have something even better—you. If you enjoy WordPress please consider telling a friend, setting it up for someone less knowledgeable than yourself, or writing the author of a media article that overlooks us.
+## 🎉 Mayaw-Mayaw Festival
 
-WordPress is the official continuation of b2/cafélog, which came from Michel V. The work has been continued by the [WordPress developers](https://wordpress.org/about/). If you would like to support WordPress, please consider [donating](https://wordpress.org/donate/).
+The crown jewel of Pinabacdao's cultural calendar, celebrated **every May 10**.
 
-## License
+### **Festival Highlights**
+- **Ethnic Dance Performances**: Traditional Waray choreography
+- **Street Dancing**: Colorful costumes and community participation  
+- **Cultural Exhibits**: Local crafts, agriculture, and heritage
+- **Food Festival**: Traditional Samareño cuisine
+- **Thanksgiving Rituals**: Agricultural blessing ceremonies
 
-This project is licensed under the GPLv2 (same as WordPress).
+### **Recent Achievements**
+- 🏆 **Aliwan Fiesta 2015**: 1st Place Float Design
+- 🥈 **Aliwan Fiesta 2015**: 2nd Runner-up Festival Dance
 
-WordPress is free software, and is released under the terms of the GPL (GNU General Public License) version 2 or (at your option) any later version. See [license.txt](license.txt).
+---
 
-## Contact
-Pinabacdao Municipal Hall
-Poblacion, Pinabacdao, Samar
-Philippines 4843
+## 🤝 Contributing
 
-Email: info@pinabacdao.gov.ph
+We welcome contributions from developers, designers, content creators, and community members!
+
+### **How to Contribute**
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+### **Contribution Areas**
+- 🐛 **Bug Reports**: Help us identify and fix issues
+- 💡 **Feature Requests**: Suggest new functionality
+- 🌐 **Translations**: Waray-Waray and Filipino translations
+- 📝 **Content**: Historical information, local stories
+- 🎨 **Design**: UI/UX improvements and accessibility
+- 📸 **Media**: Photos, videos, cultural documentation
+
+---
+
+## 📱 Mobile Responsiveness
+
+The website is fully optimized for all devices:
+
+- 📱 **Mobile**: Touch-friendly navigation, optimized layouts
+- 📱 **Tablet**: Enhanced touch interfaces, readable typography  
+- 💻 **Desktop**: Full-featured interface with hover states
+- ♿ **Accessibility**: Screen reader support, keyboard navigation
+
+---
+
+## 🔒 Security & Privacy
+
+- **Data Protection**: Compliant with Data Privacy Act of 2012
+- **Secure Forms**: HTTPS encryption for all transactions
+- **No Tracking**: Privacy-focused analytics only
+- **Content Security**: Regular security audits and updates
+
+---
+
+## 📞 Contact & Support
+
+### **Municipality of Pinabacdao**
+- 📧 **Email**: info@pinabacdao.gov.ph
+- 📞 **Phone**: +63 (055) XXX-XXXX
+- 📍 **Address**: Municipal Hall, Pinabacdao, Samar
+- 🌐 **Website**: [www.pinabacdao.gov.ph](https://pinabacdao.gov.ph)
+
+### **Technical Support**
+- 🐛 **Issues**: [GitHub Issues](https://github.com/IrishEgie/pinabacdao-lgu/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/IrishEgie/pinabacdao-lgu/issues)
+- 📧 **Web Team**: webmaster@pinabacdao.gov.ph
+
+---
+
+## 📄 License
+
+This project is open-source and maintained for public service and educational purposes.
+
+**© 2025 Municipality of Pinabacdao. All rights reserved.**
+
+```
+Licensed under the MIT License
+You may obtain a copy of the License at:
+https://opensource.org/licenses/MIT
+```
+
+---
+
+## 🙏 Acknowledgments
+
+Special thanks to:
+- **Municipal Government of Pinabacdao** - Vision and leadership  
+- **Local Community** - Content, stories, and cultural insights
+- **Development Team** - Technical implementation and design
+- **Open Source Community** - Tools and libraries that made this possible
+
+---
+
+<div align="center">
+
+**🌾 Mabuhay ang Pinabacdao! 🌾**
+
+*Built with ❤️ for the people of Pinabacdao*
+
+[🏠 Home](https://pinabacdao.gov.ph) • [📧 Contact](mailto:info@pinabacdao.gov.ph) • [🐛 Report Issue](https://github.com/municipality-pinabacdao/official-website/issues)
+
+</div>
