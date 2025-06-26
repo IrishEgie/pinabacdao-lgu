@@ -4,7 +4,7 @@ get_header();
 
 <div class="min-h-screen bg-gray-50">
   <?php get_template_part('template-parts/header'); ?>
-  
+
   <?php get_template_part('template-parts/hero-section'); ?>
 
   <!-- Quick Actions -->
@@ -14,27 +14,31 @@ get_header();
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Quick Actions</h2>
         <p class="text-lg text-gray-600">Common services and requests</p>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <a href="<?php echo esc_url(home_url('/pay-taxes')); ?>" class="h-20 text-left bg-secondary-600 hover:bg-secondary-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+        <a href="<?php echo esc_url(home_url('/pay-taxes')); ?>"
+          class="h-20 text-left bg-secondary-600 hover:bg-secondary-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Pay Taxes</div>
             <div class="text-sm opacity-90 text-white">Online payment</div>
           </div>
         </a>
-        <a href="<?php echo esc_url(home_url('/apply-permit')); ?>" class="h-20 text-left bg-green-600 hover:bg-green-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+        <a href="<?php echo esc_url(home_url('/apply-permit')); ?>"
+          class="h-20 text-left bg-green-600 hover:bg-green-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Apply Permit</div>
             <div class="text-sm opacity-90 text-white">Business license</div>
           </div>
         </a>
-        <a href="<?php echo esc_url(home_url('/get-certificate')); ?>" class="h-20 text-left bg-purple-600 hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+        <a href="<?php echo esc_url(home_url('/get-certificate')); ?>"
+          class="h-20 text-left bg-purple-600 hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Get Certificate</div>
             <div class="text-sm opacity-90 text-white">Civil documents</div>
           </div>
         </a>
-        <a href="<?php echo esc_url(home_url('/report-issue')); ?>" class="h-20 text-left bg-orange-600 hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+        <a href="<?php echo esc_url(home_url('/report-issue')); ?>"
+          class="h-20 text-left bg-orange-600 hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Report Issue</div>
             <div class="text-sm opacity-90 text-white">Community concerns</div>
@@ -45,29 +49,29 @@ get_header();
   </section>
 
   <!-- Services Section -->
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
-        <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
-      </div>
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
+    <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
+  </div>
   <?php
-              // Set limit for homepage display
-            $services_limit = 6; // Show only 6 services on homepage
-            include get_template_directory() . '/template-parts/services-section.php';
+  // Set limit for homepage display
+  $services_limit = 6; // Show only 6 services on homepage
+  include get_template_directory() . '/template-parts/services-section.php';
   ?>
 
-        <!-- View All -->
-        <div class="text-center my-12">
-            <a href="<?php echo esc_url(home_url('/services')); ?>"
-                class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-colors duration-300">
-                View All Services
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-arrow-right ml-2 w-5 h-5">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                </svg>
-            </a>
-        </div>
+  <!-- View All -->
+  <div class="text-center my-12">
+    <a href="<?php echo esc_url(home_url('/services')); ?>"
+      class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-colors duration-300">
+      View All Services
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-arrow-right ml-2 w-5 h-5">
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </svg>
+    </a>
+  </div>
 
   <!-- News & Announcements -->
   <section id="news" class="py-16 bg-white">
@@ -77,9 +81,14 @@ get_header();
           <h2 class="text-3xl font-bold text-gray-800 mb-4">Latest News & Updates</h2>
           <p class="text-lg text-gray-600">Stay informed with the latest happenings</p>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-8 h-8 text-primary-600"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-bell w-8 h-8 text-primary-600">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </svg>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php
         $news_query = new WP_Query(array(
@@ -87,14 +96,14 @@ get_header();
           'posts_per_page' => 3,
           'category_name' => 'news'
         ));
-        
+
         if ($news_query->have_posts()) {
           while ($news_query->have_posts()) {
             $news_query->the_post();
             $views = get_post_meta(get_the_ID(), 'views', true) ?: 0;
             $categories = get_the_category();
             $category = !empty($categories) ? esc_html($categories[0]->name) : 'Uncategorized';
-            
+
             echo '
             <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
               <div class="p-6">
@@ -118,11 +127,17 @@ get_header();
         }
         ?>
       </div>
-      
+
       <div class="text-center mt-12">
-        <a href="<?php echo esc_url(home_url('/news')); ?>" class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 hover:bg-primary-50 font-medium rounded-md transition-colors duration-300">
-          View All News 
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <a href="<?php echo esc_url(home_url('/news')); ?>"
+          class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 hover:bg-primary-50 font-medium rounded-md transition-colors duration-300">
+          View All News
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-right ml-2 w-5 h-5">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </a>
       </div>
     </div>
@@ -135,7 +150,7 @@ get_header();
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Municipal Leadership</h2>
         <p class="text-lg text-gray-600">Meet our dedicated public servants</p>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <?php
         $officials = array(
@@ -152,7 +167,7 @@ get_header();
             'phone' => '+63 (55) 123-4568'
           )
         );
-        
+
         foreach ($officials as $official) {
           echo '
           <div class="bg-white p-6 rounded-lg shadow-md text-center">
@@ -189,9 +204,14 @@ get_header();
           <h2 class="text-3xl font-bold text-gray-800 mb-4">Ongoing Projects</h2>
           <p class="text-lg text-gray-600">Building a better future together</p>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up w-8 h-8 text-secondary-600"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-trending-up w-8 h-8 text-secondary-600">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+          <polyline points="16 7 22 7 22 13" />
+        </svg>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <?php
         $projects = array(
@@ -216,7 +236,7 @@ get_header();
             'endDate' => 'Jun 2025'
           )
         );
-        
+
         foreach ($projects as $project) {
           echo '
           <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
@@ -272,7 +292,7 @@ get_header();
         <h2 class="text-3xl font-bold text-gray-800 mb-4">Transparency & Downloads</h2>
         <p class="text-lg text-gray-600">Access public documents and reports</p>
       </div>
-      
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <?php
         $documents = array(
@@ -293,7 +313,7 @@ get_header();
             'category' => 'Forms'
           )
         );
-        
+
         foreach ($documents as $doc) {
           echo '
           <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
@@ -317,11 +337,17 @@ get_header();
         }
         ?>
       </div>
-      
+
       <div class="text-center mt-12">
-        <a href="<?php echo esc_url(home_url('/documents')); ?>" class="inline-flex items-center justify-center px-6 py-3 border border-secondary-600 text-secondary-600 hover:bg-secondary-50 font-medium rounded-md transition-colors duration-300">
-          View All Documents 
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right ml-2 w-5 h-5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <a href="<?php echo esc_url(home_url('/documents')); ?>"
+          class="inline-flex items-center justify-center px-6 py-3 border border-secondary-600 text-secondary-600 hover:bg-secondary-50 font-medium rounded-md transition-colors duration-300">
+          View All Documents
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-right ml-2 w-5 h-5">
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
         </a>
       </div>
     </div>

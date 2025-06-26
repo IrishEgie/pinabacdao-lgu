@@ -73,4 +73,3 @@ function theme_assets() {
     );
 }
 add_action('wp_enqueue_scripts', 'theme_assets');
-

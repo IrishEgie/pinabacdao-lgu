@@ -42,7 +42,7 @@ function register_services_post_type() {
         'show_ui'               => true,
         'show_in_menu'          => true,
         'menu_position'         => 5,
-        'menu_icon'             => 'dashicons-admin-tools',
+        'menu_icon'             => 'dashicons-list-view',
         'show_in_admin_bar'     => true,
         'show_in_nav_menus'     => true,
         'can_export'            => true,
@@ -51,6 +51,10 @@ function register_services_post_type() {
         'publicly_queryable'    => true,
         'capability_type'       => 'page',
         'show_in_rest'          => true,
+            'rewrite' => array(
+        'slug' => 'service', // This matches your URL structure
+        'with_front' => false // Remove if you want /blog/ before your services
+    ),
     );
     register_post_type('service', $args);
 }

@@ -1,0 +1,354 @@
+<?php
+/**
+ * Single Service Template
+ * 
+ * @package your-theme
+ */
+
+get_header();
+?>
+
+<div class="min-h-screen bg-gray-50">
+    <?php pageBanner(); ?>
+    <?php the_breadcrumbs(); ?>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <article class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <!-- Service Header -->
+                    <div class="bg-primary-600 px-6 py-4">
+                        <div class="flex items-center space-x-4">
+                            <?php 
+                            $service_icon = get_service_icon(get_the_ID());
+                            if ($service_icon) : ?>
+                                <div class="p-2 bg-white bg-opacity-20 rounded-lg">
+                                    <?php echo get_service_icon_svg($service_icon, 'w-6 h-6 text-white'); ?>
+                                </div>
+                            <?php endif; ?>
+                            <div>
+                                <h1 class="text-2xl font-bold text-white"><?php the_title(); ?></h1>
+                                <p class="text-primary-100 mt-1">
+                                    <?php 
+                                    $terms = get_the_terms(get_the_ID(), 'service_category');
+                                    if ($terms && !is_wp_error($terms)) {
+                                        echo esc_html($terms[0]->name);
+                                    } else {
+                                        echo 'Municipal Service';
+                                    }
+                                    ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Content -->
+                    <div class="p-6">
+                        <!-- Service Description -->
+                        <div class="prose max-w-none mb-8">
+                            <?php the_content(); ?>
+                        </div>
+
+                        <!-- Service Details -->
+                        <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Service Information</h3>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div class="space-y-4">
+                                    <!-- Department -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                            </svg>
+                                            Department
+                                        </h4>
+                                        <p class="text-gray-600 pl-6">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_department', true) ?: 'Municipal Office'); ?>
+                                        </p>
+                                    </div>
+
+                                    <!-- Availability -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Availability
+                                        </h4>
+                                        <p class="text-gray-600 pl-6">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_availability', true) ?: 'Monday - Friday, 8:00 AM - 5:00 PM'); ?>
+                                        </p>
+                                    </div>
+
+                                    <!-- Processing Time -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                            </svg>
+                                            Processing Time
+                                        </h4>
+                                        <p class="text-gray-600 pl-6">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_processing_time', true) ?: '3-5 business days'); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <!-- Requirements -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                            Requirements
+                                        </h4>
+                                        <div class="pl-6">
+                                            <?php 
+                                            $requirements = get_post_meta(get_the_ID(), '_service_requirements', true);
+                                            if ($requirements) : ?>
+                                                <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                                    <?php foreach (explode("\n", $requirements) as $requirement) : ?>
+                                                        <li><?php echo esc_html(trim($requirement)); ?></li>
+                                                    <?php endforeach; ?>
+                                                </ul>
+                                            <?php else : ?>
+                                                <p class="text-gray-600">Valid ID and completed application form</p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+
+                                    <!-- Fees -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                                            </svg>
+                                            Fees
+                                        </h4>
+                                        <p class="text-gray-600 pl-6">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_fees', true) ?: 'No fees required'); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Process -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Process Flow</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <?php 
+                                $process = get_post_meta(get_the_ID(), '_service_process', true);
+                                if ($process) : ?>
+                                    <div class="prose max-w-none">
+                                        <?php echo wp_kses_post(wpautop($process)); ?>
+                                    </div>
+                                <?php else : ?>
+                                    <p class="text-gray-600">Process information not available.</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- Service Contact -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold mb-4 text-gray-800">Contact Information</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2">Office Location</h4>
+                                        <p class="text-gray-600">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_location', true) ?: 'Ground Floor, Municipal Hall'); ?>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2">Contact Details</h4>
+                                        <p class="text-gray-600">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_person', true) ?: 'Municipal Services Office'); ?>
+                                        </p>
+                                        <p class="text-gray-600">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_phone', true) ?: '+63 (55) 123-4567'); ?>
+                                        </p>
+                                        <p class="text-gray-600">
+                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_email', true) ?: 'services@pinabacdao.gov.ph'); ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Call to Action -->
+                        <div class="border-t pt-6">
+                            <h3 class="text-lg font-semibold mb-4 text-gray-800">Ready to Get Started?</h3>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <?php 
+                                $application_url = get_post_meta(get_the_ID(), '_service_application_url', true);
+                                if ($application_url) : ?>
+                                    <a href="<?php echo esc_url($application_url); ?>" 
+                                       class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        Apply Online
+                                    </a>
+                                <?php endif; ?>
+                                
+                                <a href="/contact" 
+                                   class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors font-medium">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.959 8.959 0 01-2.165-.267l-5.69 1.265a.964.964 0 01-1.143-.905l.001-5.535A8 8 0 1121 12z" />
+                                    </svg>
+                                    Contact About This Service
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Related Services -->
+                <?php
+                $related_services = get_posts(array(
+                    'post_type' => 'service',
+                    'posts_per_page' => 3,
+                    'post__not_in' => array(get_the_ID()),
+                    'orderby' => 'rand'
+                ));
+                
+                if ($related_services) : ?>
+                    <div class="mt-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Other Services You Might Need</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <?php foreach ($related_services as $service) : 
+                                $service_icon = get_service_icon($service->ID);
+                                $link_attributes = get_service_link_attributes($service->ID);
+                                ?>
+                                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
+                                    <div class="flex items-center space-x-3 mb-3">
+                                        <?php if ($service_icon) : ?>
+                                            <div class="flex-shrink-0">
+                                                <?php echo get_service_icon_svg($service_icon, 'w-6 h-6 text-primary-600'); ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        <h4 class="text-lg font-semibold text-gray-800">
+                                            <a href="<?php echo esc_url($link_attributes['href']); ?>" 
+                                               class="hover:text-primary-600 transition-colors"
+                                               <?php if (isset($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
+                                               <?php if (isset($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
+                                                <?php echo esc_html($service->post_title); ?>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <?php if ($service->post_excerpt) : ?>
+                                        <p class="text-gray-600 text-sm mb-3"><?php echo esc_html(wp_trim_words($service->post_excerpt, 12)); ?></p>
+                                    <?php endif; ?>
+                                    <a href="<?php echo esc_url($link_attributes['href']); ?>" 
+                                       class="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium"
+                                       <?php if (isset($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
+                                       <?php if (isset($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
+                                        Learn More
+                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Sidebar Navigation -->
+            <div class="lg:col-span-1 space-y-6">
+                <!-- Quick Contact -->
+                <div class="bg-white rounded-lg shadow-md p-6 top-8">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Service Quick Info</h3>
+                    <div class="space-y-4">
+                        <!-- Department -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">Department</h4>
+                            <p class="text-gray-700">
+                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_department', true) ?: 'Municipal Office'); ?>
+                            </p>
+                        </div>
+                        
+                        <!-- Processing Time -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">Processing Time</h4>
+                            <p class="text-gray-700">
+                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_processing_time', true) ?: '3-5 business days'); ?>
+                            </p>
+                        </div>
+                        
+                        <!-- Fees -->
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-500">Fees</h4>
+                            <p class="text-gray-700">
+                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_fees', true) ?: 'No fees required'); ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Services List -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">All Services</h3>
+                    <?php
+                    $services = get_posts(array(
+                        'post_type' => 'service',
+                        'posts_per_page' => -1,
+                        'orderby' => 'menu_order',
+                        'order' => 'ASC'
+                    ));
+                    
+                    if ($services) : ?>
+                        <ul class="space-y-2">
+                            <?php foreach ($services as $service) : 
+                                $current_class = (get_the_ID() === $service->ID) ? 'bg-primary-50 text-primary-600 font-medium' : 'text-gray-600 hover:bg-gray-50';
+                                ?>
+                                <li>
+                                    <a href="<?php echo get_permalink($service->ID); ?>" 
+                                       class="block px-3 py-2 rounded transition-colors duration-200 <?php echo $current_class; ?>">
+                                        <?php echo esc_html($service->post_title); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Quick Actions</h3>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="/services" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
+                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                                All Services
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/forms" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
+                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Download Forms
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/faq" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
+                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                FAQs
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php get_footer(); ?>
