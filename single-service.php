@@ -21,7 +21,7 @@ get_header();
                     <div class="bg-primary-600 px-6 py-4">
                         <div class="flex items-center space-x-4">
                             <?php 
-                            $service_icon = get_service_icon(get_the_ID());
+                            $service_icon = get_field('service_icon');
                             if ($service_icon) : ?>
                                 <div class="p-2 bg-white bg-opacity-20 rounded-lg">
                                     <?php echo get_service_icon_svg($service_icon, 'w-6 h-6 text-white'); ?>
@@ -64,7 +64,7 @@ get_header();
                                             Department
                                         </h4>
                                         <p class="text-gray-600 pl-6">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_department', true) ?: 'Municipal Office'); ?>
+                                            <?php echo esc_html(get_field('department') ?: 'Municipal Office'); ?>
                                         </p>
                                     </div>
 
@@ -77,7 +77,7 @@ get_header();
                                             Availability
                                         </h4>
                                         <p class="text-gray-600 pl-6">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_availability', true) ?: 'Monday - Friday, 8:00 AM - 5:00 PM'); ?>
+                                            <?php echo esc_html(get_field('service_availability') ?: 'Monday - Friday, 8:00 AM - 5:00 PM'); ?>
                                         </p>
                                     </div>
 
@@ -90,33 +90,39 @@ get_header();
                                             Processing Time
                                         </h4>
                                         <p class="text-gray-600 pl-6">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_processing_time', true) ?: '3-5 business days'); ?>
+                                            <?php echo esc_html(get_field('service_processing_time') ?: '3-5 business days'); ?>
                                         </p>
                                     </div>
                                 </div>
                                 <div class="space-y-4">
-                                    <!-- Requirements -->
-                                    <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
-                                            Requirements
-                                        </h4>
-                                        <div class="pl-6">
-                                            <?php 
-                                            $requirements = get_post_meta(get_the_ID(), '_service_requirements', true);
-                                            if ($requirements) : ?>
-                                                <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                                                    <?php foreach (explode("\n", $requirements) as $requirement) : ?>
-                                                        <li><?php echo esc_html(trim($requirement)); ?></li>
-                                                    <?php endforeach; ?>
-                                                </ul>
-                                            <?php else : ?>
-                                                <p class="text-gray-600">Valid ID and completed application form</p>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
+<!-- Requirements -->
+<div>
+    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+        <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Requirements
+    </h4>
+    <div class="pl-6">
+        <?php 
+        $requirements = get_field('service_requirements');
+        if ($requirements) : 
+            // Split by line breaks, trim each line, and remove empty lines
+            $items = array_filter(array_map('trim', explode("\n", $requirements)));
+            if (!empty($items)) : ?>
+                <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                    <?php foreach ($items as $item) : ?>
+                        <li><?php echo esc_html($item); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else : ?>
+                <p class="text-gray-600">No requirements specified.</p>
+            <?php endif; ?>
+        <?php else : ?>
+            <p class="text-gray-600">Valid ID and completed application form</p>
+        <?php endif; ?>
+    </div>
+</div>
 
                                     <!-- Fees -->
                                     <div>
@@ -127,7 +133,7 @@ get_header();
                                             Fees
                                         </h4>
                                         <p class="text-gray-600 pl-6">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_fees', true) ?: 'No fees required'); ?>
+                                            <?php echo esc_html(get_field('service_fees') ?: 'No fees required'); ?>
                                         </p>
                                     </div>
                                 </div>
@@ -139,10 +145,10 @@ get_header();
                             <h3 class="text-xl font-semibold mb-4 text-gray-800">Process Flow</h3>
                             <div class="bg-gray-50 rounded-lg p-6">
                                 <?php 
-                                $process = get_post_meta(get_the_ID(), '_service_process', true);
+                                $process = get_field('service_process');
                                 if ($process) : ?>
                                     <div class="prose max-w-none">
-                                        <?php echo wp_kses_post(wpautop($process)); ?>
+                                        <?php echo $process; ?>
                                     </div>
                                 <?php else : ?>
                                     <p class="text-gray-600">Process information not available.</p>
@@ -158,19 +164,19 @@ get_header();
                                     <div>
                                         <h4 class="font-medium text-gray-700 mb-2">Office Location</h4>
                                         <p class="text-gray-600">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_location', true) ?: 'Ground Floor, Municipal Hall'); ?>
+                                            <?php echo esc_html(get_field('service_location') ?: 'Ground Floor, Municipal Hall'); ?>
                                         </p>
                                     </div>
                                     <div>
                                         <h4 class="font-medium text-gray-700 mb-2">Contact Details</h4>
                                         <p class="text-gray-600">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_person', true) ?: 'Municipal Services Office'); ?>
+                                            <?php echo esc_html(get_field('service_contact_person') ?: 'Municipal Services Office'); ?>
                                         </p>
                                         <p class="text-gray-600">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_phone', true) ?: '+63 (55) 123-4567'); ?>
+                                            <?php echo esc_html(get_field('service_contact_phone') ?: '+63 (55) 123-4567'); ?>
                                         </p>
                                         <p class="text-gray-600">
-                                            <?php echo esc_html(get_post_meta(get_the_ID(), '_service_contact_email', true) ?: 'services@pinabacdao.gov.ph'); ?>
+                                            <?php echo esc_html(get_field('service_contact_email') ?: 'services@pinabacdao.gov.ph'); ?>
                                         </p>
                                     </div>
                                 </div>
@@ -182,7 +188,7 @@ get_header();
                             <h3 class="text-lg font-semibold mb-4 text-gray-800">Ready to Get Started?</h3>
                             <div class="flex flex-col sm:flex-row gap-4">
                                 <?php 
-                                $application_url = get_post_meta(get_the_ID(), '_service_application_url', true);
+                                $application_url = get_field('service_application_url');
                                 if ($application_url) : ?>
                                     <a href="<?php echo esc_url($application_url); ?>" 
                                        class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
@@ -219,8 +225,14 @@ get_header();
                         <h3 class="text-2xl font-bold text-gray-800 mb-6">Other Services You Might Need</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <?php foreach ($related_services as $service) : 
-                                $service_icon = get_service_icon($service->ID);
-                                $link_attributes = get_service_link_attributes($service->ID);
+                                $service_icon = get_field('service_icon', $service->ID);
+                                $redirect_url = get_field('service_application_url', $service->ID);
+                                $open_new_tab = get_field('open_in_new_tab', $service->ID);
+                                $link_attributes = array(
+                                    'href' => $redirect_url ?: get_permalink($service->ID),
+                                    'target' => ($redirect_url && $open_new_tab) ? '_blank' : '',
+                                    'rel' => ($redirect_url && $open_new_tab) ? 'noopener noreferrer' : ''
+                                );
                                 ?>
                                 <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
                                     <div class="flex items-center space-x-3 mb-3">
@@ -232,8 +244,8 @@ get_header();
                                         <h4 class="text-lg font-semibold text-gray-800">
                                             <a href="<?php echo esc_url($link_attributes['href']); ?>" 
                                                class="hover:text-primary-600 transition-colors"
-                                               <?php if (isset($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
-                                               <?php if (isset($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
+                                               <?php if (!empty($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
+                                               <?php if (!empty($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
                                                 <?php echo esc_html($service->post_title); ?>
                                             </a>
                                         </h4>
@@ -243,8 +255,8 @@ get_header();
                                     <?php endif; ?>
                                     <a href="<?php echo esc_url($link_attributes['href']); ?>" 
                                        class="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium"
-                                       <?php if (isset($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
-                                       <?php if (isset($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
+                                       <?php if (!empty($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
+                                       <?php if (!empty($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
                                         Learn More
                                         <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -267,7 +279,7 @@ get_header();
                         <div>
                             <h4 class="text-sm font-medium text-gray-500">Department</h4>
                             <p class="text-gray-700">
-                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_department', true) ?: 'Municipal Office'); ?>
+                                <?php echo esc_html(get_field('department') ?: 'Municipal Office'); ?>
                             </p>
                         </div>
                         
@@ -275,7 +287,7 @@ get_header();
                         <div>
                             <h4 class="text-sm font-medium text-gray-500">Processing Time</h4>
                             <p class="text-gray-700">
-                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_processing_time', true) ?: '3-5 business days'); ?>
+                                <?php echo esc_html(get_field('service_processing_time') ?: '3-5 business days'); ?>
                             </p>
                         </div>
                         
@@ -283,7 +295,7 @@ get_header();
                         <div>
                             <h4 class="text-sm font-medium text-gray-500">Fees</h4>
                             <p class="text-gray-700">
-                                <?php echo esc_html(get_post_meta(get_the_ID(), '_service_fees', true) ?: 'No fees required'); ?>
+                                <?php echo esc_html(get_field('service_fees') ?: 'No fees required'); ?>
                             </p>
                         </div>
                     </div>
