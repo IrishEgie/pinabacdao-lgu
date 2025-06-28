@@ -51,7 +51,7 @@
     .border-primary {
         border-color: var(--color-primary);
     }
-    
+
     /* Custom text selection colors */
     ::selection {
         background-color: var(--color-primary);
@@ -63,5 +63,4 @@
         background-color: var(--color-primary);
         color: var(--color-secondary-text);
     }
-    /* Add similar classes for other colors */
 }
