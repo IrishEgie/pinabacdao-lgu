@@ -72,4 +72,22 @@ function theme_assets() {
         '6.4.0'
     );
 }
+
+/**
+ * Disable the admin bar for users with roles lower than or equal to 'subscriber'.
+ */
+function disable_admin_bar_for_low_level_users() {
+    if (is_user_logged_in()) {
+        $user = wp_get_current_user();
+        $allowed_roles = array('editor', 'administrator', 'author', 'contributor', 'shop_manager', 'custom_role'); // Add other roles as needed
+
+        // Check if the user has none of the allowed roles
+        if (!array_intersect($allowed_roles, $user->roles)) {
+            add_filter('show_admin_bar', '__return_false');
+        }
+    }
+}
+add_action('after_setup_theme', 'disable_admin_bar_for_low_level_users');
 add_action('wp_enqueue_scripts', 'theme_assets');
+add_filter('show_admin_bar', '__return_true');
+

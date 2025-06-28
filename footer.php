@@ -148,6 +148,8 @@
                 'footer_copyright_text',
                 '© ' . date('Y') . ' ' . get_theme_mod('footer_municipality_name', 'Municipality') . '. All rights reserved.'
             );
+            
+            wp_footer();
             ?>
         </div>
     </div>

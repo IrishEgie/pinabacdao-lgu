@@ -95,34 +95,34 @@ get_header();
                                     </div>
                                 </div>
                                 <div class="space-y-4">
-<!-- Requirements -->
-<div>
-    <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-        <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-        </svg>
-        Requirements
-    </h4>
-    <div class="pl-6">
-        <?php 
-        $requirements = get_field('service_requirements');
-        if ($requirements) : 
-            // Split by line breaks, trim each line, and remove empty lines
-            $items = array_filter(array_map('trim', explode("\n", $requirements)));
-            if (!empty($items)) : ?>
-                <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                    <?php foreach ($items as $item) : ?>
-                        <li><?php echo esc_html($item); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php else : ?>
-                <p class="text-gray-600">No requirements specified.</p>
-            <?php endif; ?>
-        <?php else : ?>
-            <p class="text-gray-600">Valid ID and completed application form</p>
-        <?php endif; ?>
-    </div>
-</div>
+                                    <!-- Requirements -->
+                                    <div>
+                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
+                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                            </svg>
+                                            Requirements
+                                        </h4>
+                                        <div class="pl-6">
+                                            <?php 
+                                            $requirements = get_field('service_requirements');
+                                            if ($requirements) : 
+                                                // Split by line breaks, trim each line, and remove empty lines
+                                                $items = array_filter(array_map('trim', explode("\n", $requirements)));
+                                                if (!empty($items)) : ?>
+                                                    <ul class="list-disc pl-5 text-gray-600 space-y-1">
+                                                        <?php foreach ($items as $item) : ?>
+                                                            <li><?php echo esc_html($item); ?></li>
+                                                        <?php endforeach; ?>
+                                                    </ul>
+                                                <?php else : ?>
+                                                    <p class="text-gray-600">No requirements specified.</p>
+                                                <?php endif; ?>
+                                            <?php else : ?>
+                                                <p class="text-gray-600">Valid ID and completed application form</p>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
 
                                     <!-- Fees -->
                                     <div>
@@ -250,8 +250,12 @@ get_header();
                                             </a>
                                         </h4>
                                     </div>
-                                    <?php if ($service->post_excerpt) : ?>
-                                        <p class="text-gray-600 text-sm mb-3"><?php echo esc_html(wp_trim_words($service->post_excerpt, 12)); ?></p>
+                                    <?php 
+                                    $service_description = $service->post_excerpt 
+                                        ? wp_trim_words($service->post_excerpt, 12) 
+                                        : wp_trim_words($service->post_content, 20);
+                                    if ($service_description) : ?>
+                                        <p class="text-gray-600 text-sm mb-3"><?php echo esc_html($service_description); ?></p>
                                     <?php endif; ?>
                                     <a href="<?php echo esc_url($link_attributes['href']); ?>" 
                                        class="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium"
