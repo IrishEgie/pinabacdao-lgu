@@ -57,10 +57,8 @@ get_header();
                                 <div class="space-y-4">
                                     <!-- Department -->
                                     <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                            </svg>
+                                        <h4 class="flex gap-2 font-medium text-gray-700 mb-2 flex items-center">
+                                            <?php echo get_service_icon_svg('landmark', 'w-6 h-6 text-primary-600') ?>
                                             Department
                                         </h4>
                                         <p class="text-gray-600 pl-6">
@@ -70,10 +68,8 @@ get_header();
 
                                     <!-- Availability -->
                                     <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                        <h4 class="flex gap-2 font-medium text-gray-700 mb-2 flex items-center">
+                                            <?php echo get_service_icon_svg('clock', 'w-6 h-6 text-primary-600') ?>
                                             Availability
                                         </h4>
                                         <p class="text-gray-600 pl-6">
@@ -83,10 +79,8 @@ get_header();
 
                                     <!-- Processing Time -->
                                     <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                        <h4 class="flex gap-2 font-medium text-gray-700 mb-2 flex items-center">
+                                            <?php echo get_service_icon_svg('clock', 'w-6 h-6 text-primary-600') ?>
                                             Processing Time
                                         </h4>
                                         <p class="text-gray-600 pl-6">
@@ -97,10 +91,8 @@ get_header();
                                 <div class="space-y-4">
                                     <!-- Requirements -->
                                     <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                            </svg>
+                                        <h4 class="flex gap-2 font-medium text-gray-700 mb-2 flex items-center">
+                                            <?php echo get_service_icon_svg('file-text', 'w-6 h-6 text-primary-600') ?>
                                             Requirements
                                         </h4>
                                         <div class="pl-6">
@@ -126,10 +118,8 @@ get_header();
 
                                     <!-- Fees -->
                                     <div>
-                                        <h4 class="font-medium text-gray-700 mb-2 flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                            </svg>
+                                        <h4 class="flex gap-2 font-medium text-gray-700 mb-2 flex items-center">
+                                            <?php echo get_service_icon_svg('money', 'w-6 h-6 text-primary-600') ?>
                                             Fees
                                         </h4>
                                         <p class="text-gray-600 pl-6">
@@ -192,7 +182,7 @@ get_header();
                                 if ($application_url) : ?>
                                     <a href="<?php echo esc_url($application_url); ?>" 
                                        class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors font-medium">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
                                         Apply Online
@@ -201,7 +191,7 @@ get_header();
                                 
                                 <a href="/contact" 
                                    class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors font-medium">
-                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-3.582 8-8 8a8.959 8.959 0 01-2.165-.267l-5.69 1.265a.964.964 0 01-1.143-.905l.001-5.535A8 8 0 1121 12z" />
                                     </svg>
                                     Contact About This Service
@@ -219,58 +209,77 @@ get_header();
                     'post__not_in' => array(get_the_ID()),
                     'orderby' => 'rand'
                 ));
-                
+
                 if ($related_services) : ?>
-                    <div class="mt-8">
-                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Other Services You Might Need</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="mt-16">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-8">Other Services You Might Need</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <?php foreach ($related_services as $service) : 
-                                $service_icon = get_field('service_icon', $service->ID);
-                                $redirect_url = get_field('service_application_url', $service->ID);
-                                $open_new_tab = get_field('open_in_new_tab', $service->ID);
+                                $service_id = $service->ID;
+                                $service_icon = get_field('service_icon', $service_id);
+                                $service_description = $service->post_excerpt ? $service->post_excerpt : wp_trim_words($service->post_content, 20);
+                                $redirect_url = get_field('service_application_url', $service_id);
+                                $open_new_tab = get_field('open_in_new_tab', $service_id);
                                 $link_attributes = array(
-                                    'href' => $redirect_url ?: get_permalink($service->ID),
+                                    'href' => $redirect_url ?: get_permalink($service_id),
                                     'target' => ($redirect_url && $open_new_tab) ? '_blank' : '',
                                     'rel' => ($redirect_url && $open_new_tab) ? 'noopener noreferrer' : ''
                                 );
+                                
+                                $terms = get_the_terms($service_id, 'service_category');
                                 ?>
-                                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-6">
-                                    <div class="flex items-center space-x-3 mb-3">
-                                        <?php if ($service_icon) : ?>
-                                            <div class="flex-shrink-0">
-                                                <?php echo get_service_icon_svg($service_icon, 'w-6 h-6 text-primary-600'); ?>
+                                
+                                <div class="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border-l-4 border-l-primary-600 h-full">
+                                    <a 
+                                        href="<?php echo esc_url($link_attributes['href']); ?>" 
+                                        class="block h-full p-6"
+                                        <?php if (!empty($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
+                                        <?php if (!empty($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>
+                                    >
+                                        <div class="flex items-center space-x-4 pb-4">
+                                            <div class="p-3 bg-primary-50 rounded-lg group-hover:bg-primary-100 transition-colors duration-300">
+                                                <?php
+                                                $icon_name = !empty($service_icon) ? sanitize_text_field($service_icon) : 'briefcase';
+                                                $icon_name = array_key_exists($icon_name, get_service_icon_options()) ? $icon_name : 'briefcase';
+                                                echo get_service_icon_svg($icon_name, 'w-6 h-6 text-primary-600');
+                                                ?>
+                                            </div>
+                                            <h3 class="text-xl font-semibold text-gray-800 group-hover:text-primary-600 transition-colors duration-300">
+                                                <?php echo esc_html($service->post_title); ?>
+                                            </h3>
+                                        </div>
+                                        
+                                        <?php if ($terms && !is_wp_error($terms)) : ?>
+                                            <div class="flex flex-wrap gap-2 mt-2 mb-4">
+                                                <?php foreach ($terms as $term) {
+                                                    echo '<span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">';
+                                                    echo esc_html($term->name);
+                                                    echo '</span>';
+                                                } ?>
                                             </div>
                                         <?php endif; ?>
-                                        <h4 class="text-lg font-semibold text-gray-800">
-                                            <a href="<?php echo esc_url($link_attributes['href']); ?>" 
-                                               class="hover:text-primary-600 transition-colors"
-                                               <?php if (!empty($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
-                                               <?php if (!empty($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
-                                                <?php echo esc_html($service->post_title); ?>
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    <?php 
-                                    $service_description = $service->post_excerpt 
-                                        ? wp_trim_words($service->post_excerpt, 12) 
-                                        : wp_trim_words($service->post_content, 20);
-                                    if ($service_description) : ?>
-                                        <p class="text-gray-600 text-sm mb-3"><?php echo esc_html($service_description); ?></p>
-                                    <?php endif; ?>
-                                    <a href="<?php echo esc_url($link_attributes['href']); ?>" 
-                                       class="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors text-sm font-medium"
-                                       <?php if (!empty($link_attributes['target'])) echo 'target="'.esc_attr($link_attributes['target']).'"'; ?>
-                                       <?php if (!empty($link_attributes['rel'])) echo 'rel="'.esc_attr($link_attributes['rel']).'"'; ?>>
-                                        Learn More
-                                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
+                                        
+                                        <div class="space-y-4">
+                                            <p class="text-gray-600 leading-relaxed"><?php echo esc_html($service_description); ?></p>
+                                            <button class="inline-flex items-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full justify-between group-hover:bg-primary-50 transition-colors duration-300">
+                                                <div class="flex items-center text-primary-600 group-hover:text-primary-700 transition-colors duration-300">
+                                                    <span class="mr-2">Learn More</span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        class="w-6 h-6 group-hover:translate-x-1 transition-transform duration-300">
+                                                        <path d="M5 12h14" />
+                                                        <path d="m12 5 7 7-7 7" />
+                                                    </svg>
+                                                </div>
+                                            </button>
+                                        </div>
                                     </a>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </div>
-                <?php endif; ?>
+                <?php endif; ?>                
             </div>
 
             <!-- Sidebar Navigation -->
@@ -338,7 +347,7 @@ get_header();
                     <ul class="space-y-3">
                         <li>
                             <a href="/services" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                 </svg>
                                 All Services
@@ -346,7 +355,7 @@ get_header();
                         </li>
                         <li>
                             <a href="/forms" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                                 Download Forms
@@ -354,7 +363,7 @@ get_header();
                         </li>
                         <li>
                             <a href="/faq" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-4 h-4 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 FAQs

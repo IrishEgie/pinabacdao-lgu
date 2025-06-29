@@ -27,7 +27,7 @@ if (!function_exists('pageBanner')) {
         // Default arguments
         $defaults = [
             'title' => get_the_title(),
-            'subtitle' => get_field('page_banner_subtitle') ?: 'Default subtitle if none set',
+            'subtitle' => get_field('page_banner_subtitle') ?: '',
             'description' => '',
             'background_image' => get_field('page_banner_background') ?: 'https://images.unsplash.com/photo-1746928503465-c9e98b69211e?q=80&w=1720&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             'show_back_button' => false,
