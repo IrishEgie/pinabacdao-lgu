@@ -52,6 +52,10 @@
         border-color: var(--color-primary);
     }
 
+    .container-primary {
+        @apply bg-white rounded-lg shadow-lg p-6 mb-8;
+    }
+
     /* Custom text selection colors */
     ::selection {
         background-color: var(--color-primary);

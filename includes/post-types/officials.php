@@ -166,6 +166,17 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
             array(
+                'key' => 'field_official_role',
+                'label' => 'Role',
+                'name' => 'role',
+                'type' => 'text',
+                'instructions' => 'Additional role in councils or committees (e.g., Chairperson, Member)',
+                'required' => 0,
+                'wrapper' => array(
+                    'width' => '50%',
+                ),
+            ),
+            array(
                 'key' => 'field_official_department',
                 'label' => 'Department',
                 'name' => 'department',
@@ -309,6 +320,7 @@ function set_official_admin_columns($columns) {
     unset($columns['date']);
     return array_merge($columns, array(
         'position' => __('Position', 'pinabacdao-lgu'),
+        'role' => __('Role', 'pinabacdao-lgu'),
         'department' => __('Department', 'pinabacdao-lgu'),
         'official_type' => __('Type', 'pinabacdao-lgu'),
         'status' => __('Status', 'pinabacdao-lgu'),
@@ -321,6 +333,9 @@ function custom_official_column($column, $post_id) {
     switch ($column) {
         case 'position':
             echo get_field('position', $post_id);
+            break;
+        case 'role':
+            echo get_field('role', $post_id) ?: '—';
             break;
         case 'department':
             $dept = get_field('department', $post_id);
