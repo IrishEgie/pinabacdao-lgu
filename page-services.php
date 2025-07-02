@@ -20,7 +20,7 @@ get_header();
         <?php
             // Set limit for homepage display
             $services_limit = -1; // Show only 6 services on homepage
-            include get_template_directory() . '/template-parts/services-section.php';
+            include get_template_directory() . '/template-parts/sections/services-section.php';
         ?>
 
         <!-- Service Hours Card -->

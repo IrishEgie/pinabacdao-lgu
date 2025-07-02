@@ -15,8 +15,8 @@ get_header();
     <?php the_breadcrumbs(); ?>
 
     <main class="py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Dynamic Page Title -->
+        <div class="grid gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Static Page Title -->
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">
                     Organization Chart
@@ -25,10 +25,10 @@ get_header();
                     Municipal Government Structure
                 </p>
             </div>
+
+
             <!-- Dynamic Content Area -->
-            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-    
-            </div>
+            <?php the_content();?>
 
         </div>
     </main>

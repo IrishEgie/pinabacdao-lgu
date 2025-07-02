@@ -5,7 +5,7 @@ get_header();
 <div class="min-h-screen bg-gray-50">
   <?php get_template_part('template-parts/header'); ?>
 
-  <?php get_template_part('template-parts/hero-section'); ?>
+  <?php get_template_part('template-parts/heroes/hero-section'); ?>
 
   <!-- Quick Actions -->
   <section class="py-16 bg-white">
@@ -56,7 +56,7 @@ get_header();
   <?php
   // Set limit for homepage display
   $services_limit = 6; // Show only 6 services on homepage
-  include get_template_directory() . '/template-parts/services-section.php';
+  include get_template_directory() . '/template-parts/sections/services-section.php';
   ?>
 
   <!-- View All -->

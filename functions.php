@@ -30,6 +30,8 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/page-banner.php';
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
+    require_once get_template_directory() . '/includes/post-types/officials.php';
+    require_once get_template_directory() . '/includes/post-types/departments.php';
    
 }
 add_action('after_setup_theme', 'theme_setup');
