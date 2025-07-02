@@ -34,51 +34,70 @@ add_action('init', 'register_department_post_type', 0);
 
 // Setup Admin Columns
 function setup_department_admin_columns() {
-    $columns = array(
-        'acronym' => array(
+    $columns = [
+        'cb' => '<input type="checkbox" />', // Add checkbox column for bulk actions
+        'title' => __('Department Name', 'pinabacdao-lgu'), // Show post title
+        'acronym' => [
             'label' => __('Acronym', 'pinabacdao-lgu'),
             'callback' => function($post_id) {
-                echo get_safe_acf_field('acronym', $post_id);
-            }
-        ),
-        'head' => array(
+                echo esc_html(get_safe_acf_field('acronym', $post_id, '—'));
+            },
+            'sortable' => false,
+        ],
+        'head' => [
             'label' => __('Department Head', 'pinabacdao-lgu'),
             'callback' => function($post_id) {
-                echo get_admin_post_relationship($post_id, 'department_head');
-            }
-        ),
-        'services' => array(
+                $head = get_field('department_head', $post_id);
+                if ($head) {
+                    echo '<a href="' . esc_url(get_edit_post_link($head->ID)) . '">';
+                    echo esc_html($head->post_title);
+                    echo '</a>';
+                } else {
+                    echo '—';
+                }
+            },
+            'sortable' => false,
+        ],
+        'services' => [
             'label' => __('Services', 'pinabacdao-lgu'),
             'callback' => function($post_id) {
                 $services = get_field('services', $post_id);
                 if ($services) {
-                    $service_names = array_map(function($service) {
-                        return $service->post_title;
+                    $service_links = array_map(function($service) {
+                        return '<a href="' . esc_url(get_edit_post_link($service->ID)) . '">' 
+                               . esc_html($service->post_title) . '</a>';
                     }, $services);
-                    echo implode(', ', $service_names);
+                    echo implode(', ', $service_links);
                 } else {
                     echo '—';
                 }
-            }
-        ),
-        'order' => array(
+            },
+            'sortable' => false,
+        ],
+        'order' => [
             'label' => __('Order', 'pinabacdao-lgu'),
             'callback' => function($post_id) {
-                echo get_safe_acf_field('display_order', $post_id, 0);
-            }
-        ),
-    );
+                echo (int) get_safe_acf_field('display_order', $post_id, 0);
+            },
+            'sortable' => true,
+        ],
+        'date' => __('Last Modified', 'pinabacdao-lgu'), // Changed label
+    ];
 
-    $sortable = array(
+    $sortable = [
         'order' => 'display_order',
-    );
+        'date' => ['date', true] // Sort by modified date descending by default
+    ];
 
-    $column_widths = array(
+    $column_widths = [
+        'cb' => '2%',
+        'title' => '18%',
         'acronym' => '10%',
         'head' => '20%',
-        'services' => '40%',
+        'services' => '30%',
         'order' => '10%',
-    );
+        'date' => '10%'
+    ];
 
     setup_admin_columns('department', $columns, $sortable, $column_widths);
 }

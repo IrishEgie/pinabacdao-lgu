@@ -1,329 +1,358 @@
 <?php
-if (!function_exists('register_department_acf_fields')) {
-    function register_department_acf_fields() {
-        if (!function_exists('acf_add_local_field_group')) return;
+/**
+ * Department Post Type ACF Fields - Refactored
+ * 
+ * @package Pinabacdao-LGU
+ * @version 2.0.0
+ */
 
-        acf_add_local_field_group(array(
-            'key' => 'group_department_fields',
-            'title' => 'Department Information',
-            'fields' => array(
-                // Basic Information
-                array(
-                    'key' => 'field_department_acronym',
-                    'label' => 'Acronym',
-                    'name' => 'acronym',
-                    'type' => 'text',
-                    'instructions' => 'Official acronym of the department (e.g., MHO for Municipal Health Office)',
-            'wrapper' => array('width' => '50%'),
-        ),
-        array(
-            'key' => 'field_department_parent',
-            'label' => 'Parent Department',
-            'name' => 'parent_department',
-            'type' => 'post_object',
-            'instructions' => 'Select if this department is under another department',
-            'post_type' => array('department'),
-            'allow_null' => true,
-            'ui' => true,
-            'wrapper' => array('width' => '50%'),
-        ),
-        array(
-            'key' => 'field_department_mission',
-            'label' => 'Mission',
-            'name' => 'mission',
+if (!defined('ABSPATH')) exit;
+
+class PBD_Department_Fields {
+    
+    private const FIELD_GROUP_KEY = 'group_department_fields';
+    private const POST_TYPE = 'department';
+    private const MAX_DOCUMENTS = 5;
+    
+    public function __construct() {
+        add_action('acf/init', [$this, 'register_fields']);
+        add_action('admin_head', [$this, 'add_help_tab']);
+    }
+    
+    public function register_fields() {
+        if (!function_exists('acf_add_local_field_group')) {
+            error_log('ACF not available for department fields registration');
+            return;
+        }
+        
+        acf_add_local_field_group([
+            'key' => self::FIELD_GROUP_KEY,
+            'title' => __('Department Information', 'pinabacdao-lgu'),
+            'fields' => $this->get_all_fields(),
+            'location' => [[[
+                'param' => 'post_type',
+                'operator' => '==',
+                'value' => self::POST_TYPE,
+            ]]],
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'active' => true,
+        ]);
+    }
+    
+    private function get_all_fields() {
+        return array_merge(
+            $this->basic_fields(),
+            $this->organizational_fields(),
+            $this->functional_fields(),
+            $this->contact_fields(),
+            $this->document_fields(),
+            $this->display_fields()
+        );
+    }
+    
+    private function basic_fields() {
+        return [
+            $this->text_field('acronym', 'Acronym', true, 'Official acronym (e.g., MHO)', '50%'),
+            $this->post_object_field('parent_department', 'Parent Department', [self::POST_TYPE], '50%'),
+            $this->textarea_field('mission', 'Mission', true, 3),
+            $this->textarea_field('vision', 'Vision', false, 3),
+            $this->wysiwyg_field('mandate', 'Mandate'),
+        ];
+    }
+    
+    private function organizational_fields() {
+        return [
+            $this->post_object_field('department_head', 'Department Head', ['official']),
+            $this->image_field('organizational_structure', 'Organizational Structure'),
+            $this->divisions_repeater(),
+            $this->employee_count_group(),
+        ];
+    }
+    
+    private function functional_fields() {
+        return [
+            $this->wysiwyg_field('functions', 'Functions and Responsibilities'),
+            $this->relationship_field('services', 'Related Services', ['service']),
+            $this->file_field('citizens_charter', "Citizen's Charter"),
+        ];
+    }
+    
+    private function contact_fields() {
+        return [
+            $this->contact_info_group(),
+            $this->social_media_group(),
+        ];
+    }
+    
+    private function document_fields() {
+        $document_fields = [];
+        for ($i = 1; $i <= self::MAX_DOCUMENTS; $i++) {
+            $document_fields[] = $this->document_group($i);
+        }
+        
+        return [[
+            'key' => 'field_department_documents',
+            'label' => __('Public Documents', 'pinabacdao-lgu'),
+            'name' => 'documents',
+            'type' => 'group',
+            'layout' => 'block',
+            'instructions' => __('Upload files that should be publicly available on the department page.', 'pinabacdao-lgu'),
+            'sub_fields' => $document_fields,
+        ]];
+    }
+    
+    private function display_fields() {
+        return [[
+            'key' => 'field_department_display_order',
+            'label' => __('Display Order', 'pinabacdao-lgu'),
+            'name' => 'display_order',
+            'type' => 'number',
+            'default_value' => 0,
+            'min' => 0,
+            'max' => 100,
+        ]];
+    }
+    
+    // Helper methods for field creation
+    private function text_field($name, $label, $required = false, $instructions = '', $width = '100%') {
+        $field = [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
+            'type' => 'text',
+            'wrapper' => ['width' => $width],
+        ];
+        
+        if ($required) $field['required'] = true;
+        if ($instructions) $field['instructions'] = __($instructions, 'pinabacdao-lgu');
+        
+        return $field;
+    }
+    
+    private function textarea_field($name, $label, $required = false, $rows = 4) {
+        $field = [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
             'type' => 'textarea',
-            'rows' => 3,
-        ),
-        array(
-            'key' => 'field_department_vision',
-            'label' => 'Vision',
-            'name' => 'vision',
-            'type' => 'textarea',
-            'rows' => 3,
-        ),
-        array(
-            'key' => 'field_department_mandate',
-            'label' => 'Mandate',
-            'name' => 'mandate',
+            'rows' => $rows,
+        ];
+        
+        if ($required) $field['required'] = true;
+        return $field;
+    }
+    
+    private function wysiwyg_field($name, $label) {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
             'type' => 'wysiwyg',
             'tabs' => 'visual',
             'toolbar' => 'basic',
             'media_upload' => false,
-        ),
-        
-        // Organizational Information
-        array(
-            'key' => 'field_department_head',
-            'label' => 'Department Head',
-            'name' => 'department_head',
+        ];
+    }
+    
+    private function post_object_field($name, $label, $post_types, $width = '100%') {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
             'type' => 'post_object',
-            'post_type' => array('official'),
+            'post_type' => $post_types,
             'allow_null' => true,
             'return_format' => 'object',
             'ui' => true,
-        ),
-        array(
-            'key' => 'field_department_structure',
-            'label' => 'Organizational Structure',
-            'name' => 'organizational_structure',
+            'ajax' => true,
+            'wrapper' => ['width' => $width],
+        ];
+    }
+    
+    private function image_field($name, $label) {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
             'type' => 'image',
             'return_format' => 'array',
             'preview_size' => 'medium',
-        ),
-        array(
+            'library' => 'all',
+        ];
+    }
+    
+    private function file_field($name, $label) {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
+            'type' => 'file',
+            'return_format' => 'array',
+            'library' => 'all',
+        ];
+    }
+    
+    private function relationship_field($name, $label, $post_types) {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
+            'type' => 'relationship',
+            'post_type' => $post_types,
+            'return_format' => 'object',
+            'ui' => true,
+            'ajax' => true,
+        ];
+    }
+    
+    private function divisions_repeater() {
+        return [
             'key' => 'field_department_divisions',
-            'label' => 'Divisions/Units',
+            'label' => __('Divisions/Units', 'pinabacdao-lgu'),
             'name' => 'divisions',
             'type' => 'repeater',
             'layout' => 'block',
-            'button_label' => 'Add Division/Unit',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_division_name',
-                    'label' => 'Name',
-                    'name' => 'name',
-                    'type' => 'text',
-                    'wrapper' => array('width' => '40%'),
-                ),
-                array(
-                    'key' => 'field_division_head',
-                    'label' => 'Head',
-                    'name' => 'head',
-                    'type' => 'text',
-                    'wrapper' => array('width' => '30%'),
-                ),
-                array(
-                    'key' => 'field_division_contact',
-                    'label' => 'Contact',
-                    'name' => 'contact',
-                    'type' => 'text',
-                    'wrapper' => array('width' => '30%'),
-                ),
-            ),
-        ),
-        array(
+            'button_label' => __('Add Division/Unit', 'pinabacdao-lgu'),
+            'sub_fields' => [
+                $this->text_field('division_name', 'Name', true, '', '40%'),
+                $this->text_field('division_head', 'Head', false, '', '30%'),
+                $this->text_field('division_contact', 'Contact', false, '', '30%'),
+            ],
+        ];
+    }
+    
+    private function employee_count_group() {
+        return [
             'key' => 'field_department_employee_count',
-            'label' => 'Number of Employees',
+            'label' => __('Number of Employees', 'pinabacdao-lgu'),
             'name' => 'employee_count',
             'type' => 'group',
             'layout' => 'table',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_regular_employees',
-                    'label' => 'Regular',
-                    'name' => 'regular',
-                    'type' => 'number',
-                    'min' => 0,
-                ),
-                array(
-                    'key' => 'field_casual_employees',
-                    'label' => 'Casual',
-                    'name' => 'casual',
-                    'type' => 'number',
-                    'min' => 0,
-                ),
-                array(
-                    'key' => 'field_job_order_employees',
-                    'label' => 'Job Order',
-                    'name' => 'job_order',
-                    'type' => 'number',
-                    'min' => 0,
-                ),
-            ),
-        ),
-        
-        // Functional Information
-        array(
-            'key' => 'field_department_functions',
-            'label' => 'Functions and Responsibilities',
-            'name' => 'functions',
-            'type' => 'wysiwyg',
-            'tabs' => 'visual',
-            'toolbar' => 'basic',
-            'media_upload' => false,
-        ),
-        array(
-            'key' => 'field_department_services',
-            'label' => 'Related Services',
-            'name' => 'services',
-            'type' => 'relationship',
-            'post_type' => array('service'),
-            'return_format' => 'object',
-        ),
-        array(
-            'key' => 'field_department_citizens_charter',
-            'label' => 'Citizen\'s Charter',
-            'name' => 'citizens_charter',
-            'type' => 'file',
-            'return_format' => 'array',
-        ),
-        
-        // Contact Information
-        array(
+            'sub_fields' => [
+                $this->number_field('regular', 'Regular'),
+                $this->number_field('casual', 'Casual'),
+                $this->number_field('job_order', 'Job Order'),
+            ],
+        ];
+    }
+    
+    private function contact_info_group() {
+        return [
             'key' => 'field_department_contact_info',
-            'label' => 'Contact Information',
+            'label' => __('Contact Information', 'pinabacdao-lgu'),
             'name' => 'contact_info',
             'type' => 'group',
             'layout' => 'table',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_department_email',
-                    'label' => 'Email',
-                    'name' => 'email',
-                    'type' => 'email',
-                    'wrapper' => array('width' => '50%'),
-                ),
-                array(
-                    'key' => 'field_department_phone',
-                    'label' => 'Phone',
-                    'name' => 'phone',
-                    'type' => 'text',
-                    'wrapper' => array('width' => '50%'),
-                ),
-                array(
-                    'key' => 'field_department_location',
-                    'label' => 'Location',
-                    'name' => 'location',
-                    'type' => 'text',
-                ),
-                array(
-                    'key' => 'field_department_hours',
-                    'label' => 'Operating Hours',
-                    'name' => 'hours',
-                    'type' => 'text',
-                ),
-            ),
-        ),
-        array(
+            'sub_fields' => [
+                $this->email_field('email', 'Email', '50%'),
+                $this->text_field('phone', 'Phone', false, '', '50%'),
+                $this->text_field('location', 'Location'),
+                $this->text_field('hours', 'Operating Hours'),
+            ],
+        ];
+    }
+    
+    private function social_media_group() {
+        $platforms = [
+            'facebook' => ['Facebook URL', 'https://facebook.com/username'],
+            'twitter' => ['Twitter/X URL', 'https://twitter.com/username'],
+            'instagram' => ['Instagram URL', 'https://instagram.com/username'],
+            'youtube' => ['YouTube URL', 'https://youtube.com/username'],
+        ];
+        
+        $fields = [];
+        foreach ($platforms as $platform => $config) {
+            $fields[] = [
+                'key' => "field_social_{$platform}",
+                'label' => __($config[0], 'pinabacdao-lgu'),
+                'name' => $platform,
+                'type' => 'url',
+                'placeholder' => $config[1],
+                'wrapper' => ['width' => '50%'],
+            ];
+        }
+        
+        return [
             'key' => 'field_department_social_media',
-            'label' => 'Social Media Links',
+            'label' => __('Social Media Links', 'pinabacdao-lgu'),
             'name' => 'social_media',
-            'type' => 'repeater',
+            'type' => 'group',
             'layout' => 'table',
-            'button_label' => 'Add Social Media',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_social_media_platform',
-                    'label' => 'Platform',
-                    'name' => 'platform',
-                    'type' => 'select',
-                    'choices' => array(
-                        'facebook' => 'Facebook',
-                        'twitter' => 'Twitter',
-                        'instagram' => 'Instagram',
-                        'youtube' => 'YouTube',
-                        'linkedin' => 'LinkedIn',
-                        'other' => 'Other',
-                    ),
-                    'wrapper' => array('width' => '30%'),
-                ),
-                array(
-                    'key' => 'field_social_media_url',
-                    'label' => 'URL',
-                    'name' => 'url',
-                    'type' => 'url',
-                    'wrapper' => array('width' => '70%'),
-                ),
-            ),
-        ),
-        
-        // Documents
-        array(
-            'key' => 'field_department_documents',
-            'label' => 'Documents',
-            'name' => 'documents',
-            'type' => 'repeater',
-            'layout' => 'block',
-            'button_label' => 'Add Document',
-            'sub_fields' => array(
-                array(
-                    'key' => 'field_document_title',
-                    'label' => 'Title',
-                    'name' => 'title',
-                    'type' => 'text',
-                    'wrapper' => array('width' => '30%'),
-                ),
-                array(
-                    'key' => 'field_document_type',
-                    'label' => 'Type',
-                    'name' => 'type',
-                    'type' => 'select',
-                    'choices' => array(
-                        'annual_report' => 'Annual Report',
-                        'budget' => 'Budget Report',
-                        'procurement' => 'Procurement Plan',
-                        'ordinance' => 'Ordinance',
-                        'memo' => 'Memorandum',
-                        'other' => 'Other',
-                    ),
-                    'wrapper' => array('width' => '20%'),
-                ),
-                array(
-                    'key' => 'field_document_file',
-                    'label' => 'File',
-                    'name' => 'file',
-                    'type' => 'file',
-                    'return_format' => 'array',
-                    'wrapper' => array('width' => '50%'),
-                ),
-            ),
-        ),
-        
-                // Display Settings
-                array(
-                    'key' => 'field_department_display_order',
-                    'label' => 'Display Order',
-                    'name' => 'display_order',
-                    'type' => 'number',
-                    'default_value' => 0,
-                    'min' => 0,
-                    'max' => 100,
-                ),
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'department',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'active' => true,
-        ));
+            'sub_fields' => $fields,
+        ];
     }
-    add_action('acf/init', 'register_department_acf_fields');
+    
+    private function document_group($index) {
+        return [
+            'key' => "field_document_{$index}",
+            'label' => sprintf(__('Document %d', 'pinabacdao-lgu'), $index),
+            'name' => "document_{$index}",
+            'type' => 'group',
+            'sub_fields' => [
+                $this->text_field("document_{$index}_title", 'Title', false, '', '50%'),
+                $this->file_field("document_{$index}_file", 'File'),
+                [
+                    'key' => "field_document_{$index}_public",
+                    'label' => __('Make Public', 'pinabacdao-lgu'),
+                    'name' => 'is_public',
+                    'type' => 'true_false',
+                    'message' => __('Show on website', 'pinabacdao-lgu'),
+                    'default_value' => true,
+                ],
+            ],
+        ];
+    }
+    
+    private function number_field($name, $label, $min = 0, $default = 0) {
+        return [
+            'key' => "field_{$name}_employees",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
+            'type' => 'number',
+            'min' => $min,
+            'default_value' => $default,
+        ];
+    }
+    
+    private function email_field($name, $label, $width = '100%') {
+        return [
+            'key' => "field_department_{$name}",
+            'label' => __($label, 'pinabacdao-lgu'),
+            'name' => $name,
+            'type' => 'email',
+            'wrapper' => ['width' => $width],
+        ];
+    }
+    
+    public function add_help_tab() {
+        $screen = get_current_screen();
+        
+        if ($screen && self::POST_TYPE === $screen->post_type) {
+            $screen->add_help_tab([
+                'id' => 'department_files_help',
+                'title' => __('Uploading Public Files', 'pinabacdao-lgu'),
+                'content' => $this->get_help_content(),
+            ]);
+        }
+    }
+    
+    private function get_help_content() {
+        return sprintf(
+            '<h3>%s</h3><p>%s</p><ul><li>%s</li><li>%s</li><li>%s</li><li>%s</li><li>%s</li></ul>',
+            __('Uploading Public Files', 'pinabacdao-lgu'),
+            __('Use the document upload section to add files that will be visible to the public on your department page.', 'pinabacdao-lgu'),
+            __('Give each document a clear title that visitors will understand', 'pinabacdao-lgu'),
+            __('Upload the file (PDF, Word, Excel, etc.)', 'pinabacdao-lgu'),
+            __('Make sure "Make Public" is checked if you want the file visible on the website', 'pinabacdao-lgu'),
+            __('Documents are automatically organized by type', 'pinabacdao-lgu'),
+            __('You can upload up to ' . self::MAX_DOCUMENTS . ' documents per department', 'pinabacdao-lgu')
+        );
+    }
 }
 
-if (!function_exists('register_department_acf_fields')) {
-    function register_department_acf_fields() {
-        if (!function_exists('acf_add_local_field_group')) return;
-
-        acf_add_local_field_group(array(
-            'key' => 'group_department_fields',
-            'title' => 'Department Information',
-            'fields' => get_department_acf_fields(),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'department',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'active' => true,
-        ));
-    }
-    add_action('acf/init', 'register_department_acf_fields');
-}
+// Initialize the class
+new PBD_Department_Fields();
