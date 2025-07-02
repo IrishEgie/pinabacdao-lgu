@@ -7,21 +7,28 @@ if (!function_exists('acf_add_local_field_group')) {
 
 // Helper function to get department choices for select fields
 function get_department_choices() {
+    $choices = [];
+    
+    // Get all departments ordered by title
     $departments = get_posts([
         'post_type' => 'department',
         'posts_per_page' => -1,
         'orderby' => 'title',
-        'order' => 'ASC'
+        'order' => 'ASC',
+        'post_status' => 'publish'
     ]);
     
-    $choices = [];
-    foreach ($departments as $dept) {
-        $choices[$dept->ID] = $dept->post_title;
-        
-        // Include acronym if available
-        $acronym = get_field('acronym', $dept->ID);
-        if ($acronym) {
-            $choices[$dept->ID] .= " ({$acronym})";
+    if (!empty($departments)) {
+        foreach ($departments as $department) {
+            $title = $department->post_title;
+            $acronym = get_field('acronym', $department->ID);
+            
+            // Add acronym if available
+            if ($acronym) {
+                $title .= " ({$acronym})";
+            }
+            
+            $choices[$department->ID] = $title;
         }
     }
     
