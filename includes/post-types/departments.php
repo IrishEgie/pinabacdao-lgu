@@ -1,8 +1,10 @@
 <?php
-require_once __DIR__ . '/acf-fields/departments.php';
+/**
+ * Department Custom Post Type Registration
+ */
 
-// Register Department Grouping Taxonomy
-function register_department_grouping_taxonomy() {
+// Register Department Taxonomy
+function register_department_group_taxonomy() {
     $labels = [
         'name'              => _x('Department Groups', 'taxonomy general name', 'pinabacdao-lgu'),
         'singular_name'     => _x('Department Group', 'taxonomy singular name', 'pinabacdao-lgu'),
@@ -20,7 +22,7 @@ function register_department_grouping_taxonomy() {
     $args = [
         'hierarchical'      => true,
         'labels'            => $labels,
-        'show_ui'          => true,
+        'show_ui'           => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'          => ['slug' => 'department-group'],
@@ -28,8 +30,8 @@ function register_department_grouping_taxonomy() {
     ];
 
     register_taxonomy('department_group', ['department'], $args);
-    
-    // Add default terms
+
+    // Insert default terms if they don't exist
     $default_groups = [
         'executive' => 'Executive Offices',
         'legislative' => 'Legislative Body',
@@ -40,40 +42,51 @@ function register_department_grouping_taxonomy() {
     
     foreach ($default_groups as $slug => $name) {
         if (!term_exists($name, 'department_group')) {
-            wp_insert_term($name, 'department_group', [
-                'slug' => $slug,
-                'description' => get_group_description($name)
-            ]);
+            wp_insert_term($name, 'department_group', ['slug' => $slug]);
         }
     }
 }
+add_action('init', 'register_department_group_taxonomy', 0);
 
-// Helper function to get group descriptions
-function get_group_description($group_name) {
-    $descriptions = [
-        'Executive Offices' => 'Chief executive leadership and administration',
-        'Legislative Body' => 'Local lawmaking and policy development',
-        'Core Administrative Offices' => 'Essential municipal services and administration',
-        'Public Safety and Order Offices' => 'Security, emergency response, and legal services',
-        'Other Municipal Offices' => 'Specialized services and development programs'
-    ];
-    
-    return $descriptions[$group_name] ?? '';
-}
-
-add_action('init', 'register_department_grouping_taxonomy', 0);
-
-// Register Department Custom Post Type
+// Register Department Post Type
 function register_department_post_type() {
-    $labels = get_default_labels('Department', 'Departments');
-    
-    $args = array(
-        'label'                 => 'Department',
-        'description'           => 'Municipal government departments and offices',
+    $labels = [
+        'name'                  => _x('Departments', 'Post Type General Name', 'pinabacdao-lgu'),
+        'singular_name'         => _x('Department', 'Post Type Singular Name', 'pinabacdao-lgu'),
+        'menu_name'             => __('Departments', 'pinabacdao-lgu'),
+        'name_admin_bar'        => __('Department', 'pinabacdao-lgu'),
+        'archives'              => __('Department Archives', 'pinabacdao-lgu'),
+        'attributes'            => __('Department Attributes', 'pinabacdao-lgu'),
+        'parent_item_colon'     => __('Parent Department:', 'pinabacdao-lgu'),
+        'all_items'             => __('All Departments', 'pinabacdao-lgu'),
+        'add_new_item'          => __('Add New Department', 'pinabacdao-lgu'),
+        'add_new'              => __('Add New', 'pinabacdao-lgu'),
+        'new_item'             => __('New Department', 'pinabacdao-lgu'),
+        'edit_item'            => __('Edit Department', 'pinabacdao-lgu'),
+        'update_item'          => __('Update Department', 'pinabacdao-lgu'),
+        'view_item'            => __('View Department', 'pinabacdao-lgu'),
+        'view_items'           => __('View Departments', 'pinabacdao-lgu'),
+        'search_items'         => __('Search Department', 'pinabacdao-lgu'),
+        'not_found'            => __('Not found', 'pinabacdao-lgu'),
+        'not_found_in_trash'   => __('Not found in Trash', 'pinabacdao-lgu'),
+        'featured_image'       => __('Department Image', 'pinabacdao-lgu'),
+        'set_featured_image'   => __('Set department image', 'pinabacdao-lgu'),
+        'remove_featured_image' => __('Remove department image', 'pinabacdao-lgu'),
+        'use_featured_image'   => __('Use as department image', 'pinabacdao-lgu'),
+        'insert_into_item'    => __('Insert into department', 'pinabacdao-lgu'),
+        'uploaded_to_this_item' => __('Uploaded to this department', 'pinabacdao-lgu'),
+        'items_list'          => __('Departments list', 'pinabacdao-lgu'),
+        'items_list_navigation' => __('Departments list navigation', 'pinabacdao-lgu'),
+        'filter_items_list'   => __('Filter departments list', 'pinabacdao-lgu'),
+    ];
+
+    $args = [
+        'label'                 => __('Department', 'pinabacdao-lgu'),
+        'description'           => __('Municipal government departments directory', 'pinabacdao-lgu'),
         'labels'                => $labels,
-        'supports'              => array('title', 'editor', 'thumbnail', 'page-attributes', 'revisions'),
-        'taxonomies'            => array('department_group'),
-        'hierarchical'          => true,
+        'supports'              => ['title', 'editor', 'thumbnail', 'page-attributes', 'revisions'],
+        'taxonomies'            => ['department_group'],
+        'hierarchical'          => true, // Allows parent/child relationships
         'public'                => true,
         'show_ui'               => true,
         'show_in_menu'          => true,
@@ -85,107 +98,69 @@ function register_department_post_type() {
         'has_archive'           => true,
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
-        'rewrite'               => array('slug' => 'department'),
+        'rewrite'               => ['slug' => 'department', 'with_front' => false],
         'capability_type'       => 'post',
         'show_in_rest'          => true,
-    );
+        'rest_base'             => 'departments',
+    ];
 
     register_post_type('department', $args);
 }
 add_action('init', 'register_department_post_type', 0);
 
 // Setup Admin Columns
-// Setup Admin Columns
-function setup_department_admin_columns() {
-    $columns = [
-        'cb' => '<input type="checkbox" />',
-        'title' => __('Department Name', 'pinabacdao-lgu'),
-        'acronym' => [
-            'label' => __('Acronym', 'pinabacdao-lgu'),
-            'callback' => function($post_id) {
-                echo esc_html(get_safe_acf_field('acronym', $post_id, '—'));
-            },
-            'sortable' => false,
-            'width' => '8%'
-        ],
-        'department_group' => [
-            'label' => __('Group', 'pinabacdao-lgu'),
-            'callback' => function($post_id) {
-                $terms = get_the_terms($post_id, 'department_group');
-                if ($terms && !is_wp_error($terms)) {
-                    $term_names = array_map(function($term) {
-                        return esc_html($term->name);
-                    }, $terms);
-                    echo implode(', ', $term_names);
-                } else {
-                    echo '—';
-                }
-            },
-            'sortable' => true,
-            'width' => '12%'
-        ],
-        'head' => [
-            'label' => __('Head', 'pinabacdao-lgu'),
-            'callback' => function($post_id) {
-                $head = get_field('department_head', $post_id);
-                echo $head ? esc_html($head->post_title) : '—';
-            },
-            'sortable' => false,
-            'width' => '20%'
-        ],
-        'services' => [
-            'label' => __('Services', 'pinabacdao-lgu'),
-            'callback' => function($post_id) {
-                $services = get_field('services', $post_id);
-                if ($services) {
-                    $service_names = array_map(function($service) {
-                        return esc_html($service->post_title);
-                    }, $services);
-                    echo implode(', ', $service_names);
-                } else {
-                    echo '—';
-                }
-            },
-            'sortable' => false,
-            'width' => '25%'
-        ],
-        'order' => [
-            'label' => __('Order', 'pinabacdao-lgu'),
-            'callback' => function($post_id) {
-                echo (int) get_safe_acf_field('display_order', $post_id, 0);
-            },
-            'sortable' => true,
-            'width' => '8%'
-        ],
-        'date' => [
-            'label' => __('Date', 'pinabacdao-lgu'),
-            'width' => '10%'
-        ],
+function setup_department_admin_columns($columns) {
+    $new_columns = [
+        'cb' => $columns['cb'],
+        'title' => __('Name', 'pinabacdao-lgu'),
+        'acronym' => __('Acronym', 'pinabacdao-lgu'),
+        'department_group' => __('Group', 'pinabacdao-lgu'),
+        'department_head' => __('Head', 'pinabacdao-lgu'),
+        'date' => $columns['date'],
     ];
-
-    $sortable = [
-        'order' => 'display_order',
-        'department_group' => 'department_group',
-        'date' => ['date', true]
-    ];
-
-    setup_admin_columns('department', $columns, $sortable);
+    return $new_columns;
 }
-add_action('admin_init', 'setup_department_admin_columns');
+add_filter('manage_department_posts_columns', 'setup_department_admin_columns');
 
-// Link Departments to Officials
-function update_official_department_field() {
-    if (function_exists('acf_update_field')) {
-        $field = acf_get_field('field_official_department');
-        if ($field) {
-            $field['post_type'] = array('department');
-            acf_update_field($field);
-        }
+function populate_department_admin_columns($column, $post_id) {
+    switch ($column) {
+        case 'acronym':
+            echo esc_html(get_field('acronym', $post_id) ?: '—');
+            break;
+            
+        case 'department_group':
+            $terms = get_the_terms($post_id, 'department_group');
+            if ($terms && !is_wp_error($terms)) {
+                $term_names = wp_list_pluck($terms, 'name');
+                echo esc_html(implode(', ', $term_names));
+            } else {
+                echo '—';
+            }
+            break;
+            
+        case 'department_head':
+            $head = get_field('department_head', $post_id);
+            if ($head) {
+                echo '<a href="' . esc_url(get_edit_post_link($head->ID)) . '">';
+                echo esc_html($head->post_title);
+                echo '</a>';
+            } else {
+                echo '—';
+            }
+            break;
     }
 }
-add_action('acf/init', 'update_official_department_field');
+add_action('manage_department_posts_custom_column', 'populate_department_admin_columns', 10, 2);
 
-// Disable Gutenberg for Departments
+// Make columns sortable
+function make_department_columns_sortable($columns) {
+    $columns['acronym'] = 'acronym';
+    $columns['department_group'] = 'department_group';
+    return $columns;
+}
+add_filter('manage_edit-department_sortable_columns', 'make_department_columns_sortable');
+
+// Disable Gutenberg editor
 add_filter('use_block_editor_for_post_type', function($use_block_editor, $post_type) {
     if ($post_type === 'department') return false;
     return $use_block_editor;
