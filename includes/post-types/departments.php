@@ -84,7 +84,7 @@ function register_department_post_type() {
         'label'                 => __('Department', 'pinabacdao-lgu'),
         'description'           => __('Municipal government departments directory', 'pinabacdao-lgu'),
         'labels'                => $labels,
-        'supports'              => ['title', 'editor', 'thumbnail', 'page-attributes', 'revisions'],
+        'supports'              => ['title','thumbnail', 'page-attributes', 'revisions'],
         'taxonomies'            => ['department_group'],
         'hierarchical'          => true, // Allows parent/child relationships
         'public'                => true,
