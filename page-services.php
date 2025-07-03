@@ -25,8 +25,7 @@ get_header();
 
         <!-- Service Hours Card -->
         <div class="px-8">
-            <div
-                class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 ">
+            <div class="container-primary shadow-md hover:shadow-xl transition-shadow duration-300">
                 <div class="p-6">
                     <h2 class="text-2xl font-bold text-gray-800">Service Hours</h2>
                     <p class="text-gray-600">When our offices are open to serve you</p>
