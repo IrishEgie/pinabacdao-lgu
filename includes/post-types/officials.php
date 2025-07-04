@@ -48,7 +48,7 @@ function register_officials_post_type() {
         'show_in_admin_bar'     => true,
         'show_in_nav_menus'     => true,
         'can_export'            => true,
-        'has_archive'           => true,
+        'has_archive'           => false,
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'rewrite'               => ['slug' => 'officials', 'with_front' => false],
@@ -152,19 +152,3 @@ add_filter('use_block_editor_for_post_type', function($use_block_editor, $post_t
     if ($post_type === 'official') return false;
     return $use_block_editor;
 }, 10, 2);
-
-// Helper function to get full name
-function get_official_full_name($post_id) {
-    $name = get_field('official_name', $post_id);
-    if (!$name) return get_the_title($post_id);
-    
-    $full_name = $name['first_name'] . ' ' . $name['last_name'];
-    if (!empty($name['middle_name'])) {
-        $full_name = $name['first_name'] . ' ' . $name['middle_name'] . ' ' . $name['last_name'];
-    }
-    if (!empty($name['extension'])) {
-        $full_name .= ' ' . $name['extension'];
-    }
-    
-    return $full_name;
-}

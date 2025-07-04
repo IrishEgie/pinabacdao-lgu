@@ -36,6 +36,7 @@ get_header();
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- I want to add the cards here -->
+                 <?php officialCard(); ?>
             </div>
                         <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">

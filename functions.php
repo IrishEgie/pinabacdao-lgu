@@ -24,6 +24,7 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/icons.php';
     // Load cards templates
     require_once get_template_directory() . '/template-parts/cards/highlight-card.php';
+    require_once get_template_directory() . '/template-parts/cards/officials-card.php';
     // Load breadcrumbs functionality
     require_once get_template_directory() . '/includes/breadcrumbs.php';
     require_once get_template_directory() . '/includes/breadcrumbs-template.php';
