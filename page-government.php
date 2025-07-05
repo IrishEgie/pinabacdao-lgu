@@ -36,7 +36,31 @@ get_header();
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- I want to add the cards here -->
-                 <?php officialCard(); ?>
+                <?php
+                $executive_officials = new WP_Query([
+                    'post_type' => 'official',
+                    'posts_per_page' => 2,
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC',
+                    'meta_query' => [
+                        [
+                            'key' => 'official_type',
+                            'value' => 'Executive Officials',
+                            'compare' => '=',
+                        ]
+                    ],
+                ]);
+                
+                if ($executive_officials->have_posts()) {
+                    while ($executive_officials->have_posts()) {
+                        $executive_officials->the_post();
+                        officialCard(['post_id' => get_the_ID()]);
+                    }
+                    wp_reset_postdata();
+                } else {
+                    echo '<p class="col-span-full text-gray-500">No executive officials found.</p>';
+                }
+                ?>
             </div>
                         <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">
