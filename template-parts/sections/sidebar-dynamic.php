@@ -58,33 +58,35 @@ $args = wp_parse_args($args, [
             }
             
             switch ($row['type']) {
-            case 'text':
-                echo '<div class="text-gray-700 font-sm flex items-center">';
-                if ($row['icon']) {
-                    echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
-                }
-                echo esc_html($row['content']);
-                echo '</div>';
-                break;
-
-
+                case 'text':
+                    echo '<div class="text-gray-700 font-sm flex items-center">';
+                    if ($row['icon']) {
+                        echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
+                    }
+                    echo empty($row['content']) ? '<span class="text-gray-400 italic">No data available</span>' : esc_html($row['content']);
+                    echo '</div>';
+                    break;
                     
                 case 'link':
                     echo '<a href="'.esc_url($row['link']).'" target="'.esc_attr($row['target']).'" class="text-gray-700 hover:text-primary-500 transition-colors flex items-center">';
                     if ($row['icon']) {
                         echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
                     }
-                    echo esc_html($row['content']);
+                    echo empty($row['content']) ? '<span class="text-gray-400 italic">No data available</span>' : esc_html($row['content']);
                     echo '</a>';
                     break;
                     
                 case 'list':
                     $items = is_array($row['content']) ? $row['content'] : explode("\n", $row['content']);
-                    echo '<ul class="list-disc pl-5 text-gray-700 space-y-1">';
-                    foreach ($items as $item) {
-                        echo '<li>'.esc_html(trim($item)).'</li>';
+                    if (empty($items)) {
+                        echo '<span class="text-gray-400 italic">No data available</span>';
+                    } else {
+                        echo '<ul class="list-disc pl-5 text-gray-700 space-y-1">';
+                        foreach ($items as $item) {
+                            echo '<li>'.esc_html(trim($item)).'</li>';
+                        }
+                        echo '</ul>';
                     }
-                    echo '</ul>';
                     break;
             }
             
