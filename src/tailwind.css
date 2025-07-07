@@ -53,7 +53,7 @@
     }
 
     .container-primary {
-        @apply rounded-lg border bg-white shadow-lg;
+        @apply rounded-lg border bg-white;
     }
 
     /* Custom text selection colors */

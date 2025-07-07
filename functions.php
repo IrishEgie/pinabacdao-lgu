@@ -84,7 +84,7 @@ function theme_assets() {
 function disable_admin_bar_for_low_level_users() {
     if (is_user_logged_in()) {
         $user = wp_get_current_user();
-        $allowed_roles = array('editor', 'administrator', 'author', 'contributor', 'shop_manager', 'custom_role'); // Add other roles as needed
+        $allowed_roles = array('editor', 'administrator', 'author', 'contributor', 'shop_manager', 'custom_role');
 
         // Check if the user has none of the allowed roles
         if (!array_intersect($allowed_roles, $user->roles)) {
@@ -95,4 +95,5 @@ function disable_admin_bar_for_low_level_users() {
 add_action('after_setup_theme', 'disable_admin_bar_for_low_level_users');
 add_action('wp_enqueue_scripts', 'theme_assets');
 add_filter('show_admin_bar', '__return_true');
+add_image_size( 'official-portrait', 600, 800, true ); // 3:4 ratio, hard crop
 

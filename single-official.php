@@ -16,18 +16,13 @@ get_header();
 
     <main class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex gap-8">
-                <div class="flex-1">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Main Content -->
+                <div class="lg:flex-1 order-1 lg:order-none">
                     <div class="max-w-4xl mx-auto">
-                        <!-- Back Button -->
-                        <button onclick="window.history.back();" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 mb-6 hover:bg-gray-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                <path d="m12 19-7-7 7-7"></path>
-                                <path d="M19 12H5"></path>
-                            </svg>
-                            Back
-                        </button>
-
+                        <div class="container-primary">
+                            
+                        </div>
                         <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                             <div class="mb-8">
                                 <!-- Official Type and Status -->
@@ -36,13 +31,14 @@ get_header();
                                     $official_types = get_the_terms(get_the_ID(), 'official_type');
                                     if ($official_types && !is_wp_error($official_types)) :
                                     ?>
-                                        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent text-primary-foreground bg-primary-600 hover:bg-primary-700">
+                                        <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent text-primary-foreground bg-primary-500 hover:bg-primary-700">
                                             <?php echo esc_html($official_types[0]->name); ?>
                                         </span>
                                     <?php endif; ?>
                                 </div>
 
-                                <!-- Title and Position -->
+                                <div class="container-primary mb-6 p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                                    <!-- Title and Position -->
                                 <div class="flex justify-between items-start mb-6">
                                     <div class="flex-1">
                                         <h1 class="text-3xl font-bold text-gray-800 mb-2"><?php the_title(); ?></h1>
@@ -74,7 +70,7 @@ get_header();
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                                     <!-- Position -->
                                     <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-500">
                                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
@@ -86,7 +82,7 @@ get_header();
 
                                     <!-- Office -->
                                     <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-500">
                                             <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
                                             <circle cx="12" cy="10" r="3"></circle>
                                         </svg>
@@ -98,7 +94,7 @@ get_header();
 
                                     <!-- Term -->
                                     <div class="flex items-center space-x-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-primary-500">
                                             <path d="M8 2v4"></path>
                                             <path d="M16 2v4"></path>
                                             <rect width="18" height="18" x="3" y="4" rx="2"></rect>
@@ -121,13 +117,17 @@ get_header();
                                         </div>
                                     </div>
                                 </div>
+                                </div>
 
                                 <!-- Featured Image with Biography Section -->
                                 <div class="container-primary shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out">
                                     <div class="grid grid-cols-1 md:grid-cols-2">
                                         <?php if (has_post_thumbnail()) : ?>
-                                            <div class="w-full h-96 overflow-hidden rounded-l-lg">
-                                                <?php the_post_thumbnail('large', ['class' => 'w-full h-full object-cover']); ?>
+                                            <div class="w-full aspect-[3/4] max-h-[800px] overflow-hidden rounded-l-lg">
+                                                <?php the_post_thumbnail('official-portrait', [
+                                                    'class' => 'w-full h-full object-cover',
+                                                    'loading' => 'eager' // Optional: prioritize loading
+                                                ]); ?>
                                             </div>
                                         <?php endif; ?>
                                         <div class="p-8">
@@ -139,29 +139,28 @@ get_header();
                                                 <p>No biography available for this official.</p>
                                             <?php endif; ?>
                                             </div>
-
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
-
-                            <!-- Footer -->
-                            <div class="pt-6 border-t border-gray-200">
-                                <div class="flex justify-between items-center">
-                                    <div class="text-sm text-gray-500">
-                                        Last updated: <?php the_modified_date(); ?>
-                                    </div>
-                                    <div class="flex space-x-2">
-                                        <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                                <circle cx="18" cy="5" r="3"></circle>
-                                                <circle cx="6" cy="12" r="3"></circle>
-                                                <circle cx="18" cy="19" r="3"></circle>
-                                                <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
-                                                <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
-                                            </svg>
-                                            Share Profile
-                                        </button>
+                                <!-- Footer -->
+                                <div class="pt-6 border-t border-gray-200">
+                                    <div class="flex justify-between items-center">
+                                        <div class="text-sm text-gray-500">
+                                            Last updated: <?php the_modified_date(); ?>
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium h-9 rounded-md px-3 border border-input bg-background hover:bg-accent hover:text-accent-foreground">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
+                                                    <circle cx="18" cy="5" r="3"></circle>
+                                                    <circle cx="6" cy="12" r="3"></circle>
+                                                    <circle cx="18" cy="19" r="3"></circle>
+                                                    <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                                                    <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                                                </svg>
+                                                Share Profile
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -169,102 +168,86 @@ get_header();
                     </div>
                 </div>
 
-                <!-- Sidebar -->
-                <div class="w-80 hidden lg:block">
-                    <aside class="space-y-6">
-                        <!-- Contact Information -->
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <div class="flex flex-col space-y-1.5 p-6">
-                                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                                    </svg>
-                                    Contact Information
-                                </h3>
-                            </div>
-                            <div class="p-6 pt-0 space-y-3">
-                                <?php 
-                                $contact_info = get_field('contact_information');
-                                if ($contact_info) : 
-                                ?>
-                                    <?php if (!empty($contact_info['email'])) : ?>
-                                        <div class="flex items-center gap-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-primary-600">
-                                                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
-                                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-                                            </svg>
-                                            <span class="text-sm"><?php echo esc_html($contact_info['email']); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($contact_info['phone'])) : ?>
-                                        <div class="flex items-center gap-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-primary-600">
-                                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                                            </svg>
-                                            <span class="text-sm"><?php echo esc_html($contact_info['phone']); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-
-                                    <?php if (!empty($contact_info['office_hours'])) : ?>
-                                        <div class="flex items-center gap-3">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-primary-600">
-                                                <path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"></path>
-                                                <path d="M12 6v6l4 2"></path>
-                                            </svg>
-                                            <span class="text-sm"><?php echo esc_html($contact_info['office_hours']); ?></span>
-                                        </div>
-                                    <?php endif; ?>
-                                <?php endif; ?>
-
-                                <?php if (get_field('office_location')) : ?>
-                                    <div class="flex items-center gap-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-primary-600">
-                                            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <span class="text-sm"><?php echo esc_html(get_field('office_location')); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <!-- Quick Links -->
-                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
-                            <div class="flex flex-col space-y-1.5 p-6">
-                                <h3 class="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                        <path d="M15 3h6v6"></path>
-                                        <path d="M10 14 21 3"></path>
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    </svg>
-                                    Quick Links
-                                </h3>
-                            </div>
-                            <div class="p-6 pt-0 space-y-2">
-                                <?php if (get_field('facebook_url')) : ?>
-                                    <a href="<?php echo esc_url(get_field('facebook_url')); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 rounded-md px-3 w-full justify-start border border-input bg-background hover:bg-accent hover:text-accent-foreground">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                            <path d="M15 3h6v6"></path>
-                                            <path d="M10 14 21 3"></path>
-                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        </svg>
-                                        Official Facebook Page
-                                    </a>
-                                <?php endif; ?>
-
-                                <a href="<?php echo esc_url(home_url()); ?>" class="inline-flex items-center gap-2 whitespace-nowrap text-sm font-medium h-9 rounded-md px-3 w-full justify-start border border-input bg-background hover:bg-accent hover:text-accent-foreground">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 mr-2">
-                                        <path d="M15 3h6v6"></path>
-                                        <path d="M10 14 21 3"></path>
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    </svg>
-                                    Municipal Website
-                                </a>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
+ <!-- Sidebar - Right Side -->
+<div class="w-full lg:w-64 xl:w-72">
+    <aside class="space-y-6 top-8">
+        <?php
+        // Contact Information
+        get_template_part('template-parts/sections/sidebar-dynamic', null, [
+            'title' => 'Contact Information',
+            'content' => [
+                [
+                    'type' => 'link',
+                    'title' => '',
+                    'content' => get_field('contact_information')['email'] ?? 'No email provided',
+                    'icon' => 'mail',
+                    'link' => 'mailto:'.(get_field('contact_information')['email'] ?? ''),
+                    'target' => '_self'
+                ],
+                [
+                    'type' => 'link',
+                    'title' => '',
+                    'content' => get_field('contact_information')['phone'] ?? 'No phone provided',
+                    'icon' => 'phone',
+                    'link' => 'tel:'.preg_replace('/[^0-9]/', '', get_field('contact_information')['phone'] ?? ''),
+                    'target' => '_self'
+                ],
+                [
+                    'type' => 'text',
+                    'title' => 'Office Hours',
+                    'content' => get_field('contact_information')['office_hours'] ?? 'Monday - Friday, 8:00 AM - 5:00 PM',
+                    'icon' => 'clock'
+                ],
+                [
+                    'type' => 'text',
+                    'title' => 'Location',
+                    'content' => get_field('office_location') ?? 'Municipal Hall',
+                    'icon' => 'map-pin'
+                ]
+            ],
+            'button' => [
+                'show' => true,
+                'icon' => 'message-square',
+                'text' => 'Send Message',
+                'alignment' => 'center',
+                'url' => '/contact',
+                'target' => '_self'
+            ]
+        ]);
+        
+        // Quick Links
+        get_template_part('template-parts/sections/sidebar-dynamic', null, [
+            'title' => 'Quick Links',
+            'content' => [
+                [
+                    'type' => 'link',
+                    'title' => '',
+                    'content' => 'Official Facebook Page',
+                    'icon' => 'facebook',
+                    'link' => get_field('facebook_url') ?? '#',
+                    'target' => '_blank'
+                ],
+                [
+                    'type' => 'link',
+                    'title' => '',
+                    'content' => 'Municipal Website',
+                    'icon' => 'globe',
+                    'link' => home_url(),
+                    'target' => '_self'
+                ],
+                [
+                    'type' => 'link',
+                    'title' => '',
+                    'content' => 'Department Directory',
+                    'icon' => 'users',
+                    'link' => '/departments',
+                    'target' => '_self'
+                ]
+            ]
+        ]);
+        ?>
+    </aside>
+</div>
             </div>
         </div>
     </main>

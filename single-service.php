@@ -282,95 +282,94 @@ get_header();
                 <?php endif; ?>                
             </div>
 
-            <!-- Sidebar Navigation -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Quick Contact -->
-                <div class="bg-white rounded-lg shadow-md p-6 top-8">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Service Quick Info</h3>
-                    <div class="space-y-4">
-                        <!-- Department -->
-                        <div>
-                            <h4 class="text-sm font-medium text-gray-500">Department</h4>
-                            <p class="text-gray-700">
-                                <?php echo esc_html(get_field('department') ?: 'Municipal Office'); ?>
-                            </p>
-                        </div>
-                        
-                        <!-- Processing Time -->
-                        <div>
-                            <h4 class="text-sm font-medium text-gray-500">Processing Time</h4>
-                            <p class="text-gray-700">
-                                <?php echo esc_html(get_field('service_processing_time') ?: '3-5 business days'); ?>
-                            </p>
-                        </div>
-                        
-                        <!-- Fees -->
-                        <div>
-                            <h4 class="text-sm font-medium text-gray-500">Fees</h4>
-                            <p class="text-gray-700">
-                                <?php echo esc_html(get_field('service_fees') ?: 'No fees required'); ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- All Services List -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">All Services</h3>
-                    <?php
-                    $services = get_posts(array(
-                        'post_type' => 'service',
-                        'posts_per_page' => -1,
-                        'orderby' => 'menu_order',
-                        'order' => 'ASC'
-                    ));
-                    
-                    if ($services) : ?>
-                        <ul class="space-y-2">
-                            <?php foreach ($services as $service) : 
-                                $current_class = (get_the_ID() === $service->ID) ? 'bg-primary-50 text-primary-600 font-medium' : 'text-gray-600 hover:bg-gray-50';
-                                ?>
-                                <li>
-                                    <a href="<?php echo get_permalink($service->ID); ?>" 
-                                       class="block px-3 py-2 rounded transition-colors duration-200 <?php echo $current_class; ?>">
-                                        <?php echo esc_html($service->post_title); ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                </div>
-
-                <!-- Quick Actions -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Quick Actions</h3>
-                    <ul class="space-y-3">
-                        <li>
-                            <a href="/services" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                </svg>
-                                All Services
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/forms" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Download Forms
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/faq" class="text-gray-600 hover:text-primary-600 transition-colors flex items-center group">
-                                <svg class="w-6 h-6 mr-3 group-hover:text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                FAQs
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+<!-- Sidebar Navigation -->
+<div class="lg:col-span-1 space-y-6">
+    <?php
+    // Quick Info
+    get_template_part('template-parts/sections/sidebar-dynamic', null, [
+        'title' => 'Service Quick Info',
+        'content' => [
+            [
+                'type' => 'text',
+                'title' => 'Department',
+                'content' => get_field('department') ?: 'Municipal Office',
+                'icon' => 'landmark'
+            ],
+            [
+                'type' => 'text',
+                'title' => 'Processing Time',
+                'content' => get_field('service_processing_time') ?: '3-5 business days',
+                'icon' => 'clock'
+            ],
+            [
+                'type' => 'text',
+                'title' => 'Fees',
+                'content' => get_field('service_fees') ?: 'No fees required',
+                'icon' => 'dollar-sign'
+            ]
+        ]
+    ]);
+    
+    // All Services List
+    $services = get_posts([
+        'post_type' => 'service',
+        'posts_per_page' => -1,
+        'orderby' => 'menu_order',
+        'order' => 'ASC'
+    ]);
+    
+    if ($services) {
+        $service_items = [];
+        foreach ($services as $service) {
+            $service_items[] = [
+                'type' => 'link',
+                'title' => '',
+                'content' => $service->post_title,
+                'icon' => get_field('service_icon', $service->ID) ?: 'briefcase',
+                'link' => get_permalink($service->ID),
+                'target' => '_self',
+                'class' => (get_the_ID() === $service->ID) ? 'bg-primary-50 text-primary-600 font-medium px-3 py-2 rounded' : 'text-gray-600 hover:bg-gray-50 px-3 py-2 rounded'
+            ];
+        }
+        
+        get_template_part('template-parts/sections/sidebar-dynamic', null, [
+            'title' => 'All Services',
+            'content' => $service_items
+        ]);
+    }
+    
+    // Quick Actions
+    get_template_part('template-parts/sections/sidebar-dynamic', null, [
+        'title' => 'Quick Actions',
+        'content' => [
+            [
+                'type' => 'link',
+                'title' => '',
+                'content' => 'All Services',
+                'icon' => 'list',
+                'link' => '/services',
+                'target' => '_self'
+            ],
+            [
+                'type' => 'link',
+                'title' => '',
+                'content' => 'Download Forms',
+                'icon' => 'download',
+                'link' => '/forms',
+                'target' => '_self'
+            ],
+            [
+                'type' => 'link',
+                'title' => '',
+                'content' => 'FAQs',
+                'icon' => 'help-circle',
+                'link' => '/faq',
+                'target' => '_self'
+            ]
+        ]
+    ]);
+    ?>
+</div>
             </div>
         </div>
     </div>
