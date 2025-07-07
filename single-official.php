@@ -194,20 +194,20 @@ get_header();
                 ],
                 [
                     'type' => 'text',
-                    'title' => 'Office Hours',
+                    'title' => '',
                     'content' => get_field('contact_information')['office_hours'] ?? 'Monday - Friday, 8:00 AM - 5:00 PM',
                     'icon' => 'clock'
                 ],
                 [
                     'type' => 'text',
-                    'title' => 'Location',
+                    'title' => '',
                     'content' => get_field('office_location') ?? 'Municipal Hall',
-                    'icon' => 'map-pin'
+                    'icon' => 'building'
                 ]
             ],
             'button' => [
                 'show' => true,
-                'icon' => 'message-square',
+                'icon' => 'phone',
                 'text' => 'Send Message',
                 'alignment' => 'center',
                 'url' => '/contact',

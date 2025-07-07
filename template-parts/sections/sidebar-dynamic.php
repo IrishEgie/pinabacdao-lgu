@@ -54,16 +54,23 @@ $args = wp_parse_args($args, [
             echo '<div class="'.esc_attr($row['class']).'">';
             
             if ($row['title']) {
-                echo '<h4 class="text-sm font-medium text-gray-500 mb-1">'.esc_html($row['title']).'</h4>';
+                echo '<h4 class="text-sm font-sm text-gray-500 mb-1">'.esc_html($row['title']).'</h4>';
             }
             
             switch ($row['type']) {
-                case 'text':
-                    echo '<p class="text-gray-700">'.esc_html($row['content']).'</p>';
-                    break;
+            case 'text':
+                echo '<div class="text-gray-700 font-sm flex items-center">';
+                if ($row['icon']) {
+                    echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
+                }
+                echo esc_html($row['content']);
+                echo '</div>';
+                break;
+
+
                     
                 case 'link':
-                    echo '<a href="'.esc_url($row['link']).'" target="'.esc_attr($row['target']).'" class="text-gray-700 hover:text-primary-600 transition-colors flex items-center">';
+                    echo '<a href="'.esc_url($row['link']).'" target="'.esc_attr($row['target']).'" class="text-gray-700 hover:text-primary-500 transition-colors flex items-center">';
                     if ($row['icon']) {
                         echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
                     }
@@ -90,7 +97,7 @@ $args = wp_parse_args($args, [
         <div class="mt-4 text-<?php echo esc_attr($args['button']['alignment']); ?>">
             <a href="<?php echo esc_url($args['button']['url']); ?>" 
                target="<?php echo esc_attr($args['button']['target']); ?>" 
-               class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+               class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-500 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                 <?php if ($args['button']['icon']) : ?>
                     <span class="mr-2"><?php echo get_service_icon_svg($args['button']['icon'], 'w-4 h-4'); ?></span>
                 <?php endif; ?>
