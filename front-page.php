@@ -17,28 +17,28 @@ get_header();
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <a href="<?php echo esc_url(home_url('/pay-taxes')); ?>"
-          class="h-20 text-left bg-secondary-600 hover:bg-secondary-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+          class="h-20 text-left bg-secondary-600 hover:bg-secondary-500 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Pay Taxes</div>
             <div class="text-sm opacity-90 text-white">Online payment</div>
           </div>
         </a>
         <a href="<?php echo esc_url(home_url('/apply-permit')); ?>"
-          class="h-20 text-left bg-green-600 hover:bg-green-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+          class="h-20 text-left bg-green-600 hover:bg-green-500 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Apply Permit</div>
             <div class="text-sm opacity-90 text-white">Business license</div>
           </div>
         </a>
         <a href="<?php echo esc_url(home_url('/get-certificate')); ?>"
-          class="h-20 text-left bg-purple-600 hover:bg-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+          class="h-20 text-left bg-purple-600 hover:bg-purple-500 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Get Certificate</div>
             <div class="text-sm opacity-90 text-white">Civil documents</div>
           </div>
         </a>
         <a href="<?php echo esc_url(home_url('/report-issue')); ?>"
-          class="h-20 text-left bg-orange-600 hover:bg-orange-700 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
+          class="h-20 text-left bg-orange-600 hover:bg-orange-500 transition-all duration-300 transform hover:scale-105 flex items-center px-6 rounded-md">
           <div>
             <div class="font-semibold text-white">Report Issue</div>
             <div class="text-sm opacity-90 text-white">Community concerns</div>
@@ -62,7 +62,7 @@ get_header();
   <!-- View All -->
   <div class="text-center my-12">
     <a href="<?php echo esc_url(home_url('/services')); ?>"
-      class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-md transition-colors duration-300">
+      class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
       View All Services
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
