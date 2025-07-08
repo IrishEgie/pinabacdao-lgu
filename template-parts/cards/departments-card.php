@@ -41,7 +41,7 @@ if ($departments->have_posts()) :
         $group_class = $groups ? 'group-' . sanitize_title($groups[0]->name) : '';
         ?>
         
-        <div class="department-card rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:bg-gray-50 <?php echo esc_attr($group_class); ?>">
+        <a href="<?php the_permalink(); ?>" class="department-card rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:bg-gray-50 <?php echo esc_attr($group_class); ?> block"> <!-- Added 'block' class to make anchor fill container -->
             <div class="flex flex-col space-y-1.5 p-6">
                 <div class="flex items-center space-x-3">
                     <?php echo get_service_icon_svg($icon, $icon_class); ?>
@@ -56,7 +56,7 @@ if ($departments->have_posts()) :
                     <p class="text-sm text-primary-500"><?php echo esc_html($email); ?></p>
                 <?php endif; ?>
             </div>
-        </div>
+        </a>
         
     <?php endwhile;
     wp_reset_postdata();
