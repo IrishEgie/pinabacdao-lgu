@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: React-Style Single Post
- * Description: WordPress template matching SinglePost React component
+ * Template Name: Pinabacdao Single Post
+ * Description: WordPress template matching SinglePost component
  */
 
 get_header();
