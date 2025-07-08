@@ -183,7 +183,7 @@ get_header();
         <!-- Proclamations Subsection -->
         <div id="proclamations" class="mb-8">
             <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <?php echo get_service_icon_svg('award', 'text-primary-600 w-6 h-6'); ?>
+                <?php echo get_service_icon_svg('award', 'w-6 h-6'); ?>
                 Public Proclamations
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
