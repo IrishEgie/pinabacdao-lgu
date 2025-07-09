@@ -4,30 +4,31 @@
  * 
  * @param string $activeTab The currently active tab ('all', 'news', 'events', 'announcements')
  */
+$activeTab = $activeTab ?? 'all';
 ?>
 
 <div class="w-full">
-    <div class="flex w-full border-b border-gray-200 mb-8">
+    <div class="grid w-full grid-cols-4 mb-8 bg-gray-100 p-1 rounded-md">
         <button 
-            class="tab-trigger px-4 py-3 text-sm font-medium <?php echo $activeTab === 'all' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'; ?>"
+            class="p-1 tab-trigger inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium rounded-md transition-all <?php echo $activeTab === 'all' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'; ?>"
             data-tab="all"
         >
             All News & Events
         </button>
         <button 
-            class="tab-trigger px-4 py-3 text-sm font-medium <?php echo $activeTab === 'news' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'; ?>"
+            class="p-1 tab-trigger inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium rounded-md transition-all <?php echo $activeTab === 'news' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'; ?>"
             data-tab="news"
         >
             Municipal News
         </button>
         <button 
-            class="tab-trigger px-4 py-3 text-sm font-medium <?php echo $activeTab === 'events' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'; ?>"
+            class="p-1 tab-trigger inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium rounded-md transition-all <?php echo $activeTab === 'events' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'; ?>"
             data-tab="events"
         >
             Upcoming Events
         </button>
         <button 
-            class="tab-trigger px-4 py-3 text-sm font-medium <?php echo $activeTab === 'announcements' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700'; ?>"
+            class="p-1 tab-trigger inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-sm font-medium rounded-md transition-all <?php echo $activeTab === 'announcements' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'; ?>"
             data-tab="announcements"
         >
             Announcements
@@ -119,21 +120,41 @@
 </div>
 
 <script>
-// Simple tab switching functionality
-document.querySelectorAll('.tab-trigger').forEach(trigger => {
-    trigger.addEventListener('click', () => {
-        const tab = trigger.dataset.tab;
-        document.querySelectorAll('.tab-content').forEach(content => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all tab triggers and contents
+    const tabTriggers = document.querySelectorAll('.tab-trigger');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    // Function to activate a tab
+    function activateTab(tab) {
+        // Update tab buttons
+        tabTriggers.forEach(t => {
+            const isActive = t.dataset.tab === tab;
+            t.classList.toggle('bg-white', isActive);
+            t.classList.toggle('text-gray-900', isActive);
+            t.classList.toggle('shadow-sm', isActive);
+            t.classList.toggle('text-gray-500', !isActive);
+            t.classList.toggle('hover:text-gray-700', !isActive);
+        });
+        
+        // Update tab content
+        tabContents.forEach(content => {
             content.classList.toggle('hidden', content.dataset.tab !== tab);
             content.classList.toggle('block', content.dataset.tab === tab);
         });
-        document.querySelectorAll('.tab-trigger').forEach(t => {
-            t.classList.toggle('text-blue-600', t.dataset.tab === tab);
-            t.classList.toggle('border-b-2', t.dataset.tab === tab);
-            t.classList.toggle('border-blue-600', t.dataset.tab === tab);
-            t.classList.toggle('text-gray-500', t.dataset.tab !== tab);
-            t.classList.toggle('hover:text-gray-700', t.dataset.tab !== tab);
+    }
+    
+    // Set click handlers for all tabs
+    tabTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            activateTab(trigger.dataset.tab);
         });
     });
+    
+    // If no tab is active (shouldn't happen with PHP default, but good for JS-only cases)
+    const activeTab = document.querySelector('.tab-trigger.bg-white');
+    if (!activeTab && tabTriggers.length > 0) {
+        activateTab(tabTriggers[0].dataset.tab); // Activate first tab by default
+    }
 });
 </script>
