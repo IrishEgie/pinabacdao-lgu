@@ -71,7 +71,7 @@
     /* Add similar classes for other colors */
 
     h2 {
-        @apply text-3xl font-bold mb-4;
+        @apply text-3xl font-bold;
     }
     h3 {
         @apply text-xl font-bold ;
