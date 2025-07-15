@@ -98,3 +98,16 @@ add_action('after_setup_theme', 'disable_admin_bar_for_low_level_users');
 add_action('wp_enqueue_scripts', 'theme_assets');
 add_filter('show_admin_bar', '__return_true');
 add_image_size( 'official-portrait', 600, 800, true ); // 3:4 ratio, hard crop
+
+function custom_search_url_rewrite() {
+    if (is_search() && !empty($_GET['s'])) {
+        wp_redirect(home_url('/search/') . urlencode(get_query_var('s')));
+        exit();
+    }
+}
+add_action('template_redirect', 'custom_search_url_rewrite');
+
+function custom_search_rewrite_rule() {
+    add_rewrite_rule('^search/([^/]*)/?', 'index.php?s=$matches[1]', 'top');
+}
+add_action('init', 'custom_search_rewrite_rule');

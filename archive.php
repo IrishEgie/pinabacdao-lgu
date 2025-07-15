@@ -24,37 +24,38 @@ get_header();
                 <div class="w-full">
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
                         <!-- Archive Header -->
-                        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-6">
+                        <div class="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 p-6">
                             <h1 class="text-3xl font-bold text-white">Our Archives</h1>
-                            <p class="text-blue-100 mt-2">Browse through our collection of past posts and articles</p>
+                            <p class="text-primary-100 mt-2">Browse through our collection of past posts and articles</p>
                         </div>
                         
                         <!-- Archive Filters -->
                         <div class="border-b border-gray-200 p-4 bg-gray-50">
                             <div class="flex flex-wrap items-center gap-4">
                                 <div class="relative w-full md:w-auto">
-                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                         <option>All Categories</option>
                                         <option>News</option>
                                         <option>Events</option>
                                         <option>Announcements</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                       
+                                    <?php get_service_icon_svg('arrow-down')?>
                                     </div>
                                 </div>
                                 <div class="relative w-full md:w-auto">
-                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                         <option>All Years</option>
                                         <option>2023</option>
                                         <option>2022</option>
                                         <option>2021</option>
                                     </select>
                                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                        <?php get_service_icon_svg('arrow-down')?>
                                     </div>
                                 </div>
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                <button class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
                                     Filter
                                 </button>
                             </div>
@@ -66,19 +67,19 @@ get_header();
                             <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
                                 <div class="flex flex-col md:flex-row md:items-center gap-4">
                                     <div class="flex-shrink-0">
-                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600 font-bold">
+                                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-primary-100 text-primary-600 font-bold">
                                             15
                                         </span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                                        <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
                                             <a href="#">Annual Town Fiesta Celebration 2023</a>
                                         </h3>
-                                        <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-blue-600">Events</span> on June 15, 2023</p>
+                                        <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-primary-600">Events</span> on June 15, 2023</p>
                                         <p class="mt-2 text-gray-600">Join us for the colorful celebration of our town fiesta featuring cultural shows, food fairs, and more.</p>
                                     </div>
                                     <div class="flex-shrink-0">
-                                        <a href="#" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition duration-150 ease-in-out">
+                                        <a href="#" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 transition duration-150 ease-in-out">
                                             Read More
                                         </a>
                                     </div>
@@ -94,7 +95,7 @@ get_header();
                                         </span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                                        <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
                                             <a href="#">New Municipal Building Groundbreaking</a>
                                         </h3>
                                         <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-green-600">News</span> on May 28, 2023</p>
@@ -117,7 +118,7 @@ get_header();
                                         </span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                                        <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
                                             <a href="#">Scholarship Program Announcement</a>
                                         </h3>
                                         <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-purple-600">Announcements</span> on May 10, 2023</p>
@@ -140,7 +141,7 @@ get_header();
                                         </span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                                        <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
                                             <a href="#">Farmers' Market Every Saturday</a>
                                         </h3>
                                         <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-yellow-600">Events</span> on April 22, 2023</p>
@@ -163,7 +164,7 @@ get_header();
                                         </span>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <h3 class="text-lg font-medium text-gray-900 hover:text-blue-600 transition duration-150 ease-in-out">
+                                        <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
                                             <a href="#">Road Construction Advisory</a>
                                         </h3>
                                         <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-red-600">Announcements</span> on April 5, 2023</p>
@@ -202,7 +203,7 @@ get_header();
                                                 <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
                                             </svg>
                                         </a>
-                                        <a href="#" aria-current="page" class="z-10 bg-blue-50 border-blue-500 text-blue-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                        <a href="#" aria-current="page" class="z-10 bg-primary-50 border-primary-500 text-primary-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
                                             1
                                         </a>
                                         <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
