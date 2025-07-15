@@ -52,84 +52,88 @@ get_header();
 
                                 <!-- Tabs -->
                                 <div class="w-full">
-                                    <div role="tablist" aria-orientation="horizontal"
-                                        class="h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground grid w-full grid-cols-5">
-                                        <button type="button" role="tab"
-                                            class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">All
-                                            Results</button>
-                                        <button type="button" role="tab"
-                                            class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Events</button>
-                                        <button type="button" role="tab"
-                                            class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Services</button>
-                                        <button type="button" role="tab"
-                                            class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Personnel</button>
-                                        <button type="button" role="tab"
-                                            class="inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-                                            data-state="active">Places</button>
-                                    </div>
-
-                                    <!-- Places Tab Content -->
-                                    <div
-                                        class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
-                                        <h3 class="text-lg font-semibold text-gray-800">Places &amp; Locations (3)</h3>
-
-                                        <!-- Municipal Hall Card -->
-                                        <div
-                                            class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center space-x-4 mb-8">
+<?
+renderTabNavigation([
+    'tabs' => [
+        ['id' => 'all_results', 'label' => 'All Results'],
+        ['id' => 'events', 'label' => 'Events'],
+        ['id' => 'news', 'label' => 'News'],
+        ['id' => 'services', 'label' => 'Services'],
+    ],
+    'contents' => [
+        'services' => '<div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
                                             <div class="p-4">
                                                 <h4 class="font-medium text-gray-800 mb-2">Municipal Hall</h4>
                                                 <p class="text-gray-600 text-sm mb-2">Main government building housing
                                                     various municipal offices.</p>
                                                 <div class="flex items-center justify-between gap-2">
                                                     <span class="flex items-center text-xs text-gray-500">
-                                                        <?php echo get_service_icon_svg('location', 'text-gray-600 w-3 h-3 mr-1') ?>
-                                                        Town Center, Pinabacdao
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 w-3 h-3 mr-1"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>                                                        Town Center, Pinabacdao
                                                     </span>
-                                                    <div
-                                                        class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
+                                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
+                                                        Government Building</div>
+                                                </div>
+                                            </div>
+                                        </div>',
+        'all_results' => '<div class="mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4">
+                                        <h3 class="text-lg font-semibold text-gray-800">Places &amp; Locations (3)</h3>
+
+                                        <!-- Municipal Hall Card -->
+                                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                                            <div class="p-4">
+                                                <h4 class="font-medium text-gray-800 mb-2">Municipal Hall</h4>
+                                                <p class="text-gray-600 text-sm mb-2">Main government building housing
+                                                    various municipal offices.</p>
+                                                <div class="flex items-center justify-between gap-2">
+                                                    <span class="flex items-center text-xs text-gray-500">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 w-3 h-3 mr-1"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>                                                        Town Center, Pinabacdao
+                                                    </span>
+                                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
                                                         Government Building</div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Health Center Card -->
-                                        <div
-                                            class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
                                             <div class="p-4">
                                                 <h4 class="font-medium text-gray-800 mb-2">Municipal Health Center</h4>
                                                 <p class="text-gray-600 text-sm mb-2">Primary healthcare facility
                                                     serving the municipality.</p>
                                                 <div class="flex items-center justify-between">
                                                     <span class="flex items-center text-xs text-gray-500">
-                                                        <?php echo get_service_icon_svg('location', 'text-gray-600 w-3 h-3 mr-1') ?>
-                                                        Barangay Poblacion
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 w-3 h-3 mr-1"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>                                                        Barangay Poblacion
                                                     </span>
-                                                    <div
-                                                        class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
+                                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
                                                         Healthcare Facility</div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Municipal Plaza Card -->
-                                        <div
-                                            class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow">
                                             <div class="p-4">
                                                 <h4 class="font-medium text-gray-800 mb-2">Municipal Plaza</h4>
                                                 <p class="text-gray-600 text-sm mb-2">Central plaza for community
                                                     gatherings and events.</p>
                                                 <div class="flex items-center justify-between">
                                                     <span class="flex items-center text-xs text-gray-500">
-                                                        <?php echo get_service_icon_svg('location', 'text-gray-600 w-3 h-3 mr-1') ?>
-                                                        Town Center
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600 w-3 h-3 mr-1"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>                                                        Town Center
                                                     </span>
-                                                    <div
-                                                        class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
+                                                    <div class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 bg-orange-100 text-orange-800">
                                                         Public Space</div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>',
+        'about' => '<div>About us content here</div>'
+    ]
+]);
+?>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
