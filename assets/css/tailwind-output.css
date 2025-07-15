@@ -1043,11 +1043,6 @@ a {
   height: 100%;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .max-h-\[800px\] {
   max-height: 800px;
 }
@@ -1681,19 +1676,14 @@ a {
   --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
-.via-primary-600 {
-  --tw-gradient-to: rgb(46 122 86 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), #2e7a56 var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
-.via-primary-400 {
-  --tw-gradient-to: rgb(82 174 137 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), #52ae89 var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
 .via-primary-500 {
   --tw-gradient-to: rgb(40 224 96 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), #28e060 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.via-primary-600 {
+  --tw-gradient-to: rgb(46 122 86 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #2e7a56 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .to-indigo-50 {
@@ -1704,6 +1694,10 @@ a {
   --tw-gradient-to: #d9f0e2 var(--tw-gradient-to-position);
 }
 
+.to-primary-600 {
+  --tw-gradient-to: #2e7a56 var(--tw-gradient-to-position);
+}
+
 .to-primary-800 {
   --tw-gradient-to: #214e3a var(--tw-gradient-to-position);
 }
@@ -1712,48 +1706,8 @@ a {
   --tw-gradient-to: #ffa300 var(--tw-gradient-to-position);
 }
 
-.to-secondary-700 {
-  --tw-gradient-to: #685647 var(--tw-gradient-to-position);
-}
-
 .to-transparent {
   --tw-gradient-to: transparent var(--tw-gradient-to-position);
-}
-
-.to-secondary {
-  --tw-gradient-to: #ffa300 var(--tw-gradient-to-position);
-}
-
-.to-primary-300 {
-  --tw-gradient-to: #88cbac var(--tw-gradient-to-position);
-}
-
-.to-white {
-  --tw-gradient-to: #fff var(--tw-gradient-to-position);
-}
-
-.to-secondary-100 {
-  --tw-gradient-to: #eae7de var(--tw-gradient-to-position);
-}
-
-.to-secondary-200 {
-  --tw-gradient-to: #d6cfbd var(--tw-gradient-to-position);
-}
-
-.to-secondary-400 {
-  --tw-gradient-to: #a89773 var(--tw-gradient-to-position);
-}
-
-.to-secondary-600 {
-  --tw-gradient-to: #7f6b55 var(--tw-gradient-to-position);
-}
-
-.to-primary-600 {
-  --tw-gradient-to: #2e7a56 var(--tw-gradient-to-position);
-}
-
-.fill-current {
-  fill: currentColor;
 }
 
 .object-contain {

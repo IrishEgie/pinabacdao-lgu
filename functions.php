@@ -3,6 +3,7 @@
 function theme_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    add_filter('template_include', 'custom_search_template');
     
     register_nav_menus([
         'primary' => __('Primary Menu', 'text_domain'),
@@ -99,6 +100,20 @@ add_action('wp_enqueue_scripts', 'theme_assets');
 add_filter('show_admin_bar', '__return_true');
 add_image_size( 'official-portrait', 600, 800, true ); // 3:4 ratio, hard crop
 
+function custom_search_template($template) {
+    if (is_search()) {
+        // Check if our custom search results page exists
+        $search_page = get_page_by_path('search');
+        
+        if ($search_page) {
+            // Use our custom template if the search page exists
+            return locate_template('search-results.php');
+        }
+    }
+    return $template;
+}
+
+// Keep your existing rewrite rules
 function custom_search_url_rewrite() {
     if (is_search() && !empty($_GET['s'])) {
         wp_redirect(home_url('/search/') . urlencode(get_query_var('s')));
@@ -109,5 +124,13 @@ add_action('template_redirect', 'custom_search_url_rewrite');
 
 function custom_search_rewrite_rule() {
     add_rewrite_rule('^search/([^/]*)/?', 'index.php?s=$matches[1]', 'top');
+    add_rewrite_rule('^search/?', 'index.php?pagename=search', 'top');
 }
 add_action('init', 'custom_search_rewrite_rule');
+
+// Flush rewrite rules on theme activation (only once)
+function theme_activation() {
+    custom_search_rewrite_rule();
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'theme_activation');

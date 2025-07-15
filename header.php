@@ -118,15 +118,7 @@ language_attributes(); ?>>
                 <div class="flex items-center space-x-4">
                     <?php if (get_theme_mod('show_language_switcher', true)): ?>
                         <div class="hidden md:flex items-center space-x-2">
-                            <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M2 12h20"></path>
-                                <path
-                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                                </path>
-                            </svg>
+                            <?php echo get_service_icon_svg('globe', 'text-gray-600 w-4 h-4')?>
                             <select class="text-sm border-none bg-transparent focus:outline-none cursor-pointer">
                                 <option value="en">EN</option>
                                 <option value="fil">FIL</option>
@@ -134,14 +126,9 @@ language_attributes(); ?>>
                         </div>
                     <?php endif; ?>
 
-                    <a href="<?php echo esc_url(home_url('/search')); ?>"
+                    <a href="<?php echo esc_url(home_url('/search' ) ); ?>"
                         class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-50 transition-colors duration-300 h-9 px-3">
-                        <svg class="w-5 h-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
+                        <?php echo get_service_icon_svg('search', 'w-4 h-4')?>
                     </a>
 
                     <!-- Mobile menu button -->
