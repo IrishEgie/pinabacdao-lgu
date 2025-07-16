@@ -147,8 +147,3 @@ function make_official_columns_sortable($columns) {
 }
 add_filter('manage_edit-official_sortable_columns', 'make_official_columns_sortable');
 
-// Disable Gutenberg editor
-add_filter('use_block_editor_for_post_type', function($use_block_editor, $post_type) {
-    if ($post_type === 'official') return false;
-    return $use_block_editor;
-}, 10, 2);

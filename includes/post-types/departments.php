@@ -159,9 +159,3 @@ function make_department_columns_sortable($columns) {
     return $columns;
 }
 add_filter('manage_edit-department_sortable_columns', 'make_department_columns_sortable');
-
-// Disable Gutenberg editor
-add_filter('use_block_editor_for_post_type', function($use_block_editor, $post_type) {
-    if ($post_type === 'department') return false;
-    return $use_block_editor;
-}, 10, 2);

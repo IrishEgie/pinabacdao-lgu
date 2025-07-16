@@ -37,7 +37,9 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';
     require_once get_template_directory() . '/includes/post-types/officials.php';
-
+    require_once get_template_directory() . '/includes/post-types/news.php';
+    require_once get_template_directory() . '/includes/post-types/events.php';
+    require_once get_template_directory() . '/includes/post-types/announcements.php';
 }
 add_action('after_setup_theme', 'theme_setup');
 
@@ -135,3 +137,27 @@ function theme_activation() {
     flush_rewrite_rules();
 }
 add_action('after_switch_theme', 'theme_activation');
+
+/**
+ * Control Gutenberg editor for specific post types
+ */
+function custom_gutenberg_control($can_edit, $post_type) {
+    // List of post types that should use Classic Editor
+    $classic_editor_post_types = array(
+        'news',          
+        'events',        
+        'announcements', 
+        'department',    
+        'official',
+        'service'       
+    );
+    
+    // Check if this post type should use Classic Editor
+    if (in_array($post_type, $classic_editor_post_types)) {
+        return false;
+    }
+    
+    // Default to WordPress/Gutenberg's decision
+    return $can_edit;
+}
+add_filter('use_block_editor_for_post_type', 'custom_gutenberg_control', 10, 2);
