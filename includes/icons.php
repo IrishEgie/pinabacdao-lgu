@@ -49,6 +49,9 @@ function get_service_icon_options()
         'hamburg-menu' => 'Hamburger Menu',
         'close' => 'Close',
         'arrow-down' => 'Arrow Down',
+        'arrow-right' => 'Arrow Right',
+        'arrow-left' => 'Arrow Left',
+        'arrow-up' => 'Arrow Up',
     );
 }
 

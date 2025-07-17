@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: Pinabacdao Single Post
- * Description: WordPress template matching SinglePost component
+ * Template Name: Pinabacdao News & Events
+ * Description: WordPress template for News & Events page with tabbed navigation
  */
 require_once get_template_directory() . '/template-parts/sections/news-carousel.php';
 require_once get_template_directory() . '/template-parts/cards/news-card.php';
@@ -18,72 +18,79 @@ get_header();
     <main class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid gap-8">
-                <!-- Main Content Area -->
+                <!-- Featured Section -->
                 <div class="flex items-center space-x-4">
                     <?php echo get_service_icon_svg('star', 'w-6 h-6 text-primary-600'); ?>
                     <h2 class="text-2xl text-gray-800">Featured</h2>
                 </div>
+                
+                <!-- Featured Carousel -->
                 <div class="relative w-full mb-8">
-                    <!-- Carousel Featured Area -->
+
                 </div>
+                
+                <!-- Latest Updates Section -->
                 <div class="flex items-center space-x-4 mb-8">
                     <?php echo get_service_icon_svg('bell', 'w-6 h-6 text-primary-600'); ?>
                     <h2 class="text-2xl text-gray-800">Latest Updates</h2>
                 </div>
+                
+                <!-- Tab Navigation with News Cards -->
                 <div>
                     <?php
-                    renderTabNavigation([
+                    renderTabNavigationWithCards([
                         'tabs' => [
                             ['id' => 'all', 'label' => 'All'],
                             ['id' => 'news', 'label' => 'News'],
                             ['id' => 'events', 'label' => 'Events'],
-                            ['id' => 'anouncements', 'label' => 'Announcements'],
+                            ['id' => 'announcements', 'label' => 'Announcements'],
                         ],
-                        'contents' => [
-                            'all' => '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            card card card
-                                        </div>',
-                            'news' => '<div>Services content here</div>',
-                            'anouncements' => '<div>About us content here</div>'
+                        'query_args' => [
+                            'all' => [
+                                'post_type' => ['news', 'events', 'announcements'],
+                                'posts_per_page' => -1,
+                                'orderby' => 'date',
+                                'order' => 'DESC'
+                            ],
+                            'news' => [
+                                'post_type' => 'news',
+                                'posts_per_page' => 9,
+                                'orderby' => 'date',
+                                'order' => 'DESC'
+                            ],
+                            'events' => [
+                                'post_type' => 'events',
+                                'posts_per_page' => 9,
+                                'orderby' => 'meta_value',
+                                'meta_key' => 'event_datetime_start',
+                                'order' => 'ASC',
+                                'meta_query' => [
+                                    [
+                                        'key' => 'event_datetime_start',
+                                        'value' => date('Y-m-d H:i:s'),
+                                        'compare' => '>=',
+                                        'type' => 'DATETIME'
+                                    ]
+                                ]
+                            ],
+                            'announcements' => [
+                                'post_type' => 'announcements',
+                                'posts_per_page' => 9,
+                                'orderby' => 'date',
+                                'order' => 'DESC',
+                                'meta_query' => [
+                                    [
+                                        'key' => 'announcement_expiry',
+                                        'value' => date('Y-m-d'),
+                                        'compare' => '>=',
+                                        'type' => 'DATE'
+                                    ]
+                                ]
+                            ]
                         ]
                     ]);
                     ?>
                 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <?php
-    // Query for all post types
-    $args = array(
-        'post_type' => array('news', 'events', 'announcements'),
-        'posts_per_page' => -1, // Adjust number of posts to show
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'post_status' => 'publish'
-    );
-    
-    $posts_query = new WP_Query($args);
-    
-    if ($posts_query->have_posts()) :
-        while ($posts_query->have_posts()) : $posts_query->the_post();
-            // Get the appropriate card arguments for this post
-            $card_args = get_post_card_args(get_the_ID());
-            
-            // Add featured badge if this is a featured post
-            if (get_field('featured_post', get_the_ID())) {
-                $card_args['badges'][] = [
-                    'text' => 'Featured',
-                    'color' => 'yellow'
-                ];
-            }
-            
-            // Render the card
-            render_post_card($card_args);
-        endwhile;
-        wp_reset_postdata();
-    else :
-        echo '<p class="col-span-full text-center text-gray-500">No posts found.</p>';
-    endif;
-    ?>
-</div>
             </div>
         </div>
     </main>

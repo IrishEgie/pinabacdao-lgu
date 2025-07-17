@@ -57,7 +57,7 @@ function render_post_card($args = []) {
     ?>
     
     <article class="group h-full flex flex-col">
-        <a href="<?php echo esc_url($permalink); ?>" class="block h-full rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border-l-4 border-l-<?php echo esc_attr($color); ?>-500 flex flex-col">
+        <a href="<?php echo esc_url($permalink); ?>" class="block h-full rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border-l-4 border-l-<?php echo esc_attr($color); ?>-600 flex flex-col">
             <div class="relative overflow-hidden h-48 bg-gray-100">
                 <img 
                     src="<?php echo esc_url($image_url); ?>" 
@@ -109,10 +109,8 @@ function render_post_card($args = []) {
                         <?php echo esc_html($date); ?>
                     </time>
                     <span class="text-xs font-medium text-<?php echo esc_attr($color); ?>-600 hover:text-<?php echo esc_attr($color); ?>-800 transition-colors inline-flex items-center">
-                        Read more
-                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                        Read more >
+
                     </span>
                 </div>
             </div>
@@ -214,9 +212,16 @@ function get_post_card_args($post_id = null) {
                     'low' => esc_html__('Low Priority', 'textdomain')
                 ];
                 
+                // Map priorities to colors
+                $priority_colors = [
+                    'high' => 'primary',    // or 'error'
+                    'medium' => 'priority-medium', // or 'warning'
+                    'low' => 'priority-low'       // or 'success'
+                ];
+                
                 $args['badges'][] = [
                     'text' => $priority_labels[strtolower($priority)] ?? $priority,
-                    'color' => 'red'
+                    'color' => $priority_colors[strtolower($priority)] ?? 'gray'
                 ];
             }
             break;

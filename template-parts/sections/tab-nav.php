@@ -1,80 +1,66 @@
 <?php
 /**
- * Tab Navigation Component
+ * Tab Navigation Component with News Cards
  * 
- * @param string $activeTab The currently active tab (defaults to first tab if not specified)
- * @param array $tabs Array of tabs configuration (max 5 tabs)
- * @param array $contents Array of tab contents (can be HTML strings or callable functions)
+ * @param array $args {
+ *     @type string $activeTab The currently active tab
+ *     @type array  $tabs Array of tabs configuration
+ *     @type array  $query_args Custom query arguments for each tab
+ * }
  */
-function renderTabNavigation($args = []) {
+function renderTabNavigationWithCards($args = []) {
     // Default configuration
     $defaults = [
         'activeTab' => null,
         'tabs' => [
-            [
-                'id' => 'all',
-                'label' => 'All News & Events'
-            ],
-            [
-                'id' => 'news',
-                'label' => 'Municipal News'
-            ],
-            [
-                'id' => 'events',
-                'label' => 'Upcoming Events'
-            ],
-            [
-                'id' => 'announcements',
-                'label' => 'Announcements'
-            ]
+            ['id' => 'all', 'label' => 'All'],
+            ['id' => 'news', 'label' => 'News'],
+            ['id' => 'events', 'label' => 'Events'],
+            ['id' => 'announcements', 'label' => 'Announcements']
         ],
-        'contents' => [
-            'all' => '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium">News Item 1</h3>
-                    <p class="text-gray-600">Sample news content</p>
-                </div>
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium">Event Item 1</h3>
-                    <p class="text-gray-600">Sample event content</p>
-                </div>
-            </div>',
-            'news' => '<div class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                    <div class="w-1 h-6 bg-blue-600 mr-3"></div>
-                    All Municipal News
-                </h3>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium">News Item 1</h3>
-                    <p class="text-gray-600">Sample news content</p>
-                </div>
-            </div>',
-            'events' => '<div class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                    <div class="w-1 h-6 bg-green-600 mr-3"></div>
-                    All Upcoming Events
-                </h3>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium">Event Item 1</h3>
-                    <p class="text-gray-600">Sample event content</p>
-                </div>
-            </div>',
-            'announcements' => '<div class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                    <div class="w-1 h-6 bg-orange-600 mr-3"></div>
-                    All Announcements
-                </h3>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow p-4">
-                    <h3 class="text-lg font-medium">Announcement 1</h3>
-                    <p class="text-gray-600">Sample announcement content</p>
-                </div>
-            </div>'
+        'query_args' => [
+            'all' => [
+                'post_type' => ['news', 'events', 'announcements'],
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC'
+            ],
+            'news' => [
+                'post_type' => 'news',
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC'
+            ],
+            'events' => [
+                'post_type' => 'events',
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'meta_key' => 'event_datetime_start',
+                'orderby' => 'meta_value',
+                'meta_query' => [
+                    [
+                        'key' => 'event_datetime_start',
+                        'value' => date('Y-m-d H:i:s'),
+                        'compare' => '>=',
+                        'type' => 'DATETIME'
+                    ]
+                ]
+            ],
+            'announcements' => [
+                'post_type' => 'announcements',
+                'posts_per_page' => 6,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'meta_query' => [
+                    [
+                        'key' => 'announcement_expiry',
+                        'value' => date('Y-m-d'),
+                        'compare' => '>=',
+                        'type' => 'DATE'
+                    ]
+                ]
+            ]
         ]
     ];
     
@@ -99,19 +85,59 @@ function renderTabNavigation($args = []) {
         );
     }
     
-    // Generate tab contents
+    // Generate tab contents with news cards
     $tabContents = '';
     foreach ($args['tabs'] as $tab) {
         $tabId = $tab['id'];
         $isActive = $activeTab === $tabId;
-        $content = '';
         
-        if (isset($args['contents'][$tabId])) {
-            $content = is_callable($args['contents'][$tabId]) 
-                ? call_user_func($args['contents'][$tabId]) 
-                : $args['contents'][$tabId];
+        // Start content with section header
+        $content = sprintf(
+            '<div class="mb-6">
+                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                    <div class="w-1 h-6 bg-%s-600 mr-3"></div>
+                    %s
+                </h3>
+            </div>',
+            esc_attr($tabId === 'all' ? 'gray' : ($tabId === 'news' ? 'blue' : ($tabId === 'events' ? 'green' : 'orange'))),
+            esc_html($tab['label'])
+        );
+        
+        // Add the grid of news cards
+        $content .= '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">';
+        
+        // Get posts for this tab
+        $query_args = $args['query_args'][$tabId] ?? [];
+        $posts_query = new WP_Query($query_args);
+        
+        if ($posts_query->have_posts()) {
+            while ($posts_query->have_posts()) {
+                $posts_query->the_post();
+                
+                // Get card arguments
+                $card_args = get_post_card_args(get_the_ID());
+                
+                // Add featured badge if needed
+                if (get_field('featured_post', get_the_ID())) {
+                    $card_args['badges'][] = [
+                        'text' => 'Featured',
+                        'color' => 'yellow'
+                    ];
+                }
+                
+                // Render the card
+                ob_start();
+                render_post_card($card_args);
+                $content .= ob_get_clean();
+            }
+            wp_reset_postdata();
+        } else {
+            $content .= '<p class="col-span-full text-center text-gray-500 py-8">No posts found.</p>';
         }
         
+        $content .= '</div>'; // Close grid
+        
+        // Add to tab contents
         $tabContents .= sprintf(
             '<div class="tab-content %s" data-tab="%s">%s</div>',
             $isActive ? 'block' : 'hidden',
@@ -131,13 +157,10 @@ function renderTabNavigation($args = []) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Get all tab triggers and contents
     const tabTriggers = document.querySelectorAll('.tab-trigger');
     const tabContents = document.querySelectorAll('.tab-content');
     
-    // Function to activate a tab
     function activateTab(tab) {
-        // Update tab buttons
         tabTriggers.forEach(t => {
             const isActive = t.dataset.tab === tab;
             t.classList.toggle('bg-white', isActive);
@@ -147,24 +170,21 @@ document.addEventListener('DOMContentLoaded', function() {
             t.classList.toggle('hover:text-gray-700', !isActive);
         });
         
-        // Update tab content
         tabContents.forEach(content => {
             content.classList.toggle('hidden', content.dataset.tab !== tab);
             content.classList.toggle('block', content.dataset.tab === tab);
         });
     }
     
-    // Set click handlers for all tabs
     tabTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
             activateTab(trigger.dataset.tab);
         });
     });
     
-    // If no tab is active (shouldn't happen with PHP default, but good for JS-only cases)
     const activeTab = document.querySelector('.tab-trigger.bg-white');
     if (!activeTab && tabTriggers.length > 0) {
-        activateTab(tabTriggers[0].dataset.tab); // Activate first tab by default
+        activateTab(tabTriggers[0].dataset.tab);
     }
 });
 </script>
