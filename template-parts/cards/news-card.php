@@ -1,6 +1,6 @@
 <?php
 /**
- * Dynamic Post Card Template
+ * Dynamic Post Card Template - Improved Design
  * 
  * @param array $args {
  *     @type int     $post_id      Post ID
@@ -15,14 +15,20 @@
  * }
  */
 function render_post_card($args = []) {
-    // Default arguments
+    // Default arguments with type-specific fallback images
+    $default_images = [
+        'news' => 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop',
+        'events' => 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&h=250&fit=crop',
+        'announcements' => 'https://images.unsplash.com/photo-1602189156324-4c5c6c2c02b3?w=400&h=250&fit=crop'
+    ];
+    
     $defaults = [
         'post_id' => get_the_ID(),
         'type' => get_post_type(),
         'title' => get_the_title(),
         'excerpt' => get_the_excerpt(),
         'date' => get_the_date(),
-        'image_url' => get_the_post_thumbnail_url() ?: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop',
+        'image_url' => get_the_post_thumbnail_url() ?: ($default_images[get_post_type()] ?? ''),
         'permalink' => get_permalink(),
         'meta_data' => [],
         'badges' => []
@@ -31,7 +37,7 @@ function render_post_card($args = []) {
     // Merge with provided arguments
     $args = wp_parse_args($args, $defaults);
     
-    // Type-specific color classes
+    // Type-specific color classes with better contrast
     $type_colors = [
         'news' => 'blue',
         'events' => 'green',
@@ -50,70 +56,93 @@ function render_post_card($args = []) {
     extract($args);
     ?>
     
-    <a href="<?php echo esc_url($permalink); ?>" class="block">
-        <div class="rounded-lg border bg-card text-card-foreground shadow-sm group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border-l-4 border-l-<?php echo esc_attr($color); ?>-500">
-            <div class="relative overflow-hidden h-48">
-                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+    <article class="group h-full flex flex-col">
+        <a href="<?php echo esc_url($permalink); ?>" class="block h-full rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer border-l-4 border-l-<?php echo esc_attr($color); ?>-500 flex flex-col">
+            <div class="relative overflow-hidden h-48 bg-gray-100">
+                <img 
+                    src="<?php echo esc_url($image_url); ?>" 
+                    alt="<?php echo esc_attr($title); ?>" 
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+                    loading="lazy"
+                    width="400"
+                    height="250"
+                >
                 
                 <?php if (!empty($badges)) : ?>
-                    <div class="absolute top-4 left-4 space-y-2">
+                    <div class="absolute top-4 left-4 flex flex-wrap gap-2">
                         <?php foreach ($badges as $index => $badge) : ?>
-                            <span class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground bg-<?php echo esc_attr($badge['color'] ?? $color); ?>-600 hover:bg-<?php echo esc_attr($badge['color'] ?? $color); ?>-700">
+                            <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-white bg-<?php echo esc_attr($badge['color'] ?? $color); ?>-600 hover:bg-<?php echo esc_attr($badge['color'] ?? $color); ?>-700 shadow-sm">
                                 <?php echo esc_html($badge['text']); ?>
                             </span>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
+                
+                <!-- Gradient overlay for better text contrast -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
             </div>
             
-            <div class="flex flex-col space-y-1.5 p-6 pb-2">
-                <h3 class="tracking-tight text-lg font-semibold text-gray-800 group-hover:text-<?php echo esc_attr($color); ?>-600 transition-colors duration-300 line-clamp-2">
+            <div class="flex-1 p-6 flex flex-col">
+                <h3 class="text-lg font-semibold text-gray-900 group-hover:text-<?php echo esc_attr($color); ?>-700 transition-colors duration-300 line-clamp-2 mb-3">
                     <?php echo esc_html($title); ?>
                 </h3>
-            </div>
-            
-            <div class="p-6 pt-0 space-y-4">
-                <p class="text-gray-600 text-sm leading-relaxed line-clamp-2">
+                
+                <p class="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-1">
                     <?php echo esc_html($excerpt); ?>
                 </p>
                 
                 <?php if (!empty($meta_data)) : ?>
-                    <div class="space-y-2 text-sm text-gray-500">
+                    <div class="space-y-2 text-sm text-gray-500 mb-4">
                         <?php foreach ($meta_data as $meta) : ?>
                             <div class="flex items-center space-x-2">
                                 <?php if (!empty($meta['icon'])) : ?>
-                                    <?php echo get_service_icon_svg($meta['icon'], 'w-4 h-4'); ?>
+                                    <?php echo get_service_icon_svg($meta['icon'], 'w-4 h-4 flex-shrink-0'); ?>
                                 <?php endif; ?>
-                                <span><?php echo esc_html($meta['text']); ?></span>
+                                <span class="truncate"><?php echo esc_html($meta['text']); ?></span>
                             </div>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>
                 
-                <div class="flex justify-between items-center pt-2">
-                    <span class="text-xs text-gray-500"><?php echo esc_html($date); ?></span>
-                    <span class="text-xs text-<?php echo esc_attr($color); ?>-600 hover:text-<?php echo esc_attr($color); ?>-800">Read more</span>
+                <div class="flex justify-between items-center pt-3 border-t border-gray-100 mt-auto">
+                    <time class="text-xs text-gray-500" datetime="<?php echo esc_attr(get_the_date('c', $post_id)); ?>">
+                        <?php echo esc_html($date); ?>
+                    </time>
+                    <span class="text-xs font-medium text-<?php echo esc_attr($color); ?>-600 hover:text-<?php echo esc_attr($color); ?>-800 transition-colors inline-flex items-center">
+                        Read more
+                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </span>
                 </div>
             </div>
-        </div>
-    </a>
+        </a>
+    </article>
     <?php
 }
 
 /**
  * Helper function to get post card arguments for a specific post type
+ * (Improved with better image handling and type-specific defaults)
  */
 function get_post_card_args($post_id = null) {
     $post_id = $post_id ?: get_the_ID();
     $post_type = get_post_type($post_id);
+    
+    // Type-specific fallback images
+    $fallback_images = [
+        'news' => 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&h=250&fit=crop',
+        'events' => 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=400&h=250&fit=crop',
+        'announcements' => 'https://images.unsplash.com/photo-1602189156324-4c5c6c2c02b3?w=400&h=250&fit=crop'
+    ];
     
     $args = [
         'post_id' => $post_id,
         'type' => $post_type,
         'title' => get_the_title($post_id),
         'excerpt' => get_the_excerpt($post_id),
-        'date' => get_the_date('', $post_id),
-        'image_url' => get_the_post_thumbnail_url($post_id),
+        'date' => get_the_date('M j, Y', $post_id),
+        'image_url' => get_the_post_thumbnail_url($post_id, 'medium_large') ?: ($fallback_images[$post_type] ?? ''),
         'permalink' => get_permalink($post_id),
         'meta_data' => [],
         'badges' => []
@@ -125,22 +154,25 @@ function get_post_card_args($post_id = null) {
             if ($source = get_field('source', $post_id)) {
                 $args['meta_data'][] = [
                     'icon' => 'link',
-                    'text' => 'Source: ' . $source
+                    'text' => esc_html__('Source:', 'textdomain') . ' ' . $source
                 ];
             }
             break;
             
         case 'events':
-            if ($start_date = get_field('event_datetime_start', $post_id)) {
+            $start_date = get_field('event_datetime_start', $post_id);
+            $end_date = get_field('event_datetime_end', $post_id);
+            
+            if ($start_date) {
                 $args['meta_data'][] = [
                     'icon' => 'calendar',
-                    'text' => $start_date
+                    'text' => date_i18n('M j, Y g:i a', strtotime($start_date))
                 ];
                 
-                if ($end_date = get_field('event_datetime_end', $post_id)) {
+                if ($end_date && $end_date !== $start_date) {
                     $args['meta_data'][] = [
                         'icon' => 'clock',
-                        'text' => $end_date
+                        'text' => date_i18n('M j, Y g:i a', strtotime($end_date))
                     ];
                 }
             }
@@ -155,7 +187,7 @@ function get_post_card_args($post_id = null) {
             if ($attendees = get_field('expected_attendees', $post_id)) {
                 $args['meta_data'][] = [
                     'icon' => 'users',
-                    'text' => $attendees . ' expected attendees'
+                    'text' => sprintf(_n('%d expected attendee', '%d expected attendees', $attendees, 'textdomain'), $attendees)
                 ];
             }
             
@@ -171,13 +203,19 @@ function get_post_card_args($post_id = null) {
             if ($expiry = get_field('announcement_expiry', $post_id)) {
                 $args['meta_data'][] = [
                     'icon' => 'clock',
-                    'text' => 'Expires: ' . $expiry
+                    'text' => esc_html__('Expires:', 'textdomain') . ' ' . date_i18n('M j, Y', strtotime($expiry))
                 ];
             }
             
             if ($priority = get_field('announcement_priority', $post_id)) {
+                $priority_labels = [
+                    'high' => esc_html__('High Priority', 'textdomain'),
+                    'medium' => esc_html__('Medium Priority', 'textdomain'),
+                    'low' => esc_html__('Low Priority', 'textdomain')
+                ];
+                
                 $args['badges'][] = [
-                    'text' => 'Priority: ' . $priority,
+                    'text' => $priority_labels[strtolower($priority)] ?? $priority,
                     'color' => 'red'
                 ];
             }

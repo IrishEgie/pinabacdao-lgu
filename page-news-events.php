@@ -54,7 +54,7 @@ get_header();
     // Query for all post types
     $args = array(
         'post_type' => array('news', 'events', 'announcements'),
-        'posts_per_page' => 6, // Adjust number of posts to show
+        'posts_per_page' => -1, // Adjust number of posts to show
         'orderby' => 'date',
         'order' => 'DESC',
         'post_status' => 'publish'
