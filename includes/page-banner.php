@@ -46,7 +46,11 @@ if (!function_exists('pageBanner')) {
             'search' => [
                 'url' => 'https://images.unsplash.com/photo-1516382799247-87df95d790b7?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                 'credit' => 'Photo by Agence Olloweb on Unsplash'
-            ]
+            ],
+            'news' => [
+                'url' => 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'credit' => 'Photo by AboutVision on Unsplash'
+            ],
         ];
 
         // Determine default image based on archive type

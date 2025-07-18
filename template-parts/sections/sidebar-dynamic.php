@@ -59,7 +59,7 @@ $args = wp_parse_args($args, [
             
             switch ($row['type']) {
                 case 'text':
-                    echo '<div class="text-gray-700 font-sm flex items-center">';
+                    echo '<div class="text-gray-700 text-sm italic flex items-center">';
                     if ($row['icon']) {
                         echo '<span class="mr-2">'.get_service_icon_svg($row['icon'], 'w-4 h-4').'</span>';
                     }

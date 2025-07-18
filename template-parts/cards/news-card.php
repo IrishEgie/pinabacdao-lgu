@@ -204,26 +204,6 @@ function get_post_card_args($post_id = null) {
                     'text' => esc_html__('Expires:', 'textdomain') . ' ' . date_i18n('M j, Y', strtotime($expiry))
                 ];
             }
-            
-            if ($priority = get_field('announcement_priority', $post_id)) {
-                $priority_labels = [
-                    'high' => esc_html__('High Priority', 'textdomain'),
-                    'medium' => esc_html__('Medium Priority', 'textdomain'),
-                    'low' => esc_html__('Low Priority', 'textdomain')
-                ];
-                
-                // Map priorities to colors
-                $priority_colors = [
-                    'high' => 'primary',    // or 'error'
-                    'medium' => 'priority-medium', // or 'warning'
-                    'low' => 'priority-low'       // or 'success'
-                ];
-                
-                $args['badges'][] = [
-                    'text' => $priority_labels[strtolower($priority)] ?? $priority,
-                    'color' => $priority_colors[strtolower($priority)] ?? 'gray'
-                ];
-            }
             break;
     }
     
