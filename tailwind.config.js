@@ -1,6 +1,11 @@
 // tailwind.config.js
 module.exports = {
-  content: ["./*.php", "./**/*.php", "./assets/js/**/*.js"],
+  content: [
+  './*.php',
+  './**/*.php',
+  './assets/js/**/*.js',
+  './wp-content/themes/pinabacdao-lgu/**/*.php'
+],
   theme: {
     extend: {
       colors: {

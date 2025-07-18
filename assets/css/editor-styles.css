@@ -1,0 +1,24 @@
+/* Editor-specific styles */
+.wp-editor-container {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Typography for Classic Editor */
+.wp-editor-area {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.wp-editor-area h1 { font-size: 2em; font-weight: bold; margin: 0.67em 0; }
+.wp-editor-area h2 { font-size: 1.5em; font-weight: bold; margin: 0.83em 0; }
+.wp-editor-area h3 { font-size: 1.17em; font-weight: bold; margin: 1em 0; }
+.wp-editor-area h4 { font-size: 1em; font-weight: bold; margin: 1.33em 0; }
+.wp-editor-area h5 { font-size: 0.83em; font-weight: bold; margin: 1.67em 0; }
+.wp-editor-area h6 { font-size: 0.67em; font-weight: bold; margin: 2.33em 0; }
+
+.wp-editor-area p { margin: 1em 0; }
+.wp-editor-area ul, .wp-editor-area ol { margin: 1em 0; padding-left: 2em; }
+.wp-editor-area li { margin: 0.5em 0; }
+.wp-editor-area strong { font-weight: bold; }
+.wp-editor-area em { font-style: italic; }
+.wp-editor-area blockquote { margin: 1em 2em; padding-left: 1em; border-left: 4px solid #ccc; }

@@ -83,7 +83,11 @@ function theme_assets() {
         '6.4.0'
     );
 }
-
+// Add this to your functions.php
+function add_editor_styles() {
+    add_editor_style('/assets/css/editor-style.css');
+}
+add_action('after_setup_theme', 'add_editor_styles');
 /**
  * Disable the admin bar for users with roles lower than or equal to 'subscriber'.
  */
@@ -143,8 +147,7 @@ add_action('after_switch_theme', 'theme_activation');
  */
 function custom_gutenberg_control($can_edit, $post_type) {
     // List of post types that should use Classic Editor
-    $classic_editor_post_types = array(
-        'news',          
+    $classic_editor_post_types = array(         
         'events',        
         'announcements', 
         'department',    
