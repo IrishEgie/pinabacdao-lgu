@@ -48,7 +48,7 @@ get_header();
                         'query_args' => [
                             'all' => [
                                 'post_type' => ['news', 'events', 'announcements'],
-                                'posts_per_page' => -1,
+                                'posts_per_page' => 9,
                                 'orderby' => 'date',
                                 'order' => 'DESC'
                             ],
