@@ -23,8 +23,8 @@ get_header();
                         $start_date = get_field('event_datetime_start');
                         $end_date = get_field('event_datetime_end');
                         $location = get_field('event_location');
-                        $organizer = get_field('organizer_name');
-                        $attendees = get_field('expected_attendees');
+                        $organizer = get_field('event_organizer_name');
+                        $attendees = get_field('event_expected_attendees');
                     ?>
                     
                     <!-- Event Header -->
@@ -144,59 +144,60 @@ get_header();
                     </div>
                     
                     <!-- Registration Form Section -->
-
-<div id="register" class="bg-white rounded-lg shadow-md p-6 border-t-4 border-green-600">
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">Register for This Event</h2>
-    
-    <?php
-    $registration_type = get_field('registration_type');
-    $button_text = get_field('registration_button_text') ?: 'Register Now';
-    
-    switch ($registration_type) {
-        case 'embed':
-            $form_embed_code = get_field('form_embed_code');
-            if ($form_embed_code): ?>
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6">
-                    <?php echo $form_embed_code; ?>
-                </div>
-            <?php else: ?>
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-                    <p class="text-yellow-700">No form embed code provided. Please add the form embed code in the admin panel.</p>
-                </div>
-            <?php endif;
-            break;
-            
-        case 'redirect':
-            $form_url = get_field('form_url');
-            if ($form_url): ?>
-                <div class="bg-green-50 border border-green-200 rounded-lg p-6 text-center">
-                    <p class="mb-6 text-gray-700">You'll be redirected to our secure registration form.</p>
-                    <a href="<?php echo esc_url($form_url); ?>" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-green-600 px-6 py-3 text-lg font-medium text-white shadow transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list w-5 h-5">
-                            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
-                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                            <path d="M12 11h4"></path>
-                            <path d="M12 16h4"></path>
-                            <path d="M8 11h.01"></path>
-                            <path d="M8 16h.01"></path>
-                        </svg>
-                        <?php echo esc_html($button_text); ?>
-                    </a>
-                </div>
-            <?php else: ?>
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-                    <p class="text-yellow-700">No form URL provided. Please add the form URL in the admin panel.</p>
-                </div>
-            <?php endif;
-            break;
-            
-        default: ?>
-            <div class="bg-gray-50 border-l-4 border-gray-400 p-4">
-                <p class="text-gray-700">Registration information will be available soon. Please check back later.</p>
+<div id="register" class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-lg overflow-hidden border border-green-100">
+    <div class="p-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Register for This Event</h2>
+        <p class="text-green-600 text-center mb-6">Secure your spot today</p>
+        
+        <?php 
+        $iframe_code = get_field('event_registration');
+        if ($iframe_code): 
+            $allowed_html = [
+                'iframe' => [
+                    'src' => [],
+                    'width' => [],
+                    'height' => [],
+                    'frameborder' => [],
+                    'marginheight' => [],
+                    'marginwidth' => [],
+                    'loading' => [],
+                    'sandbox' => [],
+                    'allow' => [],
+                    'title' => [],
+                    'class' => [],
+                    'style' => [],
+                    'data-*' => []
+                ]
+            ];
+            ?>
+            <div class="registration-form-container bg-white rounded-lg shadow-inner overflow-hidden border border-gray-200">
+                <?php echo wp_kses($iframe_code, $allowed_html); ?>
             </div>
-    <?php } ?>
+        <?php else: ?>
+            <div class="text-center py-12">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <h3 class="mt-4 text-lg font-medium text-gray-700">Registration Coming Soon</h3>
+                <p class="mt-2 text-gray-500">We're preparing the registration form. Please check back later.</p>
+                <div class="mt-6 animate-pulse">
+                    <div class="h-12 bg-gray-100 rounded-lg w-1/2 mx-auto"></div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+    
+    <?php if ($iframe_code): ?>
+    <div class="bg-gray-50 px-8 py-4 border-t border-gray-200 text-center">
+        <p class="text-xs text-gray-500 flex items-center justify-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <span>Secure form powered by Google</span>
+        </p>
+    </div>
+    <?php endif; ?>
 </div>
-                    
                     <!-- Similar Events -->
                     <div class="bg-white rounded-lg shadow-md p-6">
                         <h2 class="text-2xl font-bold text-gray-900 mb-6">More Events You Might Like</h2>
