@@ -10,7 +10,10 @@ get_header();
 <div class="min-h-screen bg-gray-50">
     <!-- Dynamic Page Banner -->
     <?php
-    pageBanner();
+    pageBanner([
+        'title' => 'News Details',
+        'subtitle' => 'Stay updated with the latest news and announcements from our community.',
+    ]);
     ?>
 
     <!-- Dynamic Breadcrumbs -->
@@ -24,83 +27,77 @@ get_header();
                     <?php while (have_posts()):
                         the_post(); ?>
 
-                        <!-- News Stats -->
-                        <div class="flex items-center gap-4 mb-4">
-                            <?php
-                            // Get the first category
-                            $categories = get_the_terms(get_the_ID(), 'category');
-                            if ($categories && !is_wp_error($categories)): ?>
-                                <div
-                                    class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground bg-blue-600 hover:bg-blue-700">
-                                    <?php echo esc_html($categories[0]->name); ?>
+                        <!-- News Header Section -->
+                        <div class="mb-8">
+                            <!-- News Title -->
+                            <h1 class="text-3xl md:text-4xl font-bold text-gray-700 mb-4 leading-tight">
+                                <?php the_title(); ?>
+                            </h1>
+                            <!-- Excerpt as Subtitle -->
+                            <div class="bg-primary-50 border-l-4 border-primary-500 p-4 mb-6 rounded-r-lg">
+                                <div class="prose prose-primary max-w-none">
+                                    <?php if (has_excerpt()): ?>
+                                        <p class="text-gray-700"><?php echo get_the_excerpt(); ?></p>
+                                    <?php else: ?>
+                                        <p class="text-gray-700"><?php echo wp_trim_words(get_the_content(), 30); ?></p>
+                                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
+                            </div>
+                            <!-- News Meta Information -->
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                                <div class="flex items-center flex-wrap gap-3">
+                                    <?php
+                                    // Category Badge
+                                    $categories = get_the_terms(get_the_ID(), 'category');
+                                    if ($categories && !is_wp_error($categories)): ?>
+                                        <span
+                                            class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-primary-100 text-primary-800">
+                                            <?php echo esc_html($categories[0]->name); ?>
+                                        </span>
+                                    <?php endif; ?>
 
-                            <div class="flex items-center text-gray-500 text-sm gap-4">
-                                <div class="flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4">
-                                        <path d="M8 2v4"></path>
-                                        <path d="M16 2v4"></path>
-                                        <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                                        <path d="M3 10h18"></path>
-                                    </svg>
-                                    <span><?php echo get_the_date('F j, Y'); ?></span>
+                                    <!-- Author and Date -->
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <?php echo get_service_icon_svg('user', 'w-4 h-4 mr-1 text-gray-500'); ?>
+                                        <span class="mr-3"><?php the_author(); ?></span>
+
+                                        <?php echo get_service_icon_svg('calendar', 'w-4 h-4 mr-1 text-gray-500'); ?>
+                                        <span><?php echo get_the_date('F j, Y'); ?></span>
+                                    </div>
                                 </div>
 
-                                <div class="flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-eye w-4 h-4">
-                                        <path
-                                            d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0">
-                                        </path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg>
+                                <!-- Views Count -->
+                                <div class="flex items-center text-sm text-gray-600">
+                                    <?php echo get_service_icon_svg('eye', 'w-4 h-4 mr-1 text-gray-500'); ?>
                                     <span>
                                         <?php
                                         $views = get_post_meta(get_the_ID(), 'post_views', true);
-                                        echo number_format($views ? (int) $views : 0);
-                                        ?> views
+                                        echo number_format($views ? (int) $views : 0) . ' views';
+                                        ?>
                                     </span>
                                 </div>
+                            </div>
 
-                                <div class="flex items-center gap-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-user w-4 h-4">
-                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                    <span><?php the_author(); ?></span>
+                            <!-- Featured Image -->
+                            <?php if (has_post_thumbnail()): ?>
+                                <div class="rounded-lg overflow-hidden shadow-md mb-6">
+                                    <?php the_post_thumbnail('large', ['class' => 'w-full h-auto object-cover']); ?>
+                                </div>
+                            <?php endif; ?>
+
+
+
+                            <!-- Share Buttons -->
+                            <div class="flex space-x-2">
+                                <div
+                                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
+                                    <?php echo get_service_icon_svg('share', 'w-6 h-6 text-primary-500');
+                                    ;
+                                    echo do_shortcode('[addtoany]'); ?>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Excerpt & Share Button -->
-                        <div class="flex justify-between items-start mb-6">
-                            <div class="flex-1">
-                                <?php if (has_excerpt()): ?>
-                                    <h3 class="text-gray-700 leading-relaxed"><?php echo get_the_excerpt(); ?></h2>
-                                <?php else: ?>
-                                    <p class="text-lg text-gray-600 leading-relaxed">
-                                        <?php echo wp_trim_words(get_the_content(), 20); ?></p>
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share2 w-4 h-4 mr-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/></svg> <?php echo do_shortcode('[addtoany]'); ?>
-                            </div>
-
-                        </div>
-
-                        <!-- Featured Image -->
-                        <?php if (has_post_thumbnail()): ?>
-                            <div class="mb-6 rounded-lg h-400 overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                                <?php the_post_thumbnail('medium', ['class' => 'w-full h-400']); ?>
-                            </div>
-                        <?php endif; ?>
 
                         <!-- Content -->
                         <article class="max-w-none grid gap-4">
@@ -131,8 +128,11 @@ get_header();
                                     Last updated: <?php echo get_the_modified_date('F j, Y'); ?>
                                 </div>
                                 <div class="flex space-x-2">
-                                    <div class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-share2 w-4 h-4 mr-2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98m-.01-10.98-6.82 3.98"/></svg> <?php echo do_shortcode('[addtoany]'); ?>
+                                    <div
+                                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
+                                        <?php echo get_service_icon_svg('share', 'w-6 h-6 text-primary-500');
+                                        ;
+                                        echo do_shortcode('[addtoany]'); ?>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@ get_header();
                                 'url' => 'https://facebook.com/',
                                 'target' => '_self'
                             ],
-                            'container_class' => 'bg-white rounded-lg shadow-md p-6'
+                            'container_class' => 'bg-white rounded-lg shadow-md p-6 border-l-4 border-primary-600'
                         ]);
 
 

@@ -5,7 +5,7 @@
 
 // Get department groups to filter by
 $current_group = isset($args['group']) ? $args['group'] : '';
-$icon_class = 'w-6 h-6 text-primary-500';
+$icon_class = 'w-6 h-6 text-primary-600';
 
 // Query args
 $query_args = array(
@@ -41,22 +41,26 @@ if ($departments->have_posts()) :
         $group_class = $groups ? 'group-' . sanitize_title($groups[0]->name) : '';
         ?>
         
-        <a href="<?php the_permalink(); ?>" class="department-card rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:bg-gray-50 <?php echo esc_attr($group_class); ?> block"> <!-- Added 'block' class to make anchor fill container -->
-            <div class="flex flex-col space-y-1.5 p-6">
-                <div class="flex items-center space-x-3">
-                    <?php echo get_service_icon_svg($icon, $icon_class); ?>
-                    <h3 class="font-semibold tracking-tight text-lg"><?php the_title(); ?></h3>
-                </div>
-            </div>
-            <div class="p-6 pt-0">
-                <?php if ($functions) : ?>
-                    <p class="text-gray-600 mb-3"><?php echo wp_trim_words($functions, 15); ?></p>
-                <?php endif; ?>
-                <?php if ($email) : ?>
-                    <p class="text-sm text-primary-500"><?php echo esc_html($email); ?></p>
-                <?php endif; ?>
-            </div>
-        </a>
+<a href="<?php the_permalink(); ?>" class="group department-card rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer hover:bg-gray-50 <?php echo esc_attr($group_class); ?> block">
+    <div class="flex flex-col space-y-1.5 p-6">
+        <div class="flex items-center space-x-3">
+            <?php echo get_service_icon_svg($icon, $icon_class . ' transition-colors duration-300 ease-in-out group-hover:text-primary-500'); ?>
+            <h3 class="font-semibold tracking-tight text-lg text-primary-700 transition-colors duration-300 ease-in-out group-hover:text-primary-500">
+                <?php the_title(); ?>
+            </h3>
+        </div>
+    </div>
+    <div class="p-6 pt-0">
+        <?php if ($functions) : ?>
+            <p class="text-gray-600 mb-3"><?php echo wp_trim_words($functions, 15); ?></p>
+        <?php endif; ?>
+        <?php if ($email) : ?>
+            <p class="text-sm text-primary-600"><?php echo esc_html($email); ?></p>
+        <?php endif; ?>
+    </div>
+</a>
+
+
         
     <?php endwhile;
     wp_reset_postdata();

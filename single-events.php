@@ -247,19 +247,19 @@ get_header();
                                     'type' => 'text',
                                     'title' => 'Date & Time',
                                     'content' => $start_date ? date_i18n('F j, Y g:i a', strtotime($start_date)) . ($end_date ? ' - ' . date_i18n('F j, Y g:i a', strtotime($end_date)) : '') : 'TBD',
-                                    'icon' => 'calendar'
+                                    'icon' => 'clock'
                                 ],
                                 [
                                     'type' => 'text',
                                     'title' => 'Location',
                                     'content' => $location && isset($location['address']) ? $location['address'] : 'TBD',
-                                    'icon' => 'map-pin'
+                                    'icon' => 'location'
                                 ],
                                 [
                                     'type' => 'text',
                                     'title' => 'Organizer',
                                     'content' => $organizer ?: 'TBD',
-                                    'icon' => 'user'
+                                    'icon' => 'user-check'
                                 ],
                                 [
                                     'type' => 'text',
@@ -287,7 +287,7 @@ get_header();
                                     'type' => 'link',
                                     'title' => get_the_date('M j, Y'),
                                     'content' => get_the_title(),
-                                    'icon' => 'newspaper',
+                                    'icon' => 'file-text',
                                     'link' => get_permalink(),
                                     'target' => '_self'
                                 ];
