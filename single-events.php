@@ -19,221 +19,200 @@ get_header();
             <div class="flex flex-col lg:flex-row gap-8">
                 <!-- Main Content Area -->
                 <div class="flex-1 space-y-8">
-                    <?php while (have_posts()): the_post(); 
+                    <?php while (have_posts()):
+                        the_post();
                         $start_date = get_field('event_datetime_start');
                         $end_date = get_field('event_datetime_end');
                         $location = get_field('event_location');
                         $organizer = get_field('event_organizer_name');
                         $attendees = get_field('event_expected_attendees');
-                    ?>
-                    
-                    <!-- Event Header -->
-                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                            <div>
-                                <h1 class="text-3xl font-bold text-gray-900 mb-2"><?php the_title(); ?></h1>
-                                
-                                <!-- Event Meta -->
-                                <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                                    <?php if ($start_date): ?>
-                                    <div class="flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar-days w-4 h-4 text-green-600">
-                                            <path d="M8 2v4"></path>
-                                            <path d="M16 2v4"></path>
-                                            <rect width="18" height="18" x="3" y="4" rx="2"></rect>
-                                            <path d="M3 10h18"></path>
-                                            <path d="M8 14h.01"></path>
-                                            <path d="M12 14h.01"></path>
-                                            <path d="M16 14h.01"></path>
-                                            <path d="M8 18h.01"></path>
-                                            <path d="M12 18h.01"></path>
-                                            <path d="M16 18h.01"></path>
-                                        </svg>
-                                        <span>
-                                            <?php echo date_i18n('F j, Y g:i a', strtotime($start_date)); ?>
-                                            <?php if ($end_date && $end_date !== $start_date): ?>
-                                                - <?php echo date_i18n('F j, Y g:i a', strtotime($end_date)); ?>
-                                            <?php endif; ?>
-                                        </span>
-                                    </div>
-                                    <?php endif; ?>
-                                    
-                                    <?php if ($location && isset($location['address'])): ?>
-                                    <div class="flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4 text-green-600">
-                                            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <span><?php echo esc_html($location['address']); ?></span>
-                                    </div>
-                                    <?php endif; ?>
-                                    
-                                    <?php if ($organizer): ?>
-                                    <div class="flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 text-green-600">
-                                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="12" cy="7" r="4"></circle>
-                                        </svg>
-                                        <span><?php echo esc_html($organizer); ?></span>
-                                    </div>
-                                    <?php endif; ?>
-                                    
-                                    <?php if ($attendees): ?>
-                                    <div class="flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-4 h-4 text-green-600">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                        </svg>
-                                        <span><?php echo sprintf(_n('%d attendee', '%d attendees', $attendees, 'textdomain'), $attendees); ?></span>
-                                    </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                            
-                            <!-- Register Button -->
-<?php if (get_field('registration_type') && get_field('registration_type') !== 'none'): ?>
-    <a href="#register" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-list w-4 h-4">
-            <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
-            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-            <path d="M12 11h4"></path>
-            <path d="M12 16h4"></path>
-            <path d="M8 11h.01"></path>
-            <path d="M8 16h.01"></path>
-        </svg>
-        <?php echo esc_html(get_field('registration_button_text') ?: 'Register Now'); ?>
-    </a>
-<?php endif; ?>
-                        </div>
-                    </div>
-                    
-                    <!-- Event Highlights -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <?php 
-                        echo highlight_card([
-                            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-8 h-8 text-green-600"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-                            'title' => 'Event Schedule',
-                            'content' => 'Detailed schedule will be provided upon registration. The event includes keynote speeches, workshops, and networking sessions.',
-                            'additional_classes' => 'border-l-4 border-green-600'
-                        ]);
-                        
-                        echo highlight_card([
-                            'icon' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map w-8 h-8 text-green-600"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>',
-                            'title' => 'Venue Information',
-                            'content' => $location && isset($location['address']) ? esc_html($location['address']) : 'Venue details will be shared with registered attendees.',
-                            'additional_classes' => 'border-l-4 border-green-600'
-                        ]);
                         ?>
+
+<div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2"><?php the_title(); ?></h1>
+
+            <!-- Event Meta -->
+            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                <?php if ($start_date): ?>
+                    <div class="flex items-center gap-2">
+                        <?php echo get_service_icon_svg('calendar', 'text-green-600 w-4 h-4') ?>
+                        <span>
+                            <?php echo date_i18n('F j, Y g:i a', strtotime($start_date)); ?>
+                            <?php if ($end_date && $end_date !== $start_date): ?>
+                                - <?php echo date_i18n('F j, Y g:i a', strtotime($end_date)); ?>
+                            <?php endif; ?>
+                        </span>
                     </div>
-                    
-                    <!-- Featured Image -->
-                    <?php if (has_post_thumbnail()): ?>
-                        <div class="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-                            <?php the_post_thumbnail('large', ['class' => 'w-full h-auto max-h-96 object-cover']); ?>
-                        </div>
-                    <?php endif; ?>
-                    
-                    <!-- Event Description -->
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">About This Event</h2>
-                        <div class="prose max-w-none text-gray-700">
-                            <?php the_content(); ?>
-                        </div>
+                <?php endif; ?>
+
+                <?php if ($location && isset($location['address'])): ?>
+                    <div class="flex items-center gap-2">
+                        <?php echo get_service_icon_svg('location', 'text-green-600 w-4 h-4') ?>
+                        <span><?php echo esc_html($location['address']); ?></span>
                     </div>
-                    
-                    <!-- Registration Form Section -->
-<div id="register" class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-lg overflow-hidden border border-green-100">
-    <div class="p-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Register for This Event</h2>
-        <p class="text-green-600 text-center mb-6">Secure your spot today</p>
-        
-        <?php 
-        $iframe_code = get_field('event_registration');
-        if ($iframe_code): 
-            $allowed_html = [
-                'iframe' => [
-                    'src' => [],
-                    'width' => [],
-                    'height' => [],
-                    'frameborder' => [],
-                    'marginheight' => [],
-                    'marginwidth' => [],
-                    'loading' => [],
-                    'sandbox' => [],
-                    'allow' => [],
-                    'title' => [],
-                    'class' => [],
-                    'style' => [],
-                    'data-*' => []
-                ]
-            ];
-            ?>
-            <div class="registration-form-container bg-white rounded-lg shadow-inner overflow-hidden border border-gray-200">
-                <?php echo wp_kses($iframe_code, $allowed_html); ?>
+                <?php endif; ?>
+
+                <?php if ($organizer): ?>
+                    <div class="flex items-center gap-2">
+                        <?php echo get_service_icon_svg('user', 'text-green-600 w-4 h-4') ?>
+                        <span><?php echo esc_html($organizer); ?></span>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($attendees): ?>
+                    <div class="flex items-center gap-2">
+                        <?php echo get_service_icon_svg('users', 'text-green-600 w-4 h-4') ?>
+                        <span><?php echo sprintf(_n('%d attendee', '%d attendees', $attendees, 'textdomain'), $attendees); ?></span>
+                    </div>
+                <?php endif; ?>
             </div>
-        <?php else: ?>
-            <div class="text-center py-12">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-700">Registration Coming Soon</h3>
-                <p class="mt-2 text-gray-500">We're preparing the registration form. Please check back later.</p>
-                <div class="mt-6 animate-pulse">
-                    <div class="h-12 bg-gray-100 rounded-lg w-1/2 mx-auto"></div>
-                </div>
+        </div>
+
+        <!-- Share Button -->
+        <div class="flex space-x-2">
+            <div
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
+                <?php echo get_service_icon_svg('share', 'w-6 h-6 text-primary-500'); ?>
+                <?php echo do_shortcode('[addtoany]'); ?>
             </div>
-        <?php endif; ?>
+        </div>
     </div>
-    
-    <?php if ($iframe_code): ?>
-    <div class="bg-gray-50 px-8 py-4 border-t border-gray-200 text-center">
-        <p class="text-xs text-gray-500 flex items-center justify-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span>Secure form powered by Google</span>
-        </p>
-    </div>
-    <?php endif; ?>
 </div>
-                    <!-- Similar Events -->
-                    <div class="bg-white rounded-lg shadow-md p-6">
-                        <h2 class="text-2xl font-bold text-gray-900 mb-6">More Events You Might Like</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+
+                        <!-- Event Highlights -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <?php
-                            $similar_events = get_posts([
-                                'post_type' => 'events',
-                                'posts_per_page' => 3,
-                                'post__not_in' => [get_the_ID()],
-                                'orderby' => 'rand',
-                                'meta_query' => [
-                                    [
-                                        'key' => 'event_datetime_start',
-                                        'value' => date('Y-m-d H:i:s'),
-                                        'compare' => '>=',
-                                        'type' => 'DATETIME'
-                                    ]
-                                ]
+                            echo highlight_card([
+                                'icon' => get_service_icon_svg('clock', 'text-green-600 w-8 h-8'),
+                                'title' => 'Event Schedule',
+                                'content' => 'Detailed schedule will be provided upon registration. The event includes keynote speeches, workshops, and networking sessions.',
+                                'additional_classes' => 'border-l-4 border-green-600'
                             ]);
-                            
-                            if ($similar_events):
-                                foreach ($similar_events as $post):
-                                    setup_postdata($post);
-                                    render_post_card(get_post_card_args($post->ID));
-                                endforeach;
-                                wp_reset_postdata();
-                            else:
-                                echo '<p class="text-gray-500 col-span-3">No upcoming events found. Check back later!</p>';
-                            endif;
+
+                            echo highlight_card([
+                                'icon' => get_service_icon_svg('map', 'text-green-600 w-8 h-8'),
+                                'title' => 'Venue Information',
+                                'content' => $location && isset($location['address']) ? esc_html($location['address']) : 'Venue details will be shared with registered attendees.',
+                                'additional_classes' => 'border-l-4 border-green-600'
+                            ]);
                             ?>
                         </div>
-                    </div>
+
+                        <!-- Featured Image -->
+                        <?php if (has_post_thumbnail()): ?>
+                            <div class="rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+                                <?php the_post_thumbnail('large', ['class' => 'w-full h-auto max-h-96 object-cover']); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Event Description -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">About This Event</h2>
+                            <div class="prose max-w-none text-gray-700">
+                                <?php the_content(); ?>
+                            </div>
+                        </div>
+
+                        <!-- Registration Form Section -->
+                        <div id="register"
+                            class="bg-gradient-to-br from-green-50 to-white rounded-xl shadow-lg overflow-hidden border border-green-100">
+                            <div class="p-8">
+                                <h2 class="text-3xl font-bold text-gray-900 mb-2 text-center">Register for This Event</h2>
+                                <p class="text-green-600 text-center mb-6">Secure your spot today</p>
+
+                                <?php
+                                $iframe_code = get_field('event_registration');
+                                if ($iframe_code):
+                                    $allowed_html = [
+                                        'iframe' => [
+                                            'src' => [],
+                                            'width' => [],
+                                            'height' => [],
+                                            'frameborder' => [],
+                                            'marginheight' => [],
+                                            'marginwidth' => [],
+                                            'loading' => [],
+                                            'sandbox' => [],
+                                            'allow' => [],
+                                            'title' => [],
+                                            'class' => [],
+                                            'style' => [],
+                                            'data-*' => []
+                                        ]
+                                    ];
+                                    ?>
+                                    <div
+                                        class="registration-form-container bg-white rounded-lg shadow-inner overflow-hidden border border-gray-200">
+                                        <?php echo wp_kses($iframe_code, $allowed_html); ?>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="text-center py-12">
+                                        <div class="flex items-center justify-center">
+                                            <?php echo get_service_icon_svg('clipboard', 'text-gray-400 w-12 h-12 text-center') ?>
+                                        </div>
+
+                                        <h3 class="mt-4 text-lg font-medium text-gray-700">Registration Coming Soon</h3>
+                                        <p class="mt-2 text-gray-500">We're preparing the registration form. Please check back
+                                            later.</p>
+                                        <div class="mt-6 animate-pulse">
+                                            <div class="h-12 bg-gray-100 rounded-lg w-1/2 mx-auto"></div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <?php if ($iframe_code): ?>
+                                <div class="bg-gray-50 px-8 py-4 border-t border-gray-200 text-center">
+                                    <p class="text-xs text-gray-500 flex items-center justify-center space-x-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        </svg>
+                                        <span>Secure form powered by Google</span>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <!-- Similar Events -->
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-2xl font-bold text-gray-900 mb-6">More Events You Might Like</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <?php
+                                $similar_events = get_posts([
+                                    'post_type' => 'events',
+                                    'posts_per_page' => 3,
+                                    'post__not_in' => [get_the_ID()],
+                                    'orderby' => 'rand',
+                                    'meta_query' => [
+                                        [
+                                            'key' => 'event_datetime_start',
+                                            'value' => date('Y-m-d H:i:s'),
+                                            'compare' => '>=',
+                                            'type' => 'DATETIME'
+                                        ]
+                                    ]
+                                ]);
+
+                                if ($similar_events):
+                                    foreach ($similar_events as $post):
+                                        setup_postdata($post);
+                                        render_post_card(get_post_card_args($post->ID));
+                                    endforeach;
+                                    wp_reset_postdata();
+                                else:
+                                    echo '<p class="text-gray-500 col-span-3">No upcoming events found. Check back later!</p>';
+                                endif;
+                                ?>
+                            </div>
+                        </div>
 
                     <?php endwhile; ?>
                 </div>
-                
+
                 <!-- Sidebar -->
                 <div class="w-full lg:w-80 xl:w-80">
                     <aside class="space-y-6 sticky top-8">
@@ -270,7 +249,7 @@ get_header();
                             ],
                             'container_class' => 'bg-white rounded-lg shadow-md p-6 border-l-4 border-green-600'
                         ]);
-                        
+
                         // Latest News (different from news page)
                         $latest_news = get_posts([
                             'post_type' => 'news',
@@ -278,7 +257,7 @@ get_header();
                             'orderby' => 'date',
                             'order' => 'DESC'
                         ]);
-                        
+
                         if ($latest_news):
                             $news_content = [];
                             foreach ($latest_news as $post) {
@@ -293,7 +272,7 @@ get_header();
                                 ];
                             }
                             wp_reset_postdata();
-                            
+
                             get_template_part('template-parts/sections/sidebar-dynamic', null, [
                                 'title' => 'Latest News',
                                 'subtitle' => 'Stay updated with our community',
@@ -309,7 +288,7 @@ get_header();
                                 'container_class' => 'bg-white rounded-lg shadow-md p-6'
                             ]);
                         endif;
-                        
+
                         // Upcoming Events
                         $upcoming_events = get_posts([
                             'post_type' => 'events',
@@ -327,7 +306,7 @@ get_header();
                                 ]
                             ]
                         ]);
-                        
+
                         if ($upcoming_events):
                             $events_content = [];
                             foreach ($upcoming_events as $post) {
@@ -343,7 +322,7 @@ get_header();
                                 ];
                             }
                             wp_reset_postdata();
-                            
+
                             get_template_part('template-parts/sections/sidebar-dynamic', null, [
                                 'title' => 'Upcoming Events',
                                 'subtitle' => 'Mark your calendar',

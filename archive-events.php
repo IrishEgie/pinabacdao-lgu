@@ -95,40 +95,43 @@ get_header();
                                     $category_color = !empty($categories) ? get_term_meta($categories[0]->term_id, 'category_color', true) : 'primary';
                                     $day = $start_date ? date('d', strtotime($start_date)) : get_the_date('d');
                                     ?>
-                                    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                                            <div class="flex-shrink-0">
-                                                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $category_color; ?>-100 text-<?php echo $category_color; ?>-600 font-bold">
-                                                    <?php echo $day; ?>
-                                                </span>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
-                                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                                </h3>
-                                                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
-                                                    <?php if ($start_date) : ?>
-                                                        <span><span class="font-medium">Starts:</span> <?php echo date('F j, Y g:i A', strtotime($start_date)); ?></span>
-                                                    <?php endif; ?>
-                                                    <?php if ($end_date) : ?>
-                                                        <span><span class="font-medium">Ends:</span> <?php echo date('F j, Y g:i A', strtotime($end_date)); ?></span>
-                                                    <?php endif; ?>
-                                                    <?php if ($location && isset($location['address'])) : ?>
-                                                        <span><span class="font-medium">Location:</span> <?php echo esc_html($location['address']); ?></span>
-                                                    <?php endif; ?>
-                                                    <span class="text-<?php echo $category_color; ?>-600"><?php echo $category_name; ?></span>
-                                                </div>
-                                                <div class="mt-2 text-gray-600">
-                                                    <?php the_excerpt(); ?>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <a href="<?php the_permalink(); ?>" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $category_color; ?>-700 bg-<?php echo $category_color; ?>-100 hover:bg-<?php echo $category_color; ?>-200 transition duration-150 ease-in-out">
-                                                    Event Details
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+<a href="<?php the_permalink(); ?>" class="block group">
+    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-shrink-0">
+                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $category_color; ?>-100 text-<?php echo $category_color; ?>-600 font-bold">
+                    <?php echo $day; ?>
+                </span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-bold text-gray-600 group-hover:text-primary-600 transition duration-150 ease-in-out">
+                    <?php the_title(); ?>
+                </h3>
+                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
+                    <?php if ($start_date) : ?>
+                        <span><span class="font-medium">Starts:</span> <?php echo date('F j, Y g:i A', strtotime($start_date)); ?></span>
+                    <?php endif; ?>
+                    <?php if ($end_date) : ?>
+                        <span><span class="font-medium">Ends:</span> <?php echo date('F j, Y g:i A', strtotime($end_date)); ?></span>
+                    <?php endif; ?>
+                    <?php if ($location && isset($location['address'])) : ?>
+                        <span><span class="font-medium">Location:</span> <?php echo esc_html($location['address']); ?></span>
+                    <?php endif; ?>
+                    <span class="text-<?php echo $category_color; ?>-600"><?php echo $category_name; ?></span>
+                </div>
+                <div class="mt-2 text-gray-600">
+                    <?php the_excerpt(); ?>
+                </div>
+            </div>
+            <div class="flex-shrink-0">
+                <span class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $category_color; ?>-700 bg-<?php echo $category_color; ?>-100 group-hover:bg-<?php echo $category_color; ?>-200 transition duration-150 ease-in-out">
+                    Event Details
+                </span>
+            </div>
+        </div>
+    </div>
+</a>
+
                                 <?php
                                 endwhile;
                             else :

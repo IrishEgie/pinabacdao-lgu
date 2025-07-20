@@ -76,7 +76,7 @@ get_header();
                                     $post_date = get_the_date('F j, Y');
                                     $expiry_date = get_field('announcement_expiry');
                                     $priority = get_field('announcement_priority');
-                                    $priority_color = 'blue'; // default
+                                    $priority_color = 'orange'; // default
                                     
                                     if ($priority === 'High') {
                                         $priority_color = 'red';
@@ -88,35 +88,38 @@ get_header();
                                     
                                     $day = get_the_date('d');
                                     ?>
-                                    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <div class="flex flex-col md:flex-row md:items-center gap-4">
-                                            <div class="flex-shrink-0">
-                                                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $priority_color; ?>-100 text-<?php echo $priority_color; ?>-600 font-bold">
-                                                    <?php echo $day; ?>
-                                                </span>
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
-                                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                                                </h3>
-                                                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
-                                                    <span>Posted on: <?php echo $post_date; ?></span>
-                                                    <?php if ($expiry_date) : ?>
-                                                        <span>Expires on: <?php echo date('F j, Y', strtotime($expiry_date)); ?></span>
-                                                    <?php endif; ?>
-                                                    <span class="text-<?php echo $priority_color; ?>-600">Priority: <?php echo $priority ?: 'Normal'; ?></span>
-                                                </div>
-                                                <div class="mt-2 text-gray-600">
-                                                    <?php the_excerpt(); ?>
-                                                </div>
-                                            </div>
-                                            <div class="flex-shrink-0">
-                                                <a href="<?php the_permalink(); ?>" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $priority_color; ?>-700 bg-<?php echo $priority_color; ?>-100 hover:bg-<?php echo $priority_color; ?>-200 transition duration-150 ease-in-out">
-                                                    View Details
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+<a href="<?php the_permalink(); ?>" class="block group">
+    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+            <div class="flex-shrink-0">
+                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $priority_color; ?>-100 text-<?php echo $priority_color; ?>-600 font-bold">
+                    <?php echo $day; ?>
+                </span>
+            </div>
+            <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-bold text-gray-600 group-hover:text-primary-600 transition duration-150 ease-in-out">
+                    <?php the_title(); ?>
+                </h3>
+                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
+                    <span>Posted on: <?php echo $post_date; ?></span>
+                    <?php if ($expiry_date) : ?>
+                        <span>Expires on: <?php echo date('F j, Y', strtotime($expiry_date)); ?></span>
+                    <?php endif; ?>
+                    <span class="text-<?php echo $priority_color; ?>-600">Priority: <?php echo $priority ?: 'Normal'; ?></span>
+                </div>
+                <div class="mt-2 text-gray-600">
+                    <?php the_excerpt(); ?>
+                </div>
+            </div>
+            <div class="flex-shrink-0">
+                <span class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $priority_color; ?>-700 bg-<?php echo $priority_color; ?>-100 group-hover:bg-<?php echo $priority_color; ?>-200 transition duration-150 ease-in-out">
+                    View Details
+                </span>
+            </div>
+        </div>
+    </div>
+</a>
+
                                 <?php
                                 endwhile;
                             else :
