@@ -1,12 +1,13 @@
 <?php
 /**
- * Tab Navigation Component with News Cards and Pagination
+ * Enhanced Tab Navigation Component with News Cards, Pagination, and View All Links
  * 
  * @param array $args {
  *     @type string $activeTab The currently active tab
  *     @type array  $tabs Array of tabs configuration
  *     @type array  $query_args Custom query arguments for each tab
  *     @type int    $posts_per_page Posts per page (default 6)
+ *     @type array  $view_all_urls URLs for "View All" links for each tab
  * }
  */
 function renderTabNavigationWithCards($args = []) {
@@ -63,7 +64,18 @@ function renderTabNavigationWithCards($args = []) {
                     ]
                 ]
             ]
-        ]
+        ],
+        // Default View All URLs - customize these for your site
+        'view_all_urls' => [
+            'all' => '/news-events/',
+            'news' => '/news/',
+            'events' => '/events/',
+            'announcements' => '/announcements/'
+        ],
+        // Option to show view all links
+        'show_view_all' => true,
+        // Minimum posts required to show "View All" link
+        'view_all_threshold' => 6
     ];
     
     // Merge defaults with provided arguments
@@ -105,18 +117,6 @@ function renderTabNavigationWithCards($args = []) {
             continue;
         }
         
-        // Start content with section header
-        $content = sprintf(
-            '<div class="mb-6">
-                <h3 class="text-xl font-semibold text-gray-800 flex items-center">
-                    <div class="w-1 h-6 bg-%s-600 mr-3"></div>
-                    %s
-                </h3>
-            </div>',
-            esc_attr($tabId === 'all' ? 'gray' : ($tabId === 'news' ? 'blue' : ($tabId === 'events' ? 'green' : 'orange'))),
-            esc_html($tab['label'])
-        );
-        
         // Prepare query arguments with pagination
         $query_args = $args['query_args'][$tabId] ?? [];
         $query_args['posts_per_page'] = $args['posts_per_page'];
@@ -125,8 +125,64 @@ function renderTabNavigationWithCards($args = []) {
         // Create custom WP_Query for pagination
         $posts_query = new WP_Query($query_args);
         
+        // Get total posts count for "View All" decision
+        $total_query_args = $query_args;
+        $total_query_args['posts_per_page'] = -1;
+        $total_query_args['fields'] = 'ids';
+        unset($total_query_args['paged']);
+        $total_query = new WP_Query($total_query_args);
+        $total_posts = $total_query->found_posts;
+        wp_reset_postdata();
+        
+        // Start content with section header and optional View All link
+        $header_content = '';
+        
+        // Add View All link if conditions are met
+        if ($args['show_view_all'] && 
+            $total_posts >= $args['view_all_threshold'] && 
+            isset($args['view_all_urls'][$tabId])) {
+            
+            $view_all_url = $args['view_all_urls'][$tabId];
+            $header_content = sprintf(
+                '<div class="mb-6 flex items-center justify-between">
+                    <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                        <div class="w-1 h-6 bg-%s-600 mr-3"></div>
+                        %s
+                        <span class="ml-2 text-sm font-normal text-gray-500">(%d %s)</span>
+                    </h3>
+                    <a href="%s" class="inline-flex items-center gap-2 text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors group">
+                        View All %s
+                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>',
+                esc_attr($tabId === 'all' ? 'gray' : ($tabId === 'news' ? 'blue' : ($tabId === 'events' ? 'green' : 'orange'))),
+                esc_html($tab['label']),
+                $total_posts,
+                $total_posts === 1 ? 'item' : 'items',
+                esc_url($view_all_url),
+                esc_html($tab['label'])
+            );
+        } else {
+            // Standard header without View All
+            $header_content = sprintf(
+                '<div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                        <div class="w-1 h-6 bg-%s-600 mr-3"></div>
+                        %s
+                        <span class="ml-2 text-sm font-normal text-gray-500">(%d %s)</span>
+                    </h3>
+                </div>',
+                esc_attr($tabId === 'all' ? 'gray' : ($tabId === 'news' ? 'blue' : ($tabId === 'events' ? 'green' : 'orange'))),
+                esc_html($tab['label']),
+                $total_posts,
+                $total_posts === 1 ? 'item' : 'items'
+            );
+        }
+        
         // Add the grid of news cards
-        $content .= '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">';
+        $content = $header_content . '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">';
         
         if ($posts_query->have_posts()) {
             while ($posts_query->have_posts()) {
@@ -243,54 +299,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 HTML;
 }
-
-/**
- * Custom pagination function that preserves tab parameters
- * Call this instead of clean_pagination() when you need tab-aware pagination
- */
-function clean_pagination_with_tabs($args = []) {
-    // Get current tab from URL
-    $current_tab = isset($_GET['tab']) ? sanitize_text_field($_GET['tab']) : null;
-    
-    // Call original pagination function
-    ob_start();
-    clean_pagination($args);
-    $pagination = ob_get_clean();
-    
-    // If we have a tab parameter, modify all pagination URLs
-    if ($current_tab) {
-        $pagination = preg_replace_callback(
-            '/href="([^"]*)"/',
-            function($matches) use ($current_tab) {
-                $url = $matches[1];
-                return 'href="' . esc_url(add_query_arg('tab', $current_tab, $url)) . '"';
-            },
-            $pagination
-        );
-    }
-    
-    echo $pagination;
-}
-
-/**
- * Usage Examples:
- * 
- * Basic usage with pagination:
- * renderTabNavigationWithCards();
- * 
- * Custom configuration:
- * renderTabNavigationWithCards([
- *     'posts_per_page' => 9,
- *     'tabs' => [
- *         ['id' => 'recent', 'label' => 'Recent Posts'],
- *         ['id' => 'popular', 'label' => 'Popular'],
- *         ['id' => 'featured', 'label' => 'Featured']
- *     ],
- *     'query_args' => [
- *         'recent' => ['orderby' => 'date', 'order' => 'DESC'],
- *         'popular' => ['orderby' => 'comment_count', 'order' => 'DESC'],
- *         'featured' => ['meta_key' => 'featured_post', 'meta_value' => '1']
- *     ]
- * ]);
- */
 ?>

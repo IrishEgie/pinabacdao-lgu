@@ -30,7 +30,7 @@ get_header();
                                         <?php echo display_service_icon(get_field('department_icon'), 'text-3xl text-primary-600'); ?>
                                     </div>
                                 <?php endif; ?>
-                                <div>
+                                <div class="flex-1">
                                     <h1 class="text-4xl font-bold text-gray-900"><?php the_title(); ?></h1>
                                     <?php if (get_field('acronym')): ?>
                                         <p class="text-lg text-gray-600 mt-1">(<?php the_field('acronym'); ?>)</p>
@@ -41,6 +41,11 @@ get_header();
                                             <?php echo get_field('parent_department')->post_title; ?>
                                         </p>
                                     <?php endif; ?>
+                                </div>
+                                <div
+                                    class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
+                                    <?php echo get_service_icon_svg('share', 'w-6 h-6 text-primary-500');
+                                    echo do_shortcode('[addtoany]'); ?>
                                 </div>
                             </div>
                         </div>

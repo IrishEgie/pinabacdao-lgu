@@ -23,23 +23,25 @@ get_header();
                     <?php echo get_service_icon_svg('star', 'w-6 h-6 text-primary-600'); ?>
                     <h2 class="text-2xl text-gray-800">Featured</h2>
                 </div>
-                
+
                 <!-- Featured Carousel -->
                 <div class="relative w-full mb-8">
 
                 </div>
-                
+
                 <!-- Latest Updates Section -->
                 <div class="flex items-center space-x-4 mb-8">
                     <?php echo get_service_icon_svg('bell', 'w-6 h-6 text-primary-600'); ?>
                     <h2 class="text-2xl text-gray-800">Latest Updates</h2>
                 </div>
-                
+
                 <!-- Tab Navigation with News Cards -->
                 <div>
                     <?php
                     renderTabNavigationWithCards([
                         'posts_per_page' => 9,
+                        'show_view_all' => true,
+                        'view_all_threshold' => 9, // Show "View All" if more than 6 posts
                         'tabs' => [
                             ['id' => 'all', 'label' => 'All'],
                             ['id' => 'news', 'label' => 'News'],
@@ -88,6 +90,12 @@ get_header();
                                     ]
                                 ]
                             ]
+                        ],
+                        // Customize these URLs to match your site structure
+                        'view_all_urls' => [
+                            'news' => home_url('/news/'),
+                            'events' => home_url('/events/'),
+                            'announcements' => home_url('/announcements/')
                         ]
                     ]);
                     ?>

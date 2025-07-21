@@ -77,18 +77,8 @@ get_header();
                                     </span>
                                 </div>
                             </div>
-
-                            <!-- Featured Image -->
-                            <?php if (has_post_thumbnail()): ?>
-                                <div class="rounded-lg overflow-hidden shadow-md mb-6">
-                                    <?php the_post_thumbnail('large', ['class' => 'w-full h-auto object-cover']); ?>
-                                </div>
-                            <?php endif; ?>
-
-
-
                             <!-- Share Buttons -->
-                            <div class="flex space-x-2">
+                            <div class="flex space-x-2 mb-4">
                                 <div
                                     class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border border-input bg-white hover:shadow-md hover:text-primary-500 h-9 rounded-md px-3">
                                     <?php echo get_service_icon_svg('share', 'w-6 h-6 text-primary-500');
@@ -96,6 +86,12 @@ get_header();
                                     echo do_shortcode('[addtoany]'); ?>
                                 </div>
                             </div>
+                            <!-- Featured Image -->
+                            <?php if (has_post_thumbnail()): ?>
+                                <div class="rounded-lg overflow-hidden shadow-md mb-6">
+                                    <?php the_post_thumbnail('large', ['class' => 'w-full h-auto object-cover']); ?>
+                                </div>
+                            <?php endif; ?>
                         </div>
 
 
