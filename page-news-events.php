@@ -39,6 +39,7 @@ get_header();
                 <div>
                     <?php
                     renderTabNavigationWithCards([
+                        'posts_per_page' => 9,
                         'tabs' => [
                             ['id' => 'all', 'label' => 'All'],
                             ['id' => 'news', 'label' => 'News'],

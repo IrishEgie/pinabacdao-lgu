@@ -76,7 +76,7 @@ get_header();
                                     $post_date = get_the_date('F j, Y');
                                     $expiry_date = get_field('announcement_expiry');
                                     $priority = get_field('announcement_priority');
-                                    $priority_color = 'orange'; // default
+                                    $priority_color = 'blue'; // default
                                     
                                     if ($priority === 'High') {
                                         $priority_color = 'red';
@@ -88,38 +88,35 @@ get_header();
                                     
                                     $day = get_the_date('d');
                                     ?>
-<a href="<?php the_permalink(); ?>" class="block group">
-    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
-        <div class="flex flex-col md:flex-row md:items-center gap-4">
-            <div class="flex-shrink-0">
-                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $priority_color; ?>-100 text-<?php echo $priority_color; ?>-600 font-bold">
-                    <?php echo $day; ?>
-                </span>
-            </div>
-            <div class="flex-1 min-w-0">
-                <h3 class="text-lg font-bold text-gray-600 group-hover:text-primary-600 transition duration-150 ease-in-out">
-                    <?php the_title(); ?>
-                </h3>
-                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
-                    <span>Posted on: <?php echo $post_date; ?></span>
-                    <?php if ($expiry_date) : ?>
-                        <span>Expires on: <?php echo date('F j, Y', strtotime($expiry_date)); ?></span>
-                    <?php endif; ?>
-                    <span class="text-<?php echo $priority_color; ?>-600">Priority: <?php echo $priority ?: 'Normal'; ?></span>
-                </div>
-                <div class="mt-2 text-gray-600">
-                    <?php the_excerpt(); ?>
-                </div>
-            </div>
-            <div class="flex-shrink-0">
-                <span class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $priority_color; ?>-700 bg-<?php echo $priority_color; ?>-100 group-hover:bg-<?php echo $priority_color; ?>-200 transition duration-150 ease-in-out">
-                    View Details
-                </span>
-            </div>
-        </div>
-    </div>
-</a>
-
+                                    <div class="p-6 hover:bg-gray-50 transition duration-150 ease-in-out">
+                                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                                            <div class="flex-shrink-0">
+                                                <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $priority_color; ?>-100 text-<?php echo $priority_color; ?>-600 font-bold">
+                                                    <?php echo $day; ?>
+                                                </span>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <h3 class="text-lg font-medium text-gray-900 hover:text-primary-600 transition duration-150 ease-in-out">
+                                                    <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                                </h3>
+                                                <div class="flex flex-wrap gap-4 mt-1 text-sm text-gray-500">
+                                                    <span>Posted on: <?php echo $post_date; ?></span>
+                                                    <?php if ($expiry_date) : ?>
+                                                        <span>Expires on: <?php echo date('F j, Y', strtotime($expiry_date)); ?></span>
+                                                    <?php endif; ?>
+                                                    <span class="text-<?php echo $priority_color; ?>-600">Priority: <?php echo $priority ?: 'Normal'; ?></span>
+                                                </div>
+                                                <div class="mt-2 text-gray-600">
+                                                    <?php the_excerpt(); ?>
+                                                </div>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <a href="<?php the_permalink(); ?>" class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $priority_color; ?>-700 bg-<?php echo $priority_color; ?>-100 hover:bg-<?php echo $priority_color; ?>-200 transition duration-150 ease-in-out">
+                                                    View Details
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <?php
                                 endwhile;
                             else :
@@ -131,43 +128,11 @@ get_header();
                         </div>
                         
                         <!-- Pagination -->
-                        <div class="bg-gray-50 px-6 py-4 flex items-center justify-between border-t border-gray-200">
-                            <div class="flex-1 flex justify-between sm:hidden">
-                                <?php previous_posts_link('Previous'); ?>
-                                <?php next_posts_link('Next'); ?>
-                            </div>
-                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                                <div>
-                                    <p class="text-sm text-gray-700">
-                                        <?php
-                                        global $wp_query;
-                                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                                        $per_page = get_query_var('posts_per_page');
-                                        $total = $wp_query->found_posts;
-                                        $first = ($per_page * $paged) - $per_page + 1;
-                                        $last = min($per_page * $paged, $total);
-                                        printf(
-                                            'Showing <span class="font-medium">%1$d</span> to <span class="font-medium">%2$d</span> of <span class="font-medium">%3$d</span> results',
-                                            $first,
-                                            $last,
-                                            $total
-                                        );
-                                        ?>
-                                    </p>
-                                </div>
-                                <div>
-                                    <?php
-                                    the_posts_pagination(array(
-                                        'mid_size' => 2,
-                                        'prev_text' => '<span class="sr-only">Previous</span>' . get_service_icon_svg('arrow-left'),
-                                        'next_text' => '<span class="sr-only">Next</span>' . get_service_icon_svg('arrow-right'),
-                                        'screen_reader_text' => ' ',
-                                        'type' => 'list'
-                                    ));
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
+                        <?php clean_pagination([
+    'show_numbers' => 20,
+    'prev_text' => 'Previous', 
+    'next_text' => 'Next'
+]);?>
                     </div>
                 </div>
             </div>

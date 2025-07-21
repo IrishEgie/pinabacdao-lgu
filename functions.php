@@ -28,6 +28,7 @@ function theme_setup() {
     require_once get_template_directory() . '/template-parts/cards/highlight-card.php';
     require_once get_template_directory() . '/template-parts/cards/officials-card.php';
     require_once get_template_directory() . '/template-parts/sections/tab-nav.php';
+    require_once get_template_directory() . '/template-parts/sections/pagination.php';
     // Load components functionality
     require_once get_template_directory() . '/includes/breadcrumbs.php';
     require_once get_template_directory() . '/includes/breadcrumbs-template.php';
