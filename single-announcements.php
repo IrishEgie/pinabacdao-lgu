@@ -127,7 +127,7 @@ get_header();
                         <!-- Full Announcement Content -->
                         <div class="bg-white rounded-lg shadow-md p-6">
                             <h2 class="text-2xl font-bold text-gray-900 mb-4">Full Announcement Details</h2>
-                            <div class="prose max-w-none text-gray-700">
+                            <div class="prose content-area max-w-none text-gray-700">
                                 <?php the_content(); ?>
                             </div>
                         </div>

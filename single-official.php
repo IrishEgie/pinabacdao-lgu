@@ -146,7 +146,7 @@ get_header();
                                             <?php endif; ?>
                                             <div class="p-8">
                                                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Biography</h2>
-                                                <div class="text-gray-600">
+                                                <div class="content-area text-gray-600">
                                                     <?php if (get_field('biography')): ?>
                                                         <?php echo wpautop(get_field('biography')); ?>
                                                     <?php else: ?>

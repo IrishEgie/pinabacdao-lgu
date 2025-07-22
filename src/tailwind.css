@@ -67,11 +67,25 @@
         background-color: var(--color-primary);
         color: var(--color-secondary-text);
     }
+    /* In your global CSS or inside a Tailwind @layer */
+    .content-area ul {
+        @apply list-disc ml-6 text-gray-600 text-base leading-relaxed;
+    }
 
+    .content-area ol {
+        @apply list-decimal ml-6 text-gray-600 text-base leading-relaxed;
+    }
+
+    .content-area li {
+        @apply mb-2;
+    }
+    .content-area h2 {
+        @apply text-2xl font-bold text-gray-700;
+    }
     /* Add similar classes for other colors */
 
     h2 {
-        @apply text-3xl font-bold;
+        @apply text-2xl font-bold;
     }
     h3 {
         @apply text-xl font-bold ;
@@ -85,7 +99,8 @@
     a {
         @apply text-primary-600 text-sm font-medium transition-colors duration-300 rounded-md text-primary relative;
     }
-
-
+    li {
+        @apply text-gray-600 text-base leading-relaxed mb-2;
+    }
 
 }

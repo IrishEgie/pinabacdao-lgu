@@ -623,11 +623,45 @@ body {
   color: var(--color-secondary-text);
 }
 
+/* In your global CSS or inside a Tailwind @layer */
+
+.content-area ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.content-area ol {
+  margin-left: 1.5rem;
+  list-style-type: decimal;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+}
+
+.content-area li {
+  margin-bottom: 0.5rem;
+}
+
+.content-area h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
+}
+
 /* Add similar classes for other colors */
 
 h2 {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
   font-weight: 700;
 }
 
@@ -661,6 +695,15 @@ a {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  line-height: 1.625;
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
 }
 
 .container {
@@ -1527,6 +1570,11 @@ a {
   border-color: rgb(234 88 12 / var(--tw-border-opacity, 1));
 }
 
+.border-primary-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(217 240 226 / var(--tw-border-opacity, 1));
+}
+
 .border-primary-200 {
   --tw-border-opacity: 1;
   border-color: rgb(183 225 202 / var(--tw-border-opacity, 1));
@@ -1644,6 +1692,10 @@ a {
 .bg-primary-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(40 224 96 / var(--tw-bg-opacity, 1));
+}
+
+.bg-primary-500\/10 {
+  background-color: rgb(40 224 96 / 0.1);
 }
 
 .bg-primary-600 {
@@ -1780,6 +1832,12 @@ a {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-white {
+  --tw-gradient-from: #fff var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-black\/20 {
   --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -1803,6 +1861,14 @@ a {
   --tw-gradient-to: #d9f0e2 var(--tw-gradient-to-position);
 }
 
+.to-primary-50 {
+  --tw-gradient-to: #f0f9f4 var(--tw-gradient-to-position);
+}
+
+.to-primary-500 {
+  --tw-gradient-to: #28e060 var(--tw-gradient-to-position);
+}
+
 .to-primary-600 {
   --tw-gradient-to: #2e7a56 var(--tw-gradient-to-position);
 }
@@ -1815,16 +1881,16 @@ a {
   --tw-gradient-to: #ffa300 var(--tw-gradient-to-position);
 }
 
+.to-secondary\/5 {
+  --tw-gradient-to: rgb(255 163 0 / 0.05) var(--tw-gradient-to-position);
+}
+
 .to-transparent {
   --tw-gradient-to: transparent var(--tw-gradient-to-position);
 }
 
 .to-white {
   --tw-gradient-to: #fff var(--tw-gradient-to-position);
-}
-
-.to-secondary\/5 {
-  --tw-gradient-to: rgb(255 163 0 / 0.05) var(--tw-gradient-to-position);
 }
 
 .object-contain {
@@ -2371,6 +2437,11 @@ a {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-gray-100\/50 {
+  --tw-shadow-color: rgb(243 244 246 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .ring-offset-white {
   --tw-ring-offset-color: #fff;
 }
@@ -2683,6 +2754,11 @@ a {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.hover\:shadow-gray-200\/50:hover {
+  --tw-shadow-color: rgb(229 231 235 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .focus\:border-primary-500:focus {
   --tw-border-opacity: 1;
   border-color: rgb(40 224 96 / var(--tw-border-opacity, 1));
@@ -2799,6 +2875,10 @@ a {
 .group:hover .group-hover\:text-primary-700 {
   --tw-text-opacity: 1;
   color: rgb(38 98 70 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
 }
 
 .peer:disabled ~ .peer-disabled\:cursor-not-allowed {

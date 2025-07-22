@@ -96,7 +96,7 @@ get_header();
 
 
                         <!-- Content -->
-                        <article class="max-w-none grid gap-4">
+                        <article class="content-area max-w-none grid gap-4">
                             <?php the_content(); ?>
                         </article>
 

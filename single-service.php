@@ -46,7 +46,7 @@ get_header();
                     <!-- Service Content -->
                     <div class="p-6">
                         <!-- Service Description -->
-                        <div class="prose max-w-none mb-8">
+                        <div class="prose content-area max-w-none mb-8">
                             <?php the_content(); ?>
                         </div>
 
