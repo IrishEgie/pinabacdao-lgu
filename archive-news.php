@@ -10,8 +10,8 @@ get_header();
 <div class="min-h-screen bg-gray-50">
     <!-- Dynamic Page Banner -->
     <div><?php pageBanner([
-    'title' => 'News Archive',
-    'subtitle' => 'Stay updated with our latest news and announcements'
+        'title' => 'News Archive',
+        'subtitle' => 'Stay updated with our latest news and announcements'
     ]); ?></div>
 
     <!-- Dynamic Breadcrumbs -->
@@ -27,7 +27,8 @@ get_header();
                         <div class="border-b border-gray-200 p-4 bg-gray-50">
                             <div class="flex flex-wrap items-center gap-4">
                                 <div class="relative w-full md:w-auto">
-                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <select
+                                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                         <option>All Categories</option>
                                         <?php
                                         $categories = get_categories();
@@ -36,12 +37,14 @@ get_header();
                                         }
                                         ?>
                                     </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <?php get_service_icon_svg('arrow-down')?>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <?php get_service_icon_svg('arrow-down') ?>
                                     </div>
                                 </div>
                                 <div class="relative w-full md:w-auto">
-                                    <select class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                                    <select
+                                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
                                         <option>All Years</option>
                                         <?php
                                         $years = get_posts(array(
@@ -61,64 +64,73 @@ get_header();
                                         }
                                         ?>
                                     </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                        <?php get_service_icon_svg('arrow-down')?>
+                                    <div
+                                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                        <?php get_service_icon_svg('arrow-down') ?>
                                     </div>
                                 </div>
-                                <button class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                                <button
+                                    class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
                                     Filter
                                 </button>
                             </div>
                         </div>
-                        
+
                         <!-- Archive List -->
-<div class="divide-y divide-gray-200">
-    <?php
-    if (have_posts()) :
-        while (have_posts()) : the_post();
-            $post_date = get_the_date('F j, Y');
-            $categories = get_the_category();
-            $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'Uncategorized';
-            $category_color = !empty($categories) ? get_term_meta($categories[0]->term_id, 'category_color', true) : 'primary';
-            $day = get_the_date('d');
-            ?>
-            <a href="<?php the_permalink(); ?>" class="block p-6 hover:bg-gray-50 transition duration-150 ease-in-out group">
-                <div class="flex flex-col md:flex-row md:items-center gap-4">
-                    <div class="flex-shrink-0">
-                        <span class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $category_color; ?>-100 text-<?php echo $category_color; ?>-600 font-bold">
-                            <?php echo $day; ?>
-                        </span>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary-600 transition duration-150 ease-in-out">
-                            <?php the_title(); ?>
-                        </h3>
-                        <p class="text-sm text-gray-500 mt-1">Posted in <span class="text-<?php echo $category_color; ?>-600"><?php echo $category_name; ?></span> on <?php echo $post_date; ?></p>
-                        <p class="mt-2 text-gray-600"><?php echo get_the_excerpt(); ?></p>
-                    </div>
-                    <div class="flex-shrink-0">
-                        <span class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $category_color; ?>-700 bg-<?php echo $category_color; ?>-100 group-hover:bg-<?php echo $category_color; ?>-200 transition duration-150 ease-in-out">
-                            Read More
-                        </span>
-                    </div>
-                </div>
-            </a>
-        <?php
-        endwhile;
-    else :
-        ?>
-        <div class="p-6">
-            <p class="text-gray-600">No news articles found.</p>
-        </div>
-    <?php endif; ?>
-</div>
-                        
+                        <div class="divide-y divide-gray-200">
+                            <?php
+                            if (have_posts()):
+                                while (have_posts()):
+                                    the_post();
+                                    $post_date = get_the_date('F j, Y');
+                                    $categories = get_the_category();
+                                    $category_name = !empty($categories) ? esc_html($categories[0]->name) : 'Uncategorized';
+                                    $category_color = !empty($categories) ? get_term_meta($categories[0]->term_id, 'category_color', true) : 'primary';
+                                    $day = get_the_date('d');
+                                    ?>
+                                    <a href="<?php the_permalink(); ?>"
+                                        class="block p-6 hover:bg-gray-50 transition duration-150 ease-in-out group">
+                                        <div class="flex flex-col md:flex-row md:items-center gap-4">
+                                            <div class="flex-shrink-0">
+                                                <span
+                                                    class="inline-flex items-center justify-center h-12 w-12 rounded-full bg-<?php echo $category_color; ?>-100 text-<?php echo $category_color; ?>-600 font-bold">
+                                                    <?php echo $day; ?>
+                                                </span>
+                                            </div>
+                                            <div class="flex-1 min-w-0">
+                                                <h3
+                                                    class="text-lg font-bold text-gray-900 group-hover:text-primary-600 transition duration-150 ease-in-out">
+                                                    <?php the_title(); ?>
+                                                </h3>
+                                                <p class="text-sm text-gray-500 mt-1">Posted in <span
+                                                        class="text-<?php echo $category_color; ?>-600"><?php echo $category_name; ?></span>
+                                                    on <?php echo $post_date; ?></p>
+                                                <p class="mt-2 text-gray-600"><?php echo get_the_excerpt(); ?></p>
+                                            </div>
+                                            <div class="flex-shrink-0">
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md text-<?php echo $category_color; ?>-700 bg-<?php echo $category_color; ?>-100 group-hover:bg-<?php echo $category_color; ?>-200 transition duration-150 ease-in-out">
+                                                    Read More
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <?php
+                                endwhile;
+                            else:
+                                ?>
+                                <div class="p-6">
+                                    <p class="text-gray-600">No news articles found.</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
                         <!-- Pagination -->
                         <?php clean_pagination([
-    'show_numbers' => 20,
-    'prev_text' => 'Previous', 
-    'next_text' => 'Next'
-]);?>
+                            'show_numbers' => 20,
+                            'prev_text' => 'Previous',
+                            'next_text' => 'Next'
+                        ]); ?>
                     </div>
                 </div>
             </div>
