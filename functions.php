@@ -41,6 +41,7 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/post-types/news.php';
     require_once get_template_directory() . '/includes/post-types/events.php';
     require_once get_template_directory() . '/includes/post-types/announcements.php';
+    require_once get_template_directory() . '/includes/post-types/documents.php';
 }
 add_action('after_setup_theme', 'theme_setup');
 
@@ -151,7 +152,8 @@ function custom_gutenberg_control($can_edit, $post_type) {
     $classic_editor_post_types = array(         
         'events',        
         'announcements', 
-        'department',    
+        'department',
+        'document',    
         'official',
         'service'       
     );
@@ -165,3 +167,8 @@ function custom_gutenberg_control($can_edit, $post_type) {
     return $can_edit;
 }
 add_filter('use_block_editor_for_post_type', 'custom_gutenberg_control', 10, 2);
+
+function remove_default_posts_menu() {
+    remove_menu_page('edit.php');
+}
+add_action('admin_menu', 'remove_default_posts_menu');

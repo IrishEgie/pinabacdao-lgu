@@ -80,7 +80,7 @@
         @apply mb-2;
     }
     .content-area h2 {
-        @apply text-2xl font-bold text-gray-700;
+        @apply text-2xl font-bold text-gray-800;
     }
     /* Add similar classes for other colors */
 
