@@ -1774,6 +1774,12 @@ a {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-primary\/5 {
+  --tw-gradient-from: rgb(40 224 96 / 0.05) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(40 224 96 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-black\/20 {
   --tw-gradient-to: rgb(0 0 0 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(0 0 0 / 0.2) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -1815,6 +1821,10 @@ a {
 
 .to-white {
   --tw-gradient-to: #fff var(--tw-gradient-to-position);
+}
+
+.to-secondary\/5 {
+  --tw-gradient-to: rgb(255 163 0 / 0.05) var(--tw-gradient-to-position);
 }
 
 .object-contain {
