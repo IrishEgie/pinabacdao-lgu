@@ -276,7 +276,6 @@ get_header();
                     <?php endif; ?>
                 </div>
 
-                <!-- Sidebar -->
                 <!-- Sidebar - Right Side -->
                 <div class="w-full lg:w-80 xl:w-80">
                     <aside class="space-y-6 top-8">
@@ -427,39 +426,82 @@ get_header();
                             }
                         endif;
 
-                        // Documents
-                        $documents = get_field('documents');
-                        if ($documents):
-                            $doc_content = [];
+// Get related documents
+$related_documents = get_field('documents'); // Make sure this matches your relationship field name
 
-                            for ($i = 1; $i <= 5; $i++) {
-                                $doc_key = 'document_' . $i;
-                                if (!empty($documents[$doc_key])) {
-                                    // Get the file name without extension
-                                    $file_name = pathinfo($documents[$doc_key]['filename'], PATHINFO_FILENAME);
-                                    // Replace underscores and hyphens with spaces
-                                    $display_name = str_replace(['_', '-'], ' ', $file_name);
-                                    // Capitalize first letter of each word
-                                    $display_name = ucwords($display_name);
-
-                                    $doc_content[] = [
-                                        'type' => 'link',
-                                        'title' => '',
-                                        'content' => $display_name,
-                                        'icon' => 'file-text',
-                                        'link' => esc_url($documents[$doc_key]['url']),
-                                        'target' => '_blank'
-                                    ];
-                                }
-                            }
-
-                            if (!empty($doc_content)) {
-                                get_template_part('template-parts/sections/sidebar-dynamic', null, [
-                                    'title' => 'Department Documents',
-                                    'content' => $doc_content
-                                ]);
-                            }
-                        endif;
+if ($related_documents):
+    $doc_content = [];
+    
+    foreach ($related_documents as $document_post):
+        // Get the file field from the related document
+        $document_file = get_field('document_file', $document_post->ID);
+        
+        if ($document_file):
+            // Get document title (fallback to filename if no title)
+            $display_name = get_the_title($document_post);
+            if (empty($display_name)) {
+                $display_name = pathinfo($document_file['filename'], PATHINFO_FILENAME);
+            }
+            
+            // Clean up the display name
+            $display_name = str_replace(['_', '-'], ' ', $display_name);
+            $display_name = ucwords($display_name);
+            
+            // Get document number if available
+            $document_number = get_field('document_number', $document_post->ID);
+            if ($document_number) {
+                $display_name = $document_number . ' - ' . $display_name;
+            }
+            
+            // Get document type if available
+            $document_types = wp_get_post_terms($document_post->ID, 'document_type');
+            $type_name = '';
+            if (!empty($document_types) && !is_wp_error($document_types)) {
+                $type_name = $document_types[0]->name;
+                $display_name = $display_name . ' (' . $type_name . ')';
+            }
+            
+            // Get meta information
+            $meta_info = [];
+            if ($date_issued = get_field('document_date_issued', $document_post->ID)) {
+                $meta_info[] = 'Issued: ' . $date_issued;
+            }
+            if ($issuing_office = get_field('document_issuing_office', $document_post->ID)) {
+                $meta_info[] = 'Office: ' . get_the_title($issuing_office);
+            }
+            
+            $doc_content[] = [
+                'type' => 'link',
+                'title' => '',
+                'content' => $display_name,
+                'icon' => 'file-text',
+                'link' => esc_url($document_file['url']),
+                'target' => '_blank',
+                'class' => !empty($meta_info) ? 'mb-2' : '',
+                'after_content' => !empty($meta_info) ? 
+                    '<div class="text-xs text-gray-500 mt-1 pl-6">' . implode(' • ', $meta_info) . '</div>' : 
+                    ''
+            ];
+        endif;
+    endforeach;
+    
+    // Output using sidebar-dynamic component
+    if (!empty($doc_content)) {
+        get_template_part('template-parts/sections/sidebar-dynamic', null, [
+            'title' => 'Department Documents',
+            'subtitle' => 'Official documents and publications',
+            'content' => $doc_content,
+            'button' => [
+                'show' => true,
+                'icon' => 'search',
+                'text' => 'View All Documents',
+                'alignment' => 'center',
+                'url' => get_post_type_archive_link('document') . '?issuing_office=' . get_the_ID(),
+                'target' => '_self'
+            ]
+        ]);
+    }
+endif;
 
                         // Quick Links
                         get_template_part('template-parts/sections/sidebar-dynamic', null, [
