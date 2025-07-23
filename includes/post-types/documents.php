@@ -125,7 +125,6 @@ add_action('init', 'insert_default_document_terms');
 add_filter('manage_document_posts_columns', 'set_custom_document_columns');
 function set_custom_document_columns($columns) {
     unset($columns['date']);
-    $columns['document_number'] = __('Document Number', 'text_domain');
     $columns['document_type'] = __('Type', 'text_domain');
     $columns['issuing_office'] = __('Issuing Office', 'text_domain');
     $columns['date_issued'] = __('Date Issued', 'text_domain');
