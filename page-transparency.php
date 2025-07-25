@@ -36,7 +36,7 @@ get_header();
         <h2 class="text-2xl font-bold text-gray-800 mb-2">Document Categories</h2>
         <p class="text-gray-600 mb-6">Organized access to public information and reports</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <?php
             // Get all document types with counts
             $document_types = get_terms([
@@ -46,33 +46,35 @@ get_header();
             
             // Define icons for each document type
             $type_icons = [
-                'Ordinance' => 'gavel',
-                'Executive Order' => 'file-text',
-                'Memorandum' => 'clipboard',
-                'Circular' => 'file-text',
-                'Resolution' => 'file-text',
-                'Policy' => 'file-text',
-                'Guideline' => 'file-text',
-                'Notice' => 'bell'
+                'Ordinance' => '⚖️',
+                'Executive Order' => '📄',
+                'Memorandum' => '📋',
+                'Circular' => '📄',
+                'Resolution' => '📄',
+                'Policy' => '📄',
+                'Guideline' => '📄',
+                'Notice' => '🔔'
             ];
             
-            foreach ($document_types as $type) {
-                $icon = isset($type_icons[$type->name]) ? $type_icons[$type->name] : 'file-text';
-                $count = $type->count;
-                
-                echo '
-                <a href="#' . sanitize_title($type->name) . '" class="border bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
-                    <div class="p-6">
-                        <div class="flex items-center space-x-4 mb-4">
-                            ' . get_service_icon_svg($icon, 'w-8 h-8 text-primary-600') . '
-                            <div>
-                                <h3 class="text-xl font-bold text-gray-800">' . esc_html($type->name) . '</h3>
-                                <p class="text-sm text-primary-600">' . $count . ' document' . ($count != 1 ? 's' : '') . '</p>
+            if ($document_types && !is_wp_error($document_types)) {
+                foreach ($document_types as $type) {
+                    $icon = isset($type_icons[$type->name]) ? $type_icons[$type->name] : '📄';
+                    $count = $type->count;
+                    
+                    echo '
+                    <a href="#' . sanitize_title($type->name) . '" class="border bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
+                        <div class="p-5">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">' . $icon . '</span>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">' . esc_html($type->name) . '</h3>
+                                    <p class="text-xs text-blue-600">' . $count . ' document' . ($count != 1 ? 's' : '') . '</p>
+                                </div>
                             </div>
+                            <p class="text-sm text-gray-600 mt-2">Browse all ' . esc_html($type->name) . ' documents</p>
                         </div>
-                        <p class="text-gray-600">Browse all ' . esc_html($type->name) . ' documents issued by the municipality</p>
-                    </div>
-                </a>';
+                    </a>';
+                }
             }
             ?>
         </div>
@@ -83,14 +85,20 @@ get_header();
         <h2 class="text-2xl font-bold text-gray-800 mb-2">Recent Documents</h2>
         <p class="text-gray-600 mb-6">Latest transparency reports and public documents</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <?php
             // Get recent documents
             $recent_docs = new WP_Query([
                 'post_type' => 'document',
-                'posts_per_page' => 3,
+                'posts_per_page' => 6,
                 'orderby' => 'date',
-                'order' => 'DESC'
+                'order' => 'DESC',
+                'meta_query' => [
+                    [
+                        'key' => 'document_file',
+                        'compare' => 'EXISTS'
+                    ]
+                ]
             ]);
             
             if ($recent_docs->have_posts()) {
@@ -99,20 +107,29 @@ get_header();
                     $document_file = get_field('document_file');
                     $document_type = wp_get_post_terms(get_the_ID(), 'document_type');
                     $type_name = !empty($document_type) ? $document_type[0]->name : 'Document';
+                    $document_number = get_field('document_number');
+                    $date_issued = get_field('document_date_issued');
+                    $issuing_office = get_field('document_issuing_office');
                     
-                    $issuance_data = [
-                        'title' => get_the_title(),
-                        'type' => $type_name,
-                        'description' => get_the_excerpt(),
-                        'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
-                        'fileSize' => size_format($document_file['filesize'], 1),
-                        'date' => get_the_date('M j, Y'),
-                        'downloadUrl' => $document_file['url']
-                    ];
-                    
-                    get_template_part('template-parts/cards/issuance-card', null, ['issuance' => $issuance_data]);
+                    if ($document_file) {
+                        $doc_data = [
+                            'title' => $document_number ? $document_number . ' - ' . get_the_title() : get_the_title(),
+                            'type' => $type_name,
+                            'description' => get_the_excerpt(),
+                            'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
+                            'fileSize' => size_format($document_file['filesize'], 1),
+                            'date' => $date_issued ? date('M j, Y', strtotime($date_issued)) : get_the_date('M j, Y'),
+                            'downloadUrl' => $document_file['url'],
+                            'showType' => true,
+                            'showSize' => true
+                        ];
+                        
+                        get_template_part('template-parts/cards/doc-card', null, ['doc' => $doc_data]);
+                    }
                 }
                 wp_reset_postdata();
+            } else {
+                echo '<p class="text-gray-500 col-span-full text-center py-8">No recent documents found.</p>';
             }
             ?>
         </div>
@@ -124,10 +141,11 @@ get_header();
         <p class="text-gray-600 mb-6">Local laws, orders, and resolutions enacted by the municipality</p>
 
         <!-- Document Types Navigation -->
+        <?php if ($document_types && !is_wp_error($document_types)): ?>
         <div class="flex flex-wrap gap-2 mb-6">
             <?php foreach ($document_types as $type): ?>
                 <a href="#<?php echo sanitize_title($type->name); ?>" 
-                   class="px-4 py-2 bg-primary-100 text-primary-800 rounded-full text-sm font-medium hover:bg-primary-200 transition-colors">
+                   class="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors">
                     <?php echo esc_html($type->name); ?>
                 </a>
             <?php endforeach; ?>
@@ -136,18 +154,15 @@ get_header();
         <?php foreach ($document_types as $type): ?>
             <div id="<?php echo sanitize_title($type->name); ?>" class="mb-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <?php 
-                    $icon = isset($type_icons[$type->name]) ? $type_icons[$type->name] : 'file-text';
-                    echo get_service_icon_svg($icon, 'text-primary-600 w-6 h-6'); 
-                    ?>
+                    <span class="text-blue-600"><?php echo $type_icons[$type->name] ?? '📄'; ?></span>
                     <?php echo esc_html($type->name); ?>
                 </h3>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <?php
                     $type_docs = new WP_Query([
                         'post_type' => 'document',
-                        'posts_per_page' => 6,
+                        'posts_per_page' => 3,
                         'orderby' => 'date',
                         'order' => 'DESC',
                         'tax_query' => [
@@ -155,6 +170,12 @@ get_header();
                                 'taxonomy' => 'document_type',
                                 'field' => 'term_id',
                                 'terms' => $type->term_id,
+                            ]
+                        ],
+                        'meta_query' => [
+                            [
+                                'key' => 'document_file',
+                                'compare' => 'EXISTS'
                             ]
                         ]
                     ]);
@@ -164,49 +185,76 @@ get_header();
                             $type_docs->the_post();
                             $document_file = get_field('document_file');
                             $document_number = get_field('document_number');
+                            $date_issued = get_field('document_date_issued');
                             
-                            $issuance_data = [
-                                'title' => $document_number ? $document_number . ' - ' . get_the_title() : get_the_title(),
-                                'type' => $type->name,
-                                'description' => get_the_excerpt(),
-                                'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
-                                'fileSize' => size_format($document_file['filesize'], 1),
-                                'date' => get_the_date('M j, Y'),
-                                'downloadUrl' => $document_file['url']
-                            ];
-                            
-                            get_template_part('template-parts/cards/issuance-card', null, ['issuance' => $issuance_data]);
+                            if ($document_file) {
+                                $doc_data = [
+                                    'title' => $document_number ? $document_number . ' - ' . get_the_title() : get_the_title(),
+                                    'type' => $type->name,
+                                    'description' => get_the_excerpt(),
+                                    'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
+                                    'fileSize' => size_format($document_file['filesize'], 1),
+                                    'date' => $date_issued ? date('M j, Y', strtotime($date_issued)) : get_the_date('M j, Y'),
+                                    'downloadUrl' => $document_file['url'],
+                                    'showType' => false, // Don't show type since it's already in the section
+                                    'showSize' => true
+                                ];
+                                
+                                get_template_part('template-parts/cards/doc-card', null, ['doc' => $doc_data]);
+                            }
                         }
                         wp_reset_postdata();
                     } else {
-                        echo '<p class="text-gray-500">No ' . esc_html($type->name) . ' documents found.</p>';
+                        echo '<p class="text-gray-500 text-sm">No ' . esc_html($type->name) . ' documents found.</p>';
                     }
                     ?>
                 </div>
                 
-                <?php if ($type_docs->found_posts > 6): ?>
-                    <div class="mt-6 text-center">
+                <?php if ($type->count > 3): ?>
+                    <div class="mt-4">
                         <a href="<?php echo get_term_link($type); ?>" 
-                           class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700">
-                            View All <?php echo esc_html($type->name); ?> Documents
+                           class="text-sm text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                            View all <?php echo esc_html($type->name); ?> documents
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
                         </a>
                     </div>
                 <?php endif; ?>
             </div>
         <?php endforeach; ?>
+        <?php endif; ?>
     </section>
 
-    <!-- Enhanced Freedom of Information Section -->
-    <section class="bg-gradient-to-r from-primary-50 to-indigo-50 rounded-lg shadow-md p-6 mb-12">
+    <!-- Freedom of Information Section -->
+    <section class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 mb-12">
         <h2 class="text-2xl font-bold text-gray-800 mb-2">Freedom of Information (FOI)</h2>
         <p class="text-gray-600 mb-6">Your constitutional right to access public information</p>
 
-        <div class="space-y-8">
-            <?php 
-            get_template_part('template-parts/sections/transparency-seal');
-            get_template_part('template-parts/sections/transparency-hri');
-            get_template_part('template-parts/sections/transparency-foi');
-            ?>   
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl">📋</span>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Request Information</h3>
+                <p class="text-sm text-gray-600">Submit your FOI request for public documents</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl">⏱️</span>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">15-Day Response</h3>
+                <p class="text-sm text-gray-600">We respond to all requests within 15 working days</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl">🆓</span>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Free Access</h3>
+                <p class="text-sm text-gray-600">No fees for standard information requests</p>
+            </div>
         </div>
     </section>
 </div>
