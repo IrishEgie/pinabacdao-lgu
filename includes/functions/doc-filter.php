@@ -45,22 +45,37 @@ function filter_documents_query($query) {
         ]);
     }
     
-    // Year filter
-    if (isset($_GET['document_year']) && !empty($_GET['document_year'])) {
+    // Recent documents filter (last 30 days)
+    if (isset($_GET['recent_documents']) && $_GET['recent_documents'] == '1') {
         $meta_query[] = [
             'key' => 'document_date_issued',
-            'value' => sanitize_text_field($_GET['document_year']),
-            'compare' => 'LIKE',
+            'value' => date('Y-m-d', strtotime('-30 days')),
+            'compare' => '>=',
+            'type' => 'DATE'
         ];
+        $query->set('orderby', 'meta_value');
+        $query->set('meta_key', 'document_date_issued');
+        $query->set('order', 'DESC');
     }
-    
-    // Month filter
-    if (isset($_GET['document_month']) && !empty($_GET['document_month'])) {
-        $meta_query[] = [
-            'key' => 'document_date_issued',
-            'value' => '-' . str_pad(sanitize_text_field($_GET['document_month']), 2, '0', STR_PAD_LEFT) . '-',
-            'compare' => 'LIKE',
-        ];
+    // Standard year/month filter
+    else {
+        // Year filter
+        if (isset($_GET['document_year']) && !empty($_GET['document_year'])) {
+            $meta_query[] = [
+                'key' => 'document_date_issued',
+                'value' => sanitize_text_field($_GET['document_year']),
+                'compare' => 'LIKE',
+            ];
+        }
+        
+        // Month filter
+        if (isset($_GET['document_month']) && !empty($_GET['document_month'])) {
+            $meta_query[] = [
+                'key' => 'document_date_issued',
+                'value' => '-' . str_pad(sanitize_text_field($_GET['document_month']), 2, '0', STR_PAD_LEFT) . '-',
+                'compare' => 'LIKE',
+            ];
+        }
     }
     
     // Office filter
@@ -77,3 +92,10 @@ function filter_documents_query($query) {
     }
 }
 add_action('pre_get_posts', 'filter_documents_query');
+
+/**
+ * Get link for recent documents (last 30 days)
+ */
+function get_recent_documents_link() {
+    return add_query_arg('recent_documents', '1', get_post_type_archive_link('document'));
+}
