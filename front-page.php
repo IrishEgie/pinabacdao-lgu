@@ -196,94 +196,12 @@ get_header();
     </div>
   </section>
 
-  <!-- Projects Section -->
-  <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-12">
-        <div>
-          <h2 class="text-3xl font-bold text-gray-800 mb-4">Ongoing Projects</h2>
-          <p class="text-lg text-gray-600">Building a better future together</p>
-        </div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-          class="lucide lucide-trending-up w-8 h-8 text-secondary-600">
-          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-          <polyline points="16 7 22 7 22 13" />
-        </svg>
-      </div>
+  <div class="text-center my-12">
+    <a href="/government" class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
+      View Local Government 
+    </a>
+  </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <?php
-        $projects = array(
-          array(
-            'title' => 'Municipal Hospital Expansion',
-            'description' => 'Expansion of the municipal hospital to include new emergency department and specialized care units.',
-            'status' => 'ongoing',
-            'progress' => 75,
-            'budget' => '₱50,000,000',
-            'location' => 'Poblacion, Pinabacdao',
-            'startDate' => 'Jan 2024',
-            'endDate' => 'Dec 2024'
-          ),
-          array(
-            'title' => 'Rural Road Network Improvement',
-            'description' => 'Upgrading and paving of rural roads to improve transportation and economic opportunities.',
-            'status' => 'ongoing',
-            'progress' => 60,
-            'budget' => '₱25,000,000',
-            'location' => 'Various Barangays',
-            'startDate' => 'Mar 2024',
-            'endDate' => 'Jun 2025'
-          )
-        );
-
-        foreach ($projects as $project) {
-          echo '
-          <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow duration-300">
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-4">
-                <h3 class="text-xl font-semibold">' . esc_html($project['title']) . '</h3>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-600">
-                  ' . ucfirst($project['status']) . '
-                </span>
-              </div>
-              <p class="text-gray-600 mb-6">' . esc_html($project['description']) . '</p>
-              
-              <div class="mb-4">
-                <div class="flex justify-between text-sm text-gray-600 mb-1">
-                  <span>Progress</span>
-                  <span>' . esc_html($project['progress']) . '%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-primary h-2.5 rounded-full" style="width: ' . esc_attr($project['progress']) . '%"></div>
-                </div>
-              </div>
-              
-              <div class="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <p class="text-gray-500">Budget</p>
-                  <p class="font-medium">' . esc_html($project['budget']) . '</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Location</p>
-                  <p class="font-medium">' . esc_html($project['location']) . '</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">Start Date</p>
-                  <p class="font-medium">' . esc_html($project['startDate']) . '</p>
-                </div>
-                <div>
-                  <p class="text-gray-500">End Date</p>
-                  <p class="font-medium">' . esc_html($project['endDate']) . '</p>
-                </div>
-              </div>
-            </div>
-          </div>';
-        }
-        ?>
-      </div>
-    </div>
-  </section>
 
   <!-- Transparency Section -->
   <section id="transparency" class="py-16 bg-gray-50">
