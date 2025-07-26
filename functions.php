@@ -35,7 +35,8 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/breadcrumbs.php';
     require_once get_template_directory() . '/includes/breadcrumbs-template.php';
     require_once get_template_directory() . '/includes/page-banner.php';
-    require_once get_template_directory() . '/includes/carousel-function.php';
+    require get_theme_file_path( '/includes/functions/doc-filter.php' );
+    require get_theme_file_path( '/includes/functions/carousel-function.php' );
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';
@@ -44,6 +45,8 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/post-types/events.php';
     require_once get_template_directory() . '/includes/post-types/announcements.php';
     require_once get_template_directory() . '/includes/post-types/documents.php';
+    
+
 }
 add_action('after_setup_theme', 'theme_setup');
 

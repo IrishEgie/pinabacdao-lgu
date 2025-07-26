@@ -34,16 +34,6 @@ function enqueue_carousel_scripts() {
 add_action('wp_enqueue_scripts', 'enqueue_carousel_scripts', 20); // Higher priority to load after theme scripts
 
 /**
- * Include the carousel template part
- */
-function include_carousel_templates() {
-    // Include the carousel template
-    require_once get_template_directory() . '/template-parts/sections/news-carousel.php';
-    
-}
-add_action('after_setup_theme', 'include_carousel_templates');
-
-/**
  * Add custom image size for carousel items
  */
 function add_carousel_image_sizes() {

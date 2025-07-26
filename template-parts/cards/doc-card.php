@@ -33,12 +33,12 @@ $showSize = $doc['showSize'] ?? true;
 
 <a href="<?php echo esc_url($downloadUrl); ?>" 
    target="_blank" 
-   class="block border rounded-lg p-4 hover:shadow-md transition-all duration-200 hover:border-blue-200 group cursor-pointer bg-white">
+   class="block border rounded-lg p-4 hover:shadow-md transition-all duration-200 hover:border-primary-200 group cursor-pointer bg-white">
    
     <!-- Header with type and file info -->
     <div class="flex items-start justify-between mb-2">
         <?php if ($showType): ?>
-            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded group-hover:bg-blue-200 transition-colors">
+            <span class="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded group-hover:bg-primary-200 transition-colors">
                 <?php echo esc_html($type); ?>
             </span>
         <?php endif; ?>
@@ -53,7 +53,7 @@ $showSize = $doc['showSize'] ?? true;
     </div>
     
     <!-- Document title -->
-    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-800 transition-colors">
+    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary-800 transition-colors">
         <?php echo esc_html($title); ?>
     </h3>
     
@@ -72,7 +72,7 @@ $showSize = $doc['showSize'] ?? true;
             </span>
         <?php endif; ?>
         
-        <div class="flex items-center text-blue-600 group-hover:text-blue-800 text-sm font-medium transition-colors">
+        <div class="flex items-center text-primary-600 group-hover:text-primary-800 text-sm font-medium transition-colors">
             <span>Download</span>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

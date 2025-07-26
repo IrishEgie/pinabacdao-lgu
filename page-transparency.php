@@ -46,29 +46,30 @@ get_header();
             
             // Define icons for each document type
             $type_icons = [
-                'Ordinance' => '⚖️',
-                'Executive Order' => '📄',
-                'Memorandum' => '📋',
-                'Circular' => '📄',
-                'Resolution' => '📄',
-                'Policy' => '📄',
-                'Guideline' => '📄',
-                'Notice' => '🔔'
+                'Ordinance' => 'gavel',
+                'Executive Order' => 'file-text',
+                'Memorandum' => 'clipboard',
+                'Circular' => 'file-text',
+                'Resolution' => 'file-text',
+                'Policy' => 'file-text',
+                'Guideline' => 'file-text',
+                'Notice' => 'bell'
             ];
             
             if ($document_types && !is_wp_error($document_types)) {
                 foreach ($document_types as $type) {
-                    $icon = isset($type_icons[$type->name]) ? $type_icons[$type->name] : '📄';
+                    $icon_name = isset($type_icons[$type->name]) ? $type_icons[$type->name] : 'file-text';
+                    $icon_svg = get_service_icon_svg($icon_name, 'w-8 h-8 text-primary-600');
                     $count = $type->count;
                     
                     echo '
                     <a href="#' . sanitize_title($type->name) . '" class="border bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer">
                         <div class="p-5">
                             <div class="flex items-center space-x-3">
-                                <span class="text-2xl">' . $icon . '</span>
+                                <div class="w-8 h-8">' . $icon_svg . '</div>
                                 <div>
                                     <h3 class="text-lg font-bold text-gray-800">' . esc_html($type->name) . '</h3>
-                                    <p class="text-xs text-blue-600">' . $count . ' document' . ($count != 1 ? 's' : '') . '</p>
+                                    <p class="text-xs text-primary-600">' . $count . ' document' . ($count != 1 ? 's' : '') . '</p>
                                 </div>
                             </div>
                             <p class="text-sm text-gray-600 mt-2">Browse all ' . esc_html($type->name) . ' documents</p>
@@ -145,7 +146,7 @@ get_header();
         <div class="flex flex-wrap gap-2 mb-6">
             <?php foreach ($document_types as $type): ?>
                 <a href="#<?php echo sanitize_title($type->name); ?>" 
-                   class="px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-xs font-medium hover:bg-blue-200 transition-colors">
+                   class="px-3 py-1.5 bg-primary-100 text-primary-800 rounded-full text-xs font-medium hover:bg-primary-200 transition-colors">
                     <?php echo esc_html($type->name); ?>
                 </a>
             <?php endforeach; ?>
@@ -154,7 +155,10 @@ get_header();
         <?php foreach ($document_types as $type): ?>
             <div id="<?php echo sanitize_title($type->name); ?>" class="mb-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                    <span class="text-blue-600"><?php echo $type_icons[$type->name] ?? '📄'; ?></span>
+                    <?php 
+                    $icon_name = isset($type_icons[$type->name]) ? $type_icons[$type->name] : 'file-text';
+                    echo display_service_icon($icon_name, 'w-6 h-6 text-primary-600');
+                    ?>
                     <?php echo esc_html($type->name); ?>
                 </h3>
                 
@@ -213,11 +217,9 @@ get_header();
                 <?php if ($type->count > 3): ?>
                     <div class="mt-4">
                         <a href="<?php echo get_term_link($type); ?>" 
-                           class="text-sm text-blue-600 hover:text-blue-800 font-medium inline-flex items-center">
+                           class="text-sm text-primary-600 hover:text-primary-800 font-medium inline-flex items-center">
                             View all <?php echo esc_html($type->name); ?> documents
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
+                            <?php echo display_service_icon('arrow-right', 'h-4 w-4 ml-1'); ?>
                         </a>
                     </div>
                 <?php endif; ?>
@@ -226,37 +228,25 @@ get_header();
         <?php endif; ?>
     </section>
 
-    <!-- Freedom of Information Section -->
-    <section class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg shadow-md p-6 mb-12">
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">Freedom of Information (FOI)</h2>
-        <p class="text-gray-600 mb-6">Your constitutional right to access public information</p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-2xl">📋</span>
-                </div>
-                <h3 class="font-semibold text-gray-800 mb-2">Request Information</h3>
-                <p class="text-sm text-gray-600">Submit your FOI request for public documents</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-2xl">⏱️</span>
-                </div>
-                <h3 class="font-semibold text-gray-800 mb-2">15-Day Response</h3>
-                <p class="text-sm text-gray-600">We respond to all requests within 15 working days</p>
-            </div>
-            
-            <div class="text-center">
-                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-2xl">🆓</span>
-                </div>
-                <h3 class="font-semibold text-gray-800 mb-2">Free Access</h3>
-                <p class="text-sm text-gray-600">No fees for standard information requests</p>
-            </div>
-        </div>
-    </section>
+    <!-- Need Help Section -->
+    <?php 
+    display_need_help_section([
+        'title' => 'Need Help With Transparency Documents?',
+        'description' => 'For assistance accessing public documents or filing FOI requests, contact our transparency office.',
+        'contact_info' => [
+            'phone' => '(555) 123-4567',
+            'email' => 'ict@municipality.gov'
+        ],
+        'mt_class' => 'mt-12',
+        'bg_color' => 'bg-primary-50',
+        'button' => [
+            'call_text' => 'Call Information Communications Tech Office',
+            'email_text' => 'Email Document Request',
+            'call_class' => 'border border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white',
+            'email_class' => 'bg-primary-600 hover:bg-primary-700 text-white'
+        ]
+    ]);
+    ?>
 </div>
 
 <?php get_footer(); ?>

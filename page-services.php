@@ -52,6 +52,25 @@ get_header();
                 </div>
             </div>
         </div>
+        <!-- Need Help Section -->
+        <?php 
+        display_need_help_section([
+            'title' => 'Need assistance?',
+            'description' => 'For assistance accessing public services contact our Municipal Service Officer.',
+            'contact_info' => [
+                'phone' => '(555) 123-4567',
+                'email' => 'services@municipality.gov'
+            ],
+            'mt_class' => 'mt-12',
+            'bg_color' => 'bg-primary-50',
+            'button' => [
+                'call_text' => 'Call Help Desk',
+                'email_text' => 'Email for Assistance',
+                'call_class' => 'border border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-white',
+                'email_class' => 'bg-primary-600 hover:bg-primary-700 text-white'
+            ]
+        ]);
+        ?>
 
 
 
