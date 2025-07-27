@@ -107,7 +107,6 @@ function insert_default_document_terms() {
     $default_terms = array(
         'Ordinance',
         'Executive Order',
-        'Memorandum',
         'Circular',
         'Resolution',
         'Policy',

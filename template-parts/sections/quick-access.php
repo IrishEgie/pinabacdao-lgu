@@ -18,7 +18,7 @@
 if (!function_exists('display_quick_access_section')) {
     function display_quick_access_section($args = array()) {
         $defaults = array(
-            'title' => 'Quick Access',
+            'title' => '',
             'items' => array(
                 array(
                     'icon' => 'file-text',

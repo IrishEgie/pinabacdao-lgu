@@ -48,7 +48,6 @@ get_header();
             $type_icons = [
                 'Ordinance' => 'gavel',
                 'Executive Order' => 'file-text',
-                'Memorandum' => 'clipboard',
                 'Circular' => 'file-text',
                 'Resolution' => 'file-text',
                 'Policy' => 'file-text',

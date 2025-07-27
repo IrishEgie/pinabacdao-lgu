@@ -28,7 +28,7 @@ if (!function_exists('pageBanner')) {
         // Default images with attribution
         $default_images = [
             'default' => [
-                'url' => 'https://images.unsplash.com/photo-1746928503465-c9e98b69211e?q=80&w=1720&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                'url' => get_template_directory_uri() . '/assets/images/default-photo.avif',
                 'credit' => 'Photo by Max Tcvetkov on Unsplash'
             ],
             'archive' => [

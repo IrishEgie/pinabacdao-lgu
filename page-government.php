@@ -35,7 +35,7 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
+
                 <?php
                 $executive_officials = new WP_Query([
                     'post_type' => 'official',
@@ -71,7 +71,7 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
+
                 <?php
                 $sanguniang_bayan = new WP_Query([
                     'post_type' => 'official',
@@ -107,7 +107,6 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
                 <?php
                 $department_heads = new WP_Query([
                     'post_type' => 'official',
@@ -143,11 +142,12 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
-                <?php 
-                echo get_template_part('template-parts/cards/departments-card', null, 
+                <?php
+                echo get_template_part(
+                    'template-parts/cards/departments-card',
+                    null,
                     array('group' => 'executive')
-                ); 
+                );
                 ?>
 
             </div>
@@ -160,11 +160,13 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
-                <?php 
-                echo get_template_part('template-parts/cards/departments-card', null, 
+
+                <?php
+                echo get_template_part(
+                    'template-parts/cards/departments-card',
+                    null,
                     array('group' => 'legislative')
-                ); 
+                );
                 ?>
 
             </div>
@@ -177,11 +179,13 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
-                                 <?php 
-                echo get_template_part('template-parts/cards/departments-card', null, 
+
+                <?php
+                echo get_template_part(
+                    'template-parts/cards/departments-card',
+                    null,
                     array('group' => 'administrative')
-                ); 
+                );
                 ?>
             </div>
             <div class="text-center mb-8">
@@ -193,11 +197,13 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
-                                 <?php 
-                echo get_template_part('template-parts/cards/departments-card', null, 
+
+                <?php
+                echo get_template_part(
+                    'template-parts/cards/departments-card',
+                    null,
                     array('group' => 'public_safety')
-                ); 
+                );
                 ?>
             </div>
             <div class="text-center mb-8">
@@ -208,12 +214,14 @@ get_header();
                     Specialized services and development programs
                 </p>
             </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- I want to add the cards here -->
-                                 <?php 
-                echo get_template_part('template-parts/cards/departments-card', null, 
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <?php
+                echo get_template_part(
+                    'template-parts/cards/departments-card',
+                    null,
                     array('group' => 'other')
-                ); 
+                );
                 ?>
             </div>
         </div>

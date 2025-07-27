@@ -20,7 +20,7 @@ $services_query = new WP_Query($args);
 ?>
 
 <!-- Services Section -->
-<section id="services" class="py-16 bg-gray-50">
+<section id="services" class="py-8 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <?php if ($services_query->have_posts()): ?>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
