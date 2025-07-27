@@ -10,7 +10,11 @@ get_header();
 
 <div class="min-h-screen bg-gray-50">
     <!-- Dynamic Page Banner -->
-    <div><?php pageBanner(); ?></div>
+    <div><?php pageBanner([
+        'background_image' => 'https://images.unsplash.com/photo-1640572114471-3f01541bce88?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'show_credit' => true,
+        'credit' => 'Photo by D Z (metacrypto) on Unsplash',
+    ]); ?></div>
 
     <!-- Dynamic Breadcrumbs -->
     <?php the_breadcrumbs(); ?>

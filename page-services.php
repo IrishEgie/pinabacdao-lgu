@@ -6,7 +6,11 @@ get_header();
 ?>
 
 <div class="min-h-screen bg-gray-50">
-    <?php pageBanner(); ?>
+    <?php pageBanner([
+        'background_image' => 'https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'show_credit' => true,
+        'credit' => 'Photo by Erik Mclean on Unsplash',
+    ]); ?>
     <?php the_breadcrumbs(); ?>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gray-50">

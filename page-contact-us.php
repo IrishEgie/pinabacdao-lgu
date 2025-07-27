@@ -148,7 +148,11 @@ get_header();
 ?>
 
 <!-- Dynamic Page Banner -->
-<div><?php pageBanner(); ?></div>
+<div><?php pageBanner([
+        'background_image' => 'https://images.unsplash.com/uploads/1413222992504f1b734a6/1928e537?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'show_credit' => true,
+        'credit' => 'Photo by Pavan Trikutam on Unsplash',
+]); ?></div>
 
 <!-- Dynamic Breadcrumbs -->
 <?php the_breadcrumbs(); ?>

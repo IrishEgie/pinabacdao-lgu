@@ -71,7 +71,10 @@ $documents_query = new WP_Query($query_args);
     <!-- Dynamic Page Banner -->
     <div><?php pageBanner([
         'title' => 'Documents Archive',
-        'subtitle' => 'Browse official documents, ordinances, and orders'
+        'subtitle' => 'Browse official documents, ordinances, and orders',
+        'background_image' => 'https://images.unsplash.com/photo-1496494218905-aa0568688625?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' ?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'show_credit' => true,
+        'credit' => 'Photo by Valentino Funghi on Unsplash',
     ]); ?></div>
 
     <!-- Dynamic Breadcrumbs -->

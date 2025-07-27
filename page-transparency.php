@@ -5,7 +5,11 @@ Template Name: Transparency Page
 get_header();
 ?>
 
-<div><?php pageBanner(); ?></div>
+<div><?php pageBanner([
+        'background_image' => 'https://images.unsplash.com/photo-1583521214690-73421a1829a9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'show_credit' => true,
+        'credit' => 'Photo by Wesley Tingley on Unsplash',
+]); ?></div>
 <?php the_breadcrumbs(); ?>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

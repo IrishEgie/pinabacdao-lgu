@@ -31,26 +31,6 @@ if (!function_exists('pageBanner')) {
                 'url' => get_template_directory_uri() . '/assets/images/default-photo.avif',
                 'credit' => 'Photo by Max Tcvetkov on Unsplash'
             ],
-            'archive' => [
-                'url' => 'https://images.unsplash.com/photo-1703114585390-cc095031ad84?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'credit' => 'Photo by Shino Nakamura on Unsplash'
-            ],
-            'author' => [
-                'url' => 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'credit' => 'Photo by Aaron Burden on Unsplash'
-            ],
-            'date' => [
-                'url' => 'https://images.unsplash.com/photo-1597768164194-b804b42bd61a?q=80&w=1071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'credit' => 'Photo by Zhuo Cheng you on Unsplash'
-            ],
-            'search' => [
-                'url' => 'https://images.unsplash.com/photo-1516382799247-87df95d790b7?q=80&w=1474&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'credit' => 'Photo by Agence Olloweb on Unsplash'
-            ],
-            'news' => [
-                'url' => 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                'credit' => 'Photo by AboutVision on Unsplash'
-            ],
         ];
 
         // Determine default image based on archive type
@@ -108,11 +88,16 @@ if (!function_exists('pageBanner')) {
                             </p>
                         <?php endif; ?>
 
-                        <?php if ($show_credit && !get_field('page_banner_background') && isset($default_image['credit'])): ?>
+                        <?php if ($show_credit && !empty($credit)): ?>
+                            <p class="image-credit text-xs text-white/60 mt-4">
+                                <?php echo esc_html($credit); ?>
+                            </p>
+                        <?php elseif ($show_credit && !get_field('page_banner_background') && isset($default_image['credit'])): ?>
                             <p class="image-credit text-xs text-white/60 mt-4">
                                 <?php echo esc_html($default_image['credit']); ?>
                             </p>
                         <?php endif; ?>
+
                     </div>
 
                     <?php if ($action_text): ?>
