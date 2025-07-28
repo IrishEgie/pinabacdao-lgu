@@ -2,14 +2,21 @@
   "name": "pinabacdao-lgu",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "dev": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --watch",
-    "build": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --minify"
-  },
+"scripts": {
+  "dev": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --watch",
+  "build": "tailwindcss -i ./src/tailwind.css -o ./assets/css/tailwind-output.css --minify",
+  "start": "wp-scripts start",
+  "build:blocks": "wp-scripts build",
+  "lint:js": "wp-scripts lint-js",
+  "lint:css": "wp-scripts lint-style",
+  "lint:pkg-json": "wp-scripts lint-pkg-json",
+  "format": "wp-scripts format"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@wordpress/scripts": "^30.20.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17"

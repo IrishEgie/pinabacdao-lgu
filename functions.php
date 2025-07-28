@@ -22,6 +22,7 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/header-customizer.php';
     require_once get_template_directory() . '/includes/footer-customizer.php';
     require_once get_template_directory() . '/includes/login-customizer.php';
+require_once get_template_directory() . '/includes/dashboard-customizer.php';
     // Include Icon functions
     require_once get_template_directory() . '/includes/icons.php';
     // Load cards templates
@@ -60,19 +61,13 @@ function theme_assets() {
         filemtime(get_template_directory() . '/assets/css/tailwind-output.css')
     );
     
-    // Main JS
-    wp_enqueue_script(
-        'theme-script',
-        get_template_directory_uri() . '/assets/js/script.js',
-        [],
-        filemtime(get_template_directory() . '/assets/js/script.js'),
-        true
-    );
+    // Load main JavaScript file (depends on jQuery, loaded in footer)
+    wp_enqueue_script('uni-script', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
     
-    wp_localize_script('theme-script', 'themeData', [
-        'ajaxUrl' => admin_url('admin-ajax.php'),
-        'homeUrl' => home_url('/')
-    ]);
+    wp_localize_script( 'pin-script', 'pinabacdaoData', array(
+        'root_url' => get_site_url(), 
+        'nonce' => wp_create_nonce( 'wp_rest' )
+    ) );
 
     // Enqueue Google Fonts
     wp_enqueue_style(
@@ -90,11 +85,6 @@ function theme_assets() {
         '6.4.0'
     );
 }
-// Add this to your functions.php
-function add_editor_styles() {
-    add_editor_style('/assets/css/editor-style.css');
-}
-add_action('after_setup_theme', 'add_editor_styles');
 /**
  * Disable the admin bar for users with roles lower than or equal to 'subscriber'.
  */
@@ -126,28 +116,6 @@ function custom_search_template($template) {
     }
     return $template;
 }
-
-// Keep your existing rewrite rules
-function custom_search_url_rewrite() {
-    if (is_search() && !empty($_GET['s'])) {
-        wp_redirect(home_url('/search/') . urlencode(get_query_var('s')));
-        exit();
-    }
-}
-add_action('template_redirect', 'custom_search_url_rewrite');
-
-function custom_search_rewrite_rule() {
-    add_rewrite_rule('^search/([^/]*)/?', 'index.php?s=$matches[1]', 'top');
-    add_rewrite_rule('^search/?', 'index.php?pagename=search', 'top');
-}
-add_action('init', 'custom_search_rewrite_rule');
-
-// Flush rewrite rules on theme activation (only once)
-function theme_activation() {
-    custom_search_rewrite_rule();
-    flush_rewrite_rules();
-}
-add_action('after_switch_theme', 'theme_activation');
 
 /**
  * Control Gutenberg editor for specific post types

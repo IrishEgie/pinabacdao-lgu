@@ -74,7 +74,7 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
         <a href="<?php echo esc_url(home_url('/services')); ?>"
           class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
           View All Services
-        <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5');?>
+          <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
         </a>
       </div>
 
@@ -86,7 +86,7 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
               <h2 class="text-3xl font-bold text-gray-800 mb-4">Latest News & Updates</h2>
               <p class="text-lg text-gray-600">Stay informed with the latest happenings</p>
             </div>
-            <?php echo get_service_icon_svg('bell', 'text-primary-600 h-9 w-9')?>
+            <?php echo get_service_icon_svg('bell', 'text-primary-600 h-9 w-9') ?>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -112,7 +112,7 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
             <a href="<?php echo esc_url(home_url('/news')); ?>"
               class="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-blue-600 hover:bg-blue-50 font-medium rounded-md transition-colors duration-300">
               View All News
-              <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-blue-600 w-5 h-5');?>
+              <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-blue-600 w-5 h-5'); ?>
             </a>
           </div>
         </div>
@@ -161,80 +161,80 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
         <a href="/government"
           class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
           View Local Government
-          <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5');?>  
+          <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
         </a>
 
       </div>
 
 
-<!-- Transparency Section -->
-<section id="transparency" class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
+      <!-- Transparency Section -->
+      <section id="transparency" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Transparency & Downloads</h2>
             <p class="text-lg text-gray-600">Access public documents and reports</p>
-        </div>
+          </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php
             // Query for documents
             $documents_query = new WP_Query([
-                'post_type' => 'document',
-                'posts_per_page' => 6,
-                'orderby' => 'date',
-                'order' => 'DESC',
-                'meta_query' => [
-                    [
-                        'key' => 'document_file',
-                        'compare' => 'EXISTS'
-                    ]
+              'post_type' => 'document',
+              'posts_per_page' => 6,
+              'orderby' => 'date',
+              'order' => 'DESC',
+              'meta_query' => [
+                [
+                  'key' => 'document_file',
+                  'compare' => 'EXISTS'
                 ]
+              ]
             ]);
 
             if ($documents_query->have_posts()) {
-                while ($documents_query->have_posts()) {
-                    $documents_query->the_post();
-                    
-                    // Get document data
-                    $document_file = get_field('document_file');
-                    $document_type = wp_get_post_terms(get_the_ID(), 'document_type');
-                    $type_name = !empty($document_type) ? $document_type[0]->name : 'Document';
-                    $document_number = get_field('document_number');
-                    $date_issued = get_field('document_date_issued');
-                    
-                    if ($document_file) {
-                        $doc_data = [
-                            'title' => $document_number ? $document_number . ' - ' . get_the_title() : get_the_title(),
-                            'type' => $type_name,
-                            'description' => get_the_excerpt(),
-                            'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
-                            'fileSize' => size_format($document_file['filesize'], 1),
-                            'date' => $date_issued ? date('M j, Y', strtotime($date_issued)) : get_the_date('M j, Y'),
-                            'downloadUrl' => $document_file['url'],
-                            'showType' => true,
-                            'showSize' => true
-                        ];
-                        
-                        // Use your existing doc-card template
-                        get_template_part('template-parts/cards/doc-card', null, ['doc' => $doc_data]);
-                    }
+              while ($documents_query->have_posts()) {
+                $documents_query->the_post();
+
+                // Get document data
+                $document_file = get_field('document_file');
+                $document_type = wp_get_post_terms(get_the_ID(), 'document_type');
+                $type_name = !empty($document_type) ? $document_type[0]->name : 'Document';
+                $document_number = get_field('document_number');
+                $date_issued = get_field('document_date_issued');
+
+                if ($document_file) {
+                  $doc_data = [
+                    'title' => $document_number ? $document_number . ' - ' . get_the_title() : get_the_title(),
+                    'type' => $type_name,
+                    'description' => get_the_excerpt(),
+                    'fileType' => pathinfo($document_file['filename'], PATHINFO_EXTENSION),
+                    'fileSize' => size_format($document_file['filesize'], 1),
+                    'date' => $date_issued ? date('M j, Y', strtotime($date_issued)) : get_the_date('M j, Y'),
+                    'downloadUrl' => $document_file['url'],
+                    'showType' => true,
+                    'showSize' => true
+                  ];
+
+                  // Use your existing doc-card template
+                  get_template_part('template-parts/cards/doc-card', null, ['doc' => $doc_data]);
                 }
-                wp_reset_postdata();
+              }
+              wp_reset_postdata();
             } else {
-                echo '<p class="col-span-full text-center text-gray-500">No documents found.</p>';
+              echo '<p class="col-span-full text-center text-gray-500">No documents found.</p>';
             }
             ?>
-        </div>
+          </div>
 
-        <div class="text-center mt-12">
+          <div class="text-center mt-12">
             <a href="<?php echo esc_url(home_url('/documents')); ?>"
-                class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 hover:bg-primary-50 font-medium rounded-md transition-colors duration-300">
-                View All Documents
-                <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-primary-600 w-5 h-5');?>
+              class="inline-flex items-center justify-center px-6 py-3 border border-primary-600 text-primary-600 hover:bg-primary-50 font-medium rounded-md transition-colors duration-300">
+              View All Documents
+              <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-primary-600 w-5 h-5'); ?>
             </a>
+          </div>
         </div>
-    </div>
-</section>
+      </section>
 
     </div>
   </div>
