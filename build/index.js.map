@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","mappings":";;;;AAAAA,KAAK,CAAC,8CAA8C,CAAC,C","sources":["webpack://pinabacdao-lgu/./src/index.js"],"sourcesContent":["alert('This is a test alert from the index.js file!');"],"names":["alert"],"sourceRoot":""}

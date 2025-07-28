@@ -22,7 +22,7 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/header-customizer.php';
     require_once get_template_directory() . '/includes/footer-customizer.php';
     require_once get_template_directory() . '/includes/login-customizer.php';
-require_once get_template_directory() . '/includes/dashboard-customizer.php';
+    require_once get_template_directory() . '/includes/dashboard-customizer.php';
     // Include Icon functions
     require_once get_template_directory() . '/includes/icons.php';
     // Load cards templates
@@ -53,6 +53,9 @@ add_action('after_setup_theme', 'theme_setup');
 
 // Enqueue styles and scripts
 function theme_assets() {
+        // Ensure jQuery is loaded
+    wp_enqueue_script('jquery');
+    
     // Main CSS
     wp_enqueue_style(
         'theme-style',
@@ -61,14 +64,21 @@ function theme_assets() {
         filemtime(get_template_directory() . '/assets/css/tailwind-output.css')
     );
     
-    // Load main JavaScript file (depends on jQuery, loaded in footer)
-    wp_enqueue_script('uni-script', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
+    // Load main JavaScript file
+    wp_enqueue_script('pin-script', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
     
     wp_localize_script( 'pin-script', 'pinabacdaoData', array(
         'root_url' => get_site_url(), 
         'nonce' => wp_create_nonce( 'wp_rest' )
     ) );
-
+    // Main CSS
+    wp_enqueue_style(
+        'theme-style',
+        get_template_directory_uri() . '/assets/css/tailwind-output.css',
+        [],
+        filemtime(get_template_directory() . '/assets/css/tailwind-output.css')
+    );
+    
     // Enqueue Google Fonts
     wp_enqueue_style(
         'google-fonts',
@@ -101,9 +111,7 @@ function disable_admin_bar_for_low_level_users() {
 }
 add_action('after_setup_theme', 'disable_admin_bar_for_low_level_users');
 add_action('wp_enqueue_scripts', 'theme_assets');
-add_filter('show_admin_bar', '__return_true');
 add_image_size( 'official-portrait', 600, 800, true ); // 3:4 ratio, hard crop
-
 function custom_search_template($template) {
     if (is_search()) {
         // Check if our custom search results page exists
@@ -145,3 +153,17 @@ function remove_default_posts_menu() {
     remove_menu_page('edit.php');
 }
 add_action('admin_menu', 'remove_default_posts_menu');
+
+// Only show admin bar for logged-in users with appropriate roles
+function control_admin_bar_display() {
+    if (!is_user_logged_in()) {
+        return false; // Never show for non-logged-in users
+    }
+    
+    $user = wp_get_current_user();
+    $allowed_roles = array('editor', 'administrator', 'author', 'contributor');
+    
+    // Only show for users with allowed roles
+    return array_intersect($allowed_roles, $user->roles) ? true : false;
+}
+add_filter('show_admin_bar', 'control_admin_bar_display');

@@ -259,44 +259,6 @@ function renderTabNavigationWithCards($args = []) {
     </div>
     {$tabContents}
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Handle client-side tab switching for better UX
-    const tabTriggers = document.querySelectorAll('.tab-trigger');
-    const tabContents = document.querySelectorAll('.tab-content');
-    
-    // Get active tab from URL or default to first
-    const urlParams = new URLSearchParams(window.location.search);
-    const activeTabFromURL = urlParams.get('tab');
-    
-    function updateActiveTab() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentTab = urlParams.get('tab') || tabTriggers[0]?.dataset.tab;
-        
-        tabTriggers.forEach(trigger => {
-            const isActive = trigger.dataset.tab === currentTab;
-            trigger.classList.toggle('bg-white', isActive);
-            trigger.classList.toggle('text-gray-900', isActive);
-            trigger.classList.toggle('shadow-sm', isActive);
-            trigger.classList.toggle('text-gray-500', !isActive);
-            trigger.classList.toggle('hover:text-gray-700', !isActive);
-        });
-        
-        tabContents.forEach(content => {
-            const shouldShow = content.dataset.tab === currentTab;
-            content.classList.toggle('hidden', !shouldShow);
-            content.classList.toggle('block', shouldShow);
-        });
-    }
-    
-    // Update tabs on page load
-    updateActiveTab();
-    
-    // Handle browser back/forward buttons
-    window.addEventListener('popstate', updateActiveTab);
-});
-</script>
 HTML;
 }
 ?>

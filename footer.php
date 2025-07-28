@@ -149,7 +149,7 @@
                 '© ' . date('Y') . ' ' . get_theme_mod('footer_municipality_name', 'Municipality') . '. All rights reserved.'
             );
             
-            if (is_user_logged_in()) wp_footer();
+wp_footer();
             ?>
         </div>
     </div>

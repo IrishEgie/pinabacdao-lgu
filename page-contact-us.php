@@ -385,20 +385,4 @@ get_header();
         </div>
     </div>
 </main>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('submit-btn');
-    const submitText = submitBtn.querySelector('.submit-text');
-    const loadingText = submitBtn.querySelector('.loading-text');
-
-    form.addEventListener('submit', function() {
-        submitBtn.disabled = true;
-        submitText.classList.add('hidden');
-        loadingText.classList.remove('hidden');
-    });
-});
-</script>
-
 <?php get_footer(); ?>
