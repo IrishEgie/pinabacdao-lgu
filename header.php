@@ -126,10 +126,10 @@ language_attributes(); ?>>
                         </div>
                     <?php endif; ?>
 
-                    <a href="<?php echo esc_url(home_url('/search' ) ); ?>"
-                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-50 transition-colors duration-300 h-9 px-3">
-                        <?php echo get_service_icon_svg('search', 'w-4 h-4')?>
-                    </a>
+<button class="js-search-toggle inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-50 transition-colors duration-300 h-9 px-3">
+    <?php echo get_service_icon_svg('search', 'w-4 h-4')?>
+    <span class="sr-only">Search</span>
+</button>
 
                     <!-- Mobile menu button -->
                     <button id="mobile-menu-button"

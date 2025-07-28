@@ -1,7 +1,12 @@
+/**
+ * Updated index.js with Search module integration
+ */
+
 import { TabNavigation } from './modules/TabNav';
 import { HeaderNavigation } from './modules/HeaderNav';
 import { ContactForm } from './modules/ContactForm';
 import { Accordion } from './modules/Accordion';
+import Search from './modules/Search.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -28,4 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
     accordionContainers.forEach(container => {
         new Accordion(container);
     });
+
+    // Initialize Search functionality
+    new Search();
+    
 });
