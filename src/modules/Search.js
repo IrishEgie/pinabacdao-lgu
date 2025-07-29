@@ -1,248 +1,444 @@
-/**
- * Search.js - Modern WordPress Search Overlay with Tailwind CSS
- * Features:
- * - Fullscreen overlay with animated transitions
- * - Three-column results layout
- * - Keyboard shortcuts (Ctrl/Cmd+Q to open, ESC to close)
- * - Loading state
- * - Responsive design
- */
 export default class Search {
   constructor() {
-    // Initialize properties
-    this.isOpen = false;
-    this.isLoading = false;
-    this.previousValue = '';
-    this.typingTimer = null;
-    
-    // DOM elements
     this.searchToggle = document.querySelector('.js-search-toggle');
     this.searchOverlay = null;
     this.searchInput = null;
-    this.searchResults = null;
+    this.closeButton = null;
+    this.resultsDiv = null;
+    this.isOverlayOpen = false;
+    this.isSpinnerVisible = false;
+    this.previousValue = '';
+    this.typingTimer = null;
+    this.currentPage = 1;
+    this.totalPages = 1;
+    this.currentResults = {};
+    this.hasSearched = false; // Track if user has performed a search
     
-    // Initialize if toggle exists
     if (this.searchToggle) {
       this.init();
     }
   }
 
   init() {
-    this.createSearchOverlay();
-    this.setupEventListeners();
-  }
-
-  createSearchOverlay() {
-    // Create overlay container
-    this.searchOverlay = document.createElement('div');
-    this.searchOverlay.className = 'fixed inset-0 z-[100] hidden bg-black/75 backdrop-blur-sm transition-opacity duration-300';
-    this.searchOverlay.style.opacity = '0';
-
-    // Create inner container
-    const container = document.createElement('div');
-    container.className = 'relative w-full h-full flex flex-col items-center pt-16 px-4 overflow-y-auto';
-
-    // Close button
-    const closeButton = document.createElement('button');
-    closeButton.className = 'absolute top-4 right-4 p-2 text-white hover:text-gray-300 transition-colors';
-    closeButton.innerHTML = `
-      <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-      <span class="sr-only">Close search</span>
-    `;
-    closeButton.addEventListener('click', () => this.close());
-
-    // Search input container
-    const inputContainer = document.createElement('div');
-    inputContainer.className = 'w-full max-w-3xl mb-8';
-
-    // Search input
-    this.searchInput = document.createElement('input');
-    this.searchInput.type = 'text';
-    this.searchInput.placeholder = 'Search the municipality website...';
-    this.searchInput.className = 'w-full px-6 py-4 text-lg rounded-lg border-0 focus:ring-2 focus:ring-primary-500 focus:outline-none bg-white/90 placeholder-gray-500 shadow-lg';
-    this.searchInput.autocomplete = 'off';
-
-    inputContainer.appendChild(this.searchInput);
-
-    // Results container
-    this.searchResults = document.createElement('div');
-    this.searchResults.className = 'w-full max-w-6xl flex-1 pb-20';
-
-    // Assemble the overlay
-    container.appendChild(closeButton);
-    container.appendChild(inputContainer);
-    container.appendChild(this.searchResults);
-    this.searchOverlay.appendChild(container);
-
-    // Add to DOM
-    document.body.appendChild(this.searchOverlay);
-  }
-
-  setupEventListeners() {
-    // Toggle search overlay
-    this.searchToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.toggle();
-    });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      // Ctrl/Cmd + Q to open
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q' && !this.isOpen) {
-        e.preventDefault();
-        this.open();
-      }
-      
-      // ESC to close
-      if (e.key === 'Escape' && this.isOpen) {
-        this.close();
-      }
-    });
-
-    // Search input events
-    this.searchInput.addEventListener('keyup', () => this.handleTyping());
-
-    // Focus input when overlay opens
-    this.searchOverlay.addEventListener('transitionend', () => {
-      if (this.isOpen) {
-        this.searchInput.focus();
-      }
-    });
-  }
-
-  handleTyping() {
-    const currentValue = this.searchInput.value;
+    this.createOverlay();
     
-    // Only proceed if value changed
-    if (currentValue !== this.previousValue) {
+    // Event listeners
+    this.searchToggle.addEventListener('click', () => {
+      this.openOverlay();
+      if (!this.hasSearched) {
+        this.getDefaultContent();
+      }
+    });
+    
+    this.closeButton.addEventListener('click', this.closeOverlay.bind(this));
+    
+    // Close when clicking outside or pressing Escape
+    this.searchOverlay.addEventListener('click', (e) => {
+      if (e.target === this.searchOverlay) {
+        this.closeOverlay();
+      }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.isOverlayOpen) {
+        this.closeOverlay();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'q' && !this.isOverlayOpen) {
+        e.preventDefault();
+        this.openOverlay();
+        if (!this.hasSearched) {
+          this.getDefaultContent();
+        }
+      }
+    });
+    
+    // Typing logic
+    this.searchInput.addEventListener('input', this.typingLogic.bind(this));
+  }
+
+  // Add new method to get default content
+  getDefaultContent() {
+    this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+    this.isSpinnerVisible = true;
+    
+    fetch(`${wpvars.home}/wp-json/custom/v1/search/default`)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => {
+        this.currentResults = data.results;
+        this.displayResults();
+        this.paginationDiv.classList.add('hidden');
+      })
+      .catch(error => {
+        console.error('Error loading default content:', error);
+        this.resultsDiv.innerHTML = `
+          <div class="text-center py-8">
+            <h3 class="text-lg font-medium text-gray-900">Browse Latest Content</h3>
+            <p class="mt-2 text-gray-500">Start typing to search the site</p>
+          </div>
+        `;
+      })
+      .finally(() => {
+        this.isSpinnerVisible = false;
+      });
+  }
+
+  // Modify typingLogic to track searches
+  typingLogic() {
+    if (this.searchInput.value !== this.previousValue) {
       clearTimeout(this.typingTimer);
       
-      if (currentValue) {
-        // Show loading state
-        if (!this.isLoading) {
-          this.searchResults.innerHTML = `
-            <div class="flex justify-center py-12">
-              <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-            </div>
-          `;
-          this.isLoading = true;
+      if (this.searchInput.value) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+          this.isSpinnerVisible = true;
         }
-        
-        // Debounce search
-        this.typingTimer = setTimeout(() => this.performSearch(), 500);
+        this.currentPage = 1;
+        this.typingTimer = setTimeout(() => {
+          this.hasSearched = true;
+          this.getResults();
+        }, 300);
       } else {
-        this.clearResults();
+        // When clearing search, show default content again if not already searching
+        if (this.hasSearched) {
+          this.resultsDiv.innerHTML = '';
+          this.paginationDiv.classList.add('hidden');
+          this.isSpinnerVisible = false;
+          this.hasSearched = false;
+          this.getDefaultContent();
+        }
       }
       
-      this.previousValue = currentValue;
+      this.previousValue = this.searchInput.value;
     }
   }
 
-  performSearch() {
-    // This is where you would implement actual search functionality
-    // For now, we'll use placeholder results
-    this.showPlaceholderResults();
-    
-    // In a real implementation, you would:
-    // 1. Make a fetch request to WordPress REST API
-    // 2. Process the results
-    // 3. Display them in the three-column layout
-    // Example:
-    // fetch(`${wpApiSettings.root}wp/v2/search?search=${encodeURIComponent(this.searchInput.value)}`)
-    //   .then(response => response.json())
-    //   .then(results => this.displayResults(results))
-    //   .catch(error => console.error('Search error:', error))
-    //   .finally(() => this.isLoading = false);
-  }
 
-  showPlaceholderResults() {
-    this.isLoading = false;
-    this.searchResults.innerHTML = `
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Column 1: General Information -->
-        <div>
-          <h2 class="text-xl font-bold text-white mb-4 pb-2 border-b border-white/20">General Information</h2>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Municipal Services</a></li>
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Public Announcements</a></li>
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Contact Information</a></li>
-          </ul>
-        </div>
-        
-        <!-- Column 2: Departments & Services -->
-        <div>
-          <h2 class="text-xl font-bold text-white mb-4 pb-2 border-b border-white/20">Departments</h2>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Mayor's Office</a></li>
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Treasurer's Office</a></li>
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Public Works</a></li>
-          </ul>
+  createOverlay() {
+    const homeUrl = (typeof wpvars !== 'undefined' && wpvars.home) ? wpvars.home : '/';
+    
+    const overlayHTML = `
+      <div class="search-overlay fixed inset-0 z-[9999] bg-white bg-opacity-95 invisible opacity-0 scale-[1.09] transition-all duration-300 overflow-y-auto overflow-x-hidden pointer-events-none">
+        <div class="container mx-auto px-4 py-8 relative pointer-events-auto">
+          <!-- Search Header -->
+          <div class="flex justify-between items-center mb-8 bg-gray-100 p-4 rounded-lg">
+            <div class="flex items-center w-full">
+              <svg class="search-overlay__icon w-8 h-8 mr-4 text-[#2e7a56]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <input type="text" id="search-term" class="search-term flex-grow bg-transparent border-none focus:outline-none text-gray-800 text-xl placeholder-gray-400" placeholder="What are you looking for?" autocomplete="off">
+            </div>
+            <button class="search-overlay__close text-3xl text-[#2e7a56] hover:text-[#1e5a3e] transition-colors">
+              &times;
+            </button>
+          </div>
           
-          <h2 class="text-xl font-bold text-white mt-8 mb-4 pb-2 border-b border-white/20">Services</h2>
-          <ul class="space-y-3">
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Business Permits</a></li>
-            <li><a href="#" class="text-white/90 hover:text-white hover:underline">Marriage License</a></li>
-          </ul>
-        </div>
-        
-        <!-- Column 3: News & Events -->
-        <div>
-          <h2 class="text-xl font-bold text-white mb-4 pb-2 border-b border-white/20">News & Events</h2>
-          <div class="space-y-4">
-            <div class="bg-white/10 p-4 rounded-lg">
-              <h3 class="font-semibold text-white">Town Fiesta 2023</h3>
-              <p class="text-white/80 text-sm mt-1">June 15-20, 2023</p>
-              <p class="text-white/90 mt-2">Annual celebration of our town's patron saint.</p>
-            </div>
-            <div class="bg-white/10 p-4 rounded-lg">
-              <h3 class="font-semibold text-white">Public Hearing</h3>
-              <p class="text-white/80 text-sm mt-1">July 5, 2023</p>
-              <p class="text-white/90 mt-2">Discussion of new municipal ordinances.</p>
-            </div>
+          <!-- Results Container -->
+          <div id="search-overlay__results" class="advanced-search__result"></div>
+          
+          <!-- Pagination -->
+          <div id="search-pagination" class="mt-8 flex justify-center items-center hidden">
+            <button id="prev-page" class="px-4 py-2 bg-[#2e7a56] text-white rounded-l-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+              Previous
+            </button>
+            <span class="px-4 py-2 bg-gray-100">
+              Page <span id="current-page">1</span> of <span id="total-pages">1</span>
+            </span>
+            <button id="next-page" class="px-4 py-2 bg-[#2e7a56] text-white rounded-r-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+              Next
+            </button>
           </div>
         </div>
       </div>
     `;
+    
+    document.body.insertAdjacentHTML('beforeend', overlayHTML);
+    
+    // Cache elements
+    this.searchOverlay = document.querySelector('.search-overlay');
+    this.searchInput = document.getElementById('search-term');
+    this.closeButton = document.querySelector('.search-overlay__close');
+    this.resultsDiv = document.getElementById('search-overlay__results');
+    this.paginationDiv = document.getElementById('search-pagination');
+    this.prevButton = document.getElementById('prev-page');
+    this.nextButton = document.getElementById('next-page');
+    this.currentPageEl = document.getElementById('current-page');
+    this.totalPagesEl = document.getElementById('total-pages');
+    
+    // Pagination event listeners
+    this.prevButton.addEventListener('click', () => {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.getResults();
+      }
+    });
+    
+    this.nextButton.addEventListener('click', () => {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.getResults();
+      }
+    });
   }
 
-  clearResults() {
-    this.searchResults.innerHTML = '';
-    this.isLoading = false;
+  typingLogic() {
+    if (this.searchInput.value !== this.previousValue) {
+      clearTimeout(this.typingTimer);
+      
+      if (this.searchInput.value) {
+        if (!this.isSpinnerVisible) {
+          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+          this.isSpinnerVisible = true;
+        }
+        this.currentPage = 1; // Reset to first page on new search
+        this.typingTimer = setTimeout(this.getResults.bind(this), 300); // 300ms debounce
+      } else {
+        this.resultsDiv.innerHTML = '';
+        this.paginationDiv.classList.add('hidden');
+        this.isSpinnerVisible = false;
+      }
+      
+      this.previousValue = this.searchInput.value;
+    }
   }
 
-  toggle() {
-    this.isOpen ? this.close() : this.open();
+  getResults() {
+    const searchTerm = this.searchInput.value.trim();
+    
+    if (!searchTerm) {
+      this.resultsDiv.innerHTML = '';
+      this.paginationDiv.classList.add('hidden');
+      return;
+    }
+    
+    fetch(`${wpvars.home}/wp-json/custom/v1/search?term=${encodeURIComponent(searchTerm)}&page=${this.currentPage}`)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => {
+        this.currentResults = data.results;
+        this.totalPages = Math.max(
+          Math.ceil(data.total.general / 10),
+          Math.ceil(data.total.news / 10),
+          Math.ceil(data.total.documents / 10)
+        );
+        
+        this.displayResults();
+        this.updatePagination();
+      })
+      .catch(error => {
+        console.error('Search error:', error);
+        this.resultsDiv.innerHTML = `
+          <div class="text-center py-8 text-red-600">
+            Error loading search results. Please try again.
+          </div>
+        `;
+      })
+      .finally(() => {
+        this.isSpinnerVisible = false;
+      });
   }
 
-open() {
-  if (this.isOpen) return;
-  
-  this.isOpen = true;
-  document.body.style.overflow = 'hidden';
-  document.documentElement.style.overflow = 'hidden';
-  this.searchOverlay.classList.remove('hidden');
-  
-  // Trigger opacity transition
-  requestAnimationFrame(() => {
-    this.searchOverlay.style.opacity = '1';
+displayResults() {
+    let html = `
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Site Search -->
+        <div class="advanced-search__column">
+          <section id="siteSearch" class="advanced-search__section">
+            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Site Search</h2>
+            <ul class="advanced-search__list space-y-3">
+    `;
+
+    // General Results (Left Column)
+    if (this.currentResults.general?.length) {
+      this.currentResults.general.forEach(item => {
+        html += `
+          <li class="advanced-search__list-item">
+            <a href="${item.link}" class="advanced-search__list-link group block p-3 hover:bg-gray-50 rounded-lg transition-colors">
+              <h3 class="advanced-search__list-title text-lg font-medium text-gray-900 group-hover:text-[#2e7a56]">${item.title}</h3>
+              <div class="advanced-search__list-subtitle text-gray-600 text-sm mt-1 line-clamp-2">${item.excerpt}</div>
+              <div class="advanced-search__list-meta text-xs text-gray-500 mt-1">${item.post_type}</div>
+            </a>
+          </li>
+        `;
+      });
+    } else {
+      html += `
+        <li class="text-gray-500 py-4">
+          No general results found
+        </li>
+      `;
+    }
+
+    html += `
+            </ul>
+          </section>
+        </div>
+        
+        <!-- Middle Column - News -->
+        <div class="advanced-search__column">
+          <section id="newsroom" class="advanced-search__section">
+            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Newsroom</h2>
+            <div class="space-y-4">
+    `;
+
+    // News Results (Middle Column)
+    if (this.currentResults.news?.length) {
+      this.currentResults.news.forEach(item => {
+        html += `
+          <article class="advanced-search__news-item">
+            <a href="${item.link}" class="group block">
+              ${item.image ? `
+                <figure class="advanced-search__news-figure overflow-hidden rounded-lg mb-2">
+                  <img src="${item.image}" 
+                       class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-300"
+                       alt="${item.title}">
+                </figure>
+              ` : ''}
+              <h3 class="advanced-search__news-title text-lg font-medium text-gray-900 group-hover:text-[#2e7a56] mb-1">${item.title}</h3>
+              <div class="advanced-search__news-excerpt text-gray-600 text-sm line-clamp-2">${item.excerpt}</div>
+            </a>
+          </article>
+        `;
+      });
+    } else {
+      html += `
+        <div class="text-gray-500 py-4">
+          No news results found
+        </div>
+      `;
+    }
+
+    html += `
+            </div>
+          </section>
+        </div>
+        
+        <!-- Right Column - Documents -->
+        <div class="advanced-search__column">
+          <section id="documents" class="advanced-search__section">
+            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Documents</h2>
+            <ul class="advanced-search__list space-y-3">
+    `;
+
+    // Documents Results (Right Column)
+if (this.currentResults.documents?.length) {
+  // Group documents by type (assuming type is available in the results)
+  const groupedDocuments = {};
+  this.currentResults.documents.forEach(doc => {
+    if (!groupedDocuments[doc.type]) {
+      groupedDocuments[doc.type] = [];
+    }
+    groupedDocuments[doc.type].push(doc);
   });
+
+  // Render each document group
+  for (const [type, docs] of Object.entries(groupedDocuments)) {
+    html += `
+      <div class="document-group">
+        <h3 class="text-lg font-medium text-gray-800 mb-3">${type}</h3>
+        <ul class="space-y-3">
+    `;
+    
+    docs.forEach(item => {
+      html += `
+        <li class="document-item bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+          <a href="${item.link}" 
+             target="_blank"
+             rel="noopener noreferrer"
+             class="block p-4 group">
+            <div class="flex justify-between items-start">
+              <div class="flex-1">
+                <h4 class="text-lg font-medium text-gray-900 group-hover:text-[#2e7a56] mb-1">${item.title}</h4>
+                <div class="flex items-center gap-3 text-sm">
+                  <span class="text-gray-500">${item.date}</span>
+                  <span class="text-gray-400">•</span>
+                  <span class="text-gray-500">${item.file_size || 'PDF'}</span>
+                </div>
+              </div>
+              <div class="ml-4 flex-shrink-0">
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-[#2e7a56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+            </div>
+          </a>
+        </li>
+      `;
+    });
+    
+    html += `
+        </ul>
+      </div>
+    `;
+  }
+
+  html += `
+      </div>
+    </section>
+  `;
 }
 
-close() {
-  if (!this.isOpen) return;
-  
-  this.isOpen = false;
-  this.searchOverlay.style.opacity = '0';
-  
-  setTimeout(() => {
-    this.searchOverlay.classList.add('hidden');
-    document.body.style.overflow = '';
-    document.documentElement.style.overflow = '';
-    this.searchInput.value = '';
-    this.clearResults();
-  }, 300);
+    html += `
+            </ul>
+          </section>
+        </div>
+      </div>
+    `;
+
+    // No results message (fallback)
+    if (!this.currentResults.general?.length && 
+        !this.currentResults.news?.length && 
+        !this.currentResults.documents?.length) {
+      html = `
+        <div class="text-center py-12 col-span-3">
+          <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="mt-2 text-lg font-medium text-gray-900">No results found</h3>
+          <p class="mt-1 text-gray-500">Try different search terms</p>
+        </div>
+      `;
+    }
+    
+    this.resultsDiv.innerHTML = html;
 }
+
+  updatePagination() {
+    this.currentPageEl.textContent = this.currentPage;
+    this.totalPagesEl.textContent = this.totalPages;
+    
+    this.prevButton.disabled = this.currentPage <= 1;
+    this.nextButton.disabled = this.currentPage >= this.totalPages;
+    
+    if (this.totalPages > 1) {
+      this.paginationDiv.classList.remove('hidden');
+    } else {
+      this.paginationDiv.classList.add('hidden');
+    }
+  }
+
+  openOverlay() {
+    this.searchOverlay.classList.remove('invisible', 'pointer-events-none');
+    this.searchOverlay.classList.add('visible', 'pointer-events-auto');
+    this.searchOverlay.style.opacity = '1';
+    this.searchOverlay.style.transform = 'scale(1)';
+    document.body.classList.add('overflow-hidden');
+    setTimeout(() => this.searchInput.focus(), 350);
+    this.isOverlayOpen = true;
+  }
+
+  closeOverlay() {
+    this.searchOverlay.style.opacity = '0';
+    this.searchOverlay.style.transform = 'scale(1.09)';
+    setTimeout(() => {
+      this.searchOverlay.classList.remove('visible', 'pointer-events-auto');
+      this.searchOverlay.classList.add('invisible', 'pointer-events-none');
+      document.body.classList.remove('overflow-hidden');
+    }, 300);
+    this.isOverlayOpen = false;
+  }
 }

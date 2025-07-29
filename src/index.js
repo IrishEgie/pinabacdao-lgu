@@ -1,7 +1,3 @@
-/**
- * Updated index.js with Search module integration
- */
-
 import { TabNavigation } from './modules/TabNav';
 import { HeaderNavigation } from './modules/HeaderNav';
 import { ContactForm } from './modules/ContactForm';
@@ -9,7 +5,6 @@ import { Accordion } from './modules/Accordion';
 import Search from './modules/Search.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
     // Initialize all tab navigations on the page
     document.querySelectorAll('[data-tab-navigation]').forEach(container => {
         new TabNavigation(container);
@@ -34,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         new Accordion(container);
     });
 
-    // Initialize Search functionality
+    // Initialize search functionality
     new Search();
-    
 });

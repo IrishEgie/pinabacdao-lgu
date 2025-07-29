@@ -38,6 +38,7 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/page-banner.php';
     require get_theme_file_path( '/includes/functions/doc-filter.php' );
     require get_theme_file_path( '/includes/functions/carousel-function.php' );
+    require get_theme_file_path( '/includes/functions/search-ep.php' );
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';
@@ -67,10 +68,12 @@ function theme_assets() {
     // Load main JavaScript file
     wp_enqueue_script('pin-script', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
     
-    wp_localize_script( 'pin-script', 'pinabacdaoData', array(
-        'root_url' => get_site_url(), 
-        'nonce' => wp_create_nonce( 'wp_rest' )
-    ) );
+    wp_localize_script('pin-script', 'wpvars', array(
+        'home' => home_url(),
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => wp_create_nonce('search_nonce')
+    ));
+
     // Main CSS
     wp_enqueue_style(
         'theme-style',
