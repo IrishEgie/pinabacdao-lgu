@@ -22,7 +22,6 @@ function theme_setup() {
     require_once get_template_directory() . '/includes/header-customizer.php';
     require_once get_template_directory() . '/includes/footer-customizer.php';
     require_once get_template_directory() . '/includes/login-customizer.php';
-    require_once get_template_directory() . '/includes/dashboard-customizer.php';
     // Include Icon functions
     require_once get_template_directory() . '/includes/icons.php';
     // Load cards templates
