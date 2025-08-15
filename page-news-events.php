@@ -23,6 +23,8 @@ get_header();
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid gap-8">
                 <!-- Featured Section -->
+
+<?php /*
                 <div class="flex items-center space-x-4">
                     <?php echo get_service_icon_svg('star', 'w-6 h-6 text-primary-600'); ?>
                     <h2 class="text-2xl text-gray-800">Featured</h2>
@@ -32,7 +34,7 @@ get_header();
                 <div class="relative w-full mb-8">
 
                 </div>
-
+*/?>
                 <!-- Latest Updates Section -->
                 <div class="flex items-center space-x-4 mb-8">
                     <?php echo get_service_icon_svg('bell', 'w-6 h-6 text-primary-600'); ?>

@@ -127,7 +127,17 @@ function custom_search_template($template) {
     }
     return $template;
 }
-
+add_filter('a2a_share_save_js_options', function($options) {
+    if (is_single()) {
+        $options['url'] = get_permalink();
+        $options['title'] = get_the_title();
+        
+        if (has_post_thumbnail()) {
+            $options['media'] = get_the_post_thumbnail_url(get_the_ID(), 'large');
+        }
+    }
+    return $options;
+});
 /**
  * Control Gutenberg editor for specific post types
  */
