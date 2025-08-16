@@ -4,30 +4,39 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        /* Brand Colors */
-        --color-primary: #28e060;
-        --color-secondary: #ffa300;
-        --color-tertiary: #66604a;
-        --color-alternate: #c8d7e4;
+:root {
+        /* Brand Colors - Filipino Flag Theme */
+        --color-primary: #1877f2;        /* Facebook Blue */
+        --color-secondary: #ce1126;      /* Filipino Flag Red */
+        --color-tertiary: #fcd116;       /* Filipino Flag Yellow/Gold */
+        --color-alternate: #0038a8;      /* Deep Filipino Flag Blue */
 
         /* Utility Colors */
-        --color-primary-text: #0b191e;
-        --color-secondary-text: #384e58;
-        --color-primary-bg: #fff1f1;
-        --color-secondary-bg: #ffffff;
+        --color-primary-text: #1f2937;   /* Clean dark gray */
+        --color-secondary-text: #4b5563; /* Medium gray */
+        --color-primary-bg: #ffffff;     /* Clean white */
+        --color-secondary-bg: #f9fafb;   /* Light gray */
 
-        /* Accent Colors */
-        --color-accent-1: rgba(77, 219, 134, 0.42);
-        --color-accent-2: rgba(146, 129, 99, 0.42);
-        --color-accent-3: rgba(108, 96, 74, 0.42);
-        --color-accent-4: rgba(255, 255, 255, 0.80);
+        /* Accent Colors - Filipino Theme */
+        --color-accent-1: rgba(24, 119, 242, 0.1);   /* Facebook blue tint */
+        --color-accent-2: rgba(206, 17, 38, 0.1);    /* Flag red tint */
+        --color-accent-3: rgba(252, 209, 22, 0.1);   /* Flag yellow tint */
+        --color-accent-4: rgba(0, 56, 168, 0.1);     /* Deep blue tint */
 
         /* Semantic Colors */
-        --color-success: #336a4a;
-        --color-error: #c4454d;
-        --color-warning: #f3c344;
-        --color-info: #ffffff;
+        --color-success: #16a34a;        /* Clean green */
+        --color-error: #ce1126;          /* Flag red */
+        --color-warning: #fcd116;        /* Flag yellow */
+        --color-info: #1877f2;           /* Facebook blue */
+
+        /* Extended LGU Colors */
+        --color-government: #0038a8;     /* Official government blue */
+        --color-heritage: #8b5a2b;       /* Filipino heritage brown */
+        
+        /* Priority Colors */
+        --color-priority-high: #ce1126;   /* Flag red */
+        --color-priority-medium: #fcd116; /* Flag yellow */
+        --color-priority-low: #1877f2;    /* Facebook blue */
     }
 
     html {

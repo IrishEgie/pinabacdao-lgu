@@ -242,20 +242,20 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
 </main>
 
 <!-- Emergency Contacts -->
-<section class="py-16 bg-red-600 text-white">
+<section class="py-16 bg-yellow-600 text-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center">
       <h2 class="text-3xl font-bold mb-8">Emergency Contacts</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+        <div class="bg-black/10 backdrop-blur-sm rounded-xl p-6">
           <h3 class="text-xl font-semibold mb-4">Police</h3>
           <p class="text-2xl font-bold text-white">117</p>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+        <div class="bg-black/10 backdrop-blur-sm rounded-xl p-6">
           <h3 class="text-xl font-semibold mb-4">Fire Department</h3>
           <p class="text-2xl font-bold text-white">116</p>
         </div>
-        <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+        <div class="bg-black/10 backdrop-blur-sm rounded-xl p-6">
           <h3 class="text-xl font-semibold mb-4">Medical Emergency</h3>
           <p class="text-2xl font-bold text-white">911</p>
         </div>

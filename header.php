@@ -55,7 +55,7 @@ language_attributes(); ?>>
             bottom: 0;
             left: 0;
             height: 2px;
-            background-color: #28e060; /* blue-500 */
+            background-color: #1877f2; /* blue-500 */
             /* blue-500 */
             transition: width 0.3s ease;
         }
