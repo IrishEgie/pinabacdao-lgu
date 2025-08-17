@@ -52,9 +52,10 @@ function create_news_cpt() {
         'has_archive'           => true,
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
-        'capability_type'       => 'post',
         'show_in_rest'          => true,
         'rewrite'               => array('slug' => 'news'),
+        'capability_type' => 'post',
+        'map_meta_cap'  => true,
     );
 
     register_post_type('news', $args);

@@ -83,6 +83,8 @@ function register_official_type_taxonomy() {
         'show_admin_column' => true,
         'show_in_rest'      => true,
         'rewrite'           => ['slug' => 'official-type'],
+        'capability_type' => 'officials',
+        'map_meta_cap'  => true,
     ];
 
     register_taxonomy('official_type', ['official'], $args);

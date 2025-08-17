@@ -99,7 +99,8 @@ function register_department_post_type() {
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'rewrite'               => ['slug' => 'department', 'with_front' => false],
-        'capability_type'       => 'post',
+        'capability_type'       => 'departments',
+        'map_meta_cap'  => true,
         'show_in_rest'          => true,
         'rest_base'             => 'departments',
     ];

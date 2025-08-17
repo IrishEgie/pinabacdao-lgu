@@ -41,8 +41,9 @@ function register_services_post_type() {
         'show_in_rest'  => true,
         'menu_icon'     => 'dashicons-list-view',
         'rewrite'       => ['slug' => 'service', 'with_front' => false],
-        'has_archive' => true,
-
+        'has_archive'   => true,
+        'capability_type' => 'services',
+        'map_meta_cap'  => true,
     ];
     
     register_post_type('service', $args);

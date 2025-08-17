@@ -52,7 +52,8 @@ function register_document_post_type() {
         'has_archive'          => true,
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
-        'capability_type'       => 'post',
+        'capability_type'       => 'documents',
+        'map_meta_cap'          => true,
         'show_in_rest'          => true,
         'rewrite'               => array(
             'slug' => 'documents',
