@@ -40,7 +40,7 @@ get_header();
                             <h3 class="text-lg font-semibold mb-4">Regular Hours</h3>
                             <div class="space-y-2 text-gray-600">
                                 <p><strong>Monday - Friday:</strong> 8:00 AM - 5:00 PM</p>
-                                <p><strong>Saturday:</strong> 8:00 AM - 12:00 PM</p>
+                                <p><strong>Saturday:</strong> Closed</p>
                                 <p><strong>Sunday:</strong> Closed</p>
                             </div>
                         </div>

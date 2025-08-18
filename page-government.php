@@ -44,7 +44,7 @@ get_header();
                 <?php
                 $executive_officials = new WP_Query([
                     'post_type' => 'official',
-                    'posts_per_page' => 2,
+                    'posts_per_page' => -1,
                     'orderby' => 'menu_order',
                     'order' => 'ASC',
                     'meta_query' => [
@@ -80,7 +80,7 @@ get_header();
                 <?php
                 $sanguniang_bayan = new WP_Query([
                     'post_type' => 'official',
-                    'posts_per_page' => 2,
+                    'posts_per_page' => -1,
                     'orderby' => 'menu_order',
                     'order' => 'ASC',
                     'meta_query' => [
