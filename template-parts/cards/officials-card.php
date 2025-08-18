@@ -71,7 +71,7 @@ if (!function_exists('officialCard')) {
         ?>
         <a href="<?php echo esc_url($post_url); ?>" class="block no-underline">
             <div
-                class="rounded-lg border bg-card text-card-foreground shadow-sm group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                class="rounded-lg border bg-white text-card-foreground shadow-sm group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
                 <div class="flex flex-col space-y-1.5 p-6 text-center pb-4">
                     <div class="mx-auto w-24 h-24 rounded-full overflow-hidden mb-4">
                         <?php if ($thumbnail): ?>

@@ -35,7 +35,7 @@ function process_contact_form() {
     $message = sanitize_textarea_field($_POST['message']);
 
     // Email configuration
-    $to = 'info@pinabacdao.gov.ph';
+    $to = 'lgupinabacdao.omm@gmail.com';
     
     // Email headers - Set reply-to to sender's email
     $headers = array(
@@ -223,8 +223,8 @@ get_header();
                                             <?php echo get_service_icon_svg('mail', 'w-6 h-6 text-primary-600 mt-1'); ?>
                                             <div>
                                                 <h3 class="font-semibold text-gray-800 mb-2">Email Us</h3>
-                                                <a href="mailto:info@pinabacdao.gov.ph"
-                                                    class="text-primary-600 hover:text-primary-800 transition-colors">info@pinabacdao.gov.ph</a>
+                                                <a href="mailto:lgupinabacdao.omm@gmail.com"
+                                                    class="text-primary-600 hover:text-primary-800 transition-colors">lgupinabacdao.omm@gmail.com</a>
                                             </div>
                                         </div>
                                     </div>
@@ -371,7 +371,7 @@ get_header();
                                     <?php echo get_service_icon_svg('phone', 'w-4 h-4 mr-2'); ?>
                                     Call Now
                                 </button>
-                                <a href="mailto:info@pinabacdao.gov.ph"
+                                <a href="mailto:lgupinabacdao.omm@gmail.com"
                                     class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
                                     Send Email
                                     <?php get_service_icon_svg('email') ?>

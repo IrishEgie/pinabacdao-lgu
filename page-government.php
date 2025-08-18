@@ -29,6 +29,7 @@ get_header();
                     Municipal Government Structure
                 </p>
             </div>
+            <div class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8"><?php the_content()?></div>
             <div class="container-primary shadow-md hover:shadow-xl transition-shadow duration-300"></div>
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">
