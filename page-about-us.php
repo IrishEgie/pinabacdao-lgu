@@ -72,7 +72,7 @@ get_header();
                 </p>
             </div>
             <!-- Dynamic Content Area -->
-            <div class="grid gap-12">
+            <div class="content-area grid gap-12">
                 <?php
                 the_content();
                 ?>

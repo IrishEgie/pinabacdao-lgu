@@ -91,6 +91,9 @@
     .content-area h2 {
         @apply text-2xl font-bold text-gray-800;
     }
+    .content-area img {
+        @apply rounded-lg overflow-hidden shadow-md mb-6 hover:shadow-md transition-shadow duration-300;
+    }
 .search-overlay.visible {
     position: fixed !important;
     top: 0 !important;
