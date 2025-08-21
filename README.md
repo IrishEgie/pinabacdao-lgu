@@ -7,7 +7,8 @@
 
 📍 **Province of Samar, Philippines**
 
-> *"The Heart of Rice Production in Samar, Home of the Vibrant Mayaw-Mayaw Festival"*
+>*"The Heart of Rice Production in Samar, Home of the Vibrant Mayaw-Mayaw Festival"*
+
 
 [![WordPress](https://img.shields.io/badge/WordPress-6.x-blue.svg)](https://wordpress.org/)
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
@@ -100,7 +101,7 @@ The name **Pinabacdao** derives from the Waray term *"pinabakdaw"* meaning **"as
 Frontend: React 18.x + Tailwind CSS
 Backend / CMS: WordPress (REST API)
 Database: SQL (MySQL/MariaDB)
-Deployment: Self-hosted / cPanel or Cloud / DreamHost
+Deployment: Self-hosted
 ```
 
 ### **Key Components**
@@ -133,13 +134,8 @@ Deployment: Self-hosted / cPanel or Cloud / DreamHost
 │   └── Social Services
 ├── 📰 News & Events
 │   ├── Municipal News
-│   ├── Event Calendar
+│   ├── Events
 │   └── Announcements
-├── 📋 BAC (Bids & Awards)
-│   ├── Procurement Plans
-│   ├── Bid Invitations
-│   ├── Results & Awards
-│   └── BAC Composition
 └── 🔍 Transparency
     ├── Full Disclosure Policy
     ├── Budget & Finance
