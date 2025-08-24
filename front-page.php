@@ -134,12 +134,12 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
               'posts_per_page' => 2,
               'orderby' => 'menu_order',
               'order' => 'ASC',
-              'meta_query' => [
-                [
-                  'key' => 'official_type',
-                  'value' => 'Executive Officials',
-                  'compare' => '=',
-                ]
+              'tax_query' => [
+                  [
+                      'taxonomy' => 'official_type',
+                      'field' => 'slug',
+                      'terms' => 'department-heads', // Use slug instead of name
+                  ]
               ],
             ]);
 
