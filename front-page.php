@@ -138,7 +138,7 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
                   [
                       'taxonomy' => 'official_type',
                       'field' => 'slug',
-                      'terms' => 'department-heads', // Use slug instead of name
+                      'terms' => 'executive-officials',
                   ]
               ],
             ]);
