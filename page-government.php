@@ -114,7 +114,7 @@ get_header();
                     Legislative body of the municipality
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <?php
                 $sanguniang_bayan = new WP_Query([
                     'post_type' => 'official',
@@ -149,7 +149,7 @@ get_header();
                     Leaders of municipal offices and services
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <?php
                 $department_heads = new WP_Query([
                     'post_type' => 'official',
