@@ -149,3 +149,18 @@ function make_official_columns_sortable($columns) {
 }
 add_filter('manage_edit-official_sortable_columns', 'make_official_columns_sortable');
 
+
+// Add to your functions.php or officials.php
+function sync_official_type_with_taxonomy($post_id) {
+    if (get_post_type($post_id) !== 'official') {
+        return;
+    }
+    
+    $acf_official_type = get_field('official_type', $post_id);
+    
+    if ($acf_official_type) {
+        // Set the taxonomy term based on ACF field
+        wp_set_object_terms($post_id, $acf_official_type, 'official_type');
+    }
+}
+add_action('save_post', 'sync_official_type_with_taxonomy');

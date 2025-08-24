@@ -10,7 +10,7 @@ get_header();
 <div class="min-h-screen bg-gray-50">
     <!-- Dynamic Page Banner -->
     <div><?php pageBanner([
-        'background_image' => 'https://images.unsplash.com/photo-1655016268120-383558788b37?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'?: get_template_directory_uri() . '/assets/images/default-photo.avif',
+        'background_image' => 'https://images.unsplash.com/photo-1655016268120-383558788b37?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' ?: get_template_directory_uri() . '/assets/images/default-photo.avif',
         'show_credit' => true,
         'credit' => 'Photo by Myk Miravalles on Unsplash',
     ]); ?></div>
@@ -29,7 +29,10 @@ get_header();
                     Municipal Government Structure
                 </p>
             </div>
-            <div class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8"><?php the_content()?></div>
+            <div
+                class="rounded-lg border bg-white text-card-foreground shadow-sm hover:shadow-lg transition-shadow duration-300 mb-8">
+                <?php the_content() ?>
+            </div>
             <div class="container-primary shadow-md hover:shadow-xl transition-shadow duration-300"></div>
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">
@@ -47,11 +50,11 @@ get_header();
                     'posts_per_page' => -1,
                     'orderby' => 'menu_order',
                     'order' => 'ASC',
-                    'meta_query' => [
+                    'tax_query' => [
                         [
-                            'key' => 'official_type',
-                            'value' => 'Executive Officials',
-                            'compare' => '=',
+                            'taxonomy' => 'official_type',
+                            'field' => 'slug',
+                            'terms' => 'executive-officials', // Use slug instead of name
                         ]
                     ],
                 ]);
@@ -69,6 +72,42 @@ get_header();
             </div>
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-4">
+                    Administrative Officials
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Administrative management and public service coordination
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <?php
+                $executive_officials = new WP_Query([
+                    'post_type' => 'official',
+                    'posts_per_page' => -1,
+                    'orderby' => 'menu_order',
+                    'order' => 'ASC',
+                    'tax_query' => [
+                        [
+                            'taxonomy' => 'official_type',
+                            'field' => 'slug',
+                            'terms' => 'administrative-officials', // Use slug instead of name
+                        ]
+                    ],
+                ]);
+
+                if ($executive_officials->have_posts()) {
+                    while ($executive_officials->have_posts()) {
+                        $executive_officials->the_post();
+                        officialCard(['post_id' => get_the_ID()]);
+                    }
+                    wp_reset_postdata();
+                } else {
+                    echo '<p class=" text-center col-span-full text-gray-500">No administrative officials found.</p>';
+                }
+                ?>
+            </div>
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">
                     Sangguniang Bayan
                 </h2>
                 <p class="text-lg text-gray-600">
@@ -76,18 +115,17 @@ get_header();
                 </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
                 <?php
                 $sanguniang_bayan = new WP_Query([
                     'post_type' => 'official',
                     'posts_per_page' => -1,
                     'orderby' => 'menu_order',
                     'order' => 'ASC',
-                    'meta_query' => [
+                    'tax_query' => [
                         [
-                            'key' => 'official_type',
-                            'value' => 'Sangguniang Bayan',
-                            'compare' => '=',
+                            'taxonomy' => 'official_type',
+                            'field' => 'slug',
+                            'terms' => 'sangguniang-bayan', // Use slug instead of name
                         ]
                     ],
                 ]);
@@ -118,11 +156,11 @@ get_header();
                     'posts_per_page' => -1,
                     'orderby' => 'menu_order',
                     'order' => 'ASC',
-                    'meta_query' => [
+                    'tax_query' => [
                         [
-                            'key' => 'official_type',
-                            'value' => 'Department Heads',
-                            'compare' => '=',
+                            'taxonomy' => 'official_type',
+                            'field' => 'slug',
+                            'terms' => 'department-heads', // Use slug instead of name
                         ]
                     ],
                 ]);
