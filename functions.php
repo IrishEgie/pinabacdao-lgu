@@ -27,6 +27,7 @@ function theme_setup() {
     // Load cards templates
     require_once get_template_directory() . '/template-parts/cards/highlight-card.php';
     require_once get_template_directory() . '/template-parts/cards/officials-card.php';
+    require_once get_template_directory() . '/template-parts/cards/officials-comp-card.php';
     require_once get_template_directory() . '/template-parts/sections/tab-nav.php';
     require_once get_template_directory() . '/template-parts/sections/pagination.php';
     require_once get_template_directory() . '/template-parts/sections/quick-access.php';

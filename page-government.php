@@ -160,7 +160,7 @@ get_header();
                         [
                             'taxonomy' => 'official_type',
                             'field' => 'slug',
-                            'terms' => 'department-heads', // Use slug instead of name
+                            'terms' => 'department-heads',
                         ]
                     ],
                 ]);
@@ -168,11 +168,11 @@ get_header();
                 if ($department_heads->have_posts()) {
                     while ($department_heads->have_posts()) {
                         $department_heads->the_post();
-                        officialCard(['post_id' => get_the_ID()]);
+                        compactOfficialCard(['post_id' => get_the_ID()]);
                     }
                     wp_reset_postdata();
                 } else {
-                    echo '<p class=" text-center col-span-full text-gray-500">No Department Heads found.</p>';
+                    echo '<p class=" text-center col-span-full text-gray-500">No administrative officials found.</p>';
                 }
                 ?>
             </div>
