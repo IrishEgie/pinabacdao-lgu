@@ -54,10 +54,10 @@ add_action('after_setup_theme', 'theme_setup');
 
 // Enqueue styles and scripts
 function theme_assets() {
-        // Ensure jQuery is loaded
+    // Ensure jQuery is loaded
     wp_enqueue_script('jquery');
     
-    // Main CSS
+    // Enqueue Tailwind CSS (only once!)
     wp_enqueue_style(
         'theme-style',
         get_template_directory_uri() . '/assets/css/tailwind-output.css',
@@ -65,32 +65,52 @@ function theme_assets() {
         filemtime(get_template_directory() . '/assets/css/tailwind-output.css')
     );
     
-    // Load main JavaScript file
-    wp_enqueue_script('pin-script', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
+    // Properly enqueue JavaScript using WordPress build system
+    $asset_file_path = get_template_directory() . '/build/index.asset.php';
     
-    wp_localize_script('pin-script', 'wpvars', array(
-        'home' => home_url(),
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce' => wp_create_nonce('search_nonce')
-    ));
-
-    // Main CSS
-    wp_enqueue_style(
-        'theme-style',
-        get_template_directory_uri() . '/assets/css/tailwind-output.css',
-        [],
-        filemtime(get_template_directory() . '/assets/css/tailwind-output.css')
-    );
+    if (file_exists($asset_file_path)) {
+        $asset_file = include $asset_file_path;
+        
+        wp_enqueue_script(
+            'pinabacdao-main-js',
+            get_template_directory_uri() . '/build/index.js',
+            $asset_file['dependencies'], // This includes proper dependencies
+            $asset_file['version'],
+            true // Load in footer
+        );
+        
+        // Localize script for AJAX
+        wp_localize_script('pinabacdao-main-js', 'wpvars', array(
+            'home' => home_url(),
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('search_nonce')
+        ));
+    } else {
+        // Fallback if build file doesn't exist
+        wp_enqueue_script(
+            'pinabacdao-fallback-js',
+            get_template_directory_uri() . '/build/index.js',
+            array('jquery'),
+            '1.0',
+            true
+        );
+        
+        wp_localize_script('pinabacdao-fallback-js', 'wpvars', array(
+            'home' => home_url(),
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('search_nonce')
+        ));
+    }
     
     // Enqueue Google Fonts
     wp_enqueue_style(
         'google-fonts',
-        'https://fonts.googleapis.com/css2?family=Open+Sans&display=swap',
+        'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap',
         [],
         null
     );
     
-    // Enqueue Font Awesome 6 (Free version)
+    // Enqueue Font Awesome 6
     wp_enqueue_style(
         'font-awesome',
         'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css',
@@ -98,6 +118,7 @@ function theme_assets() {
         '6.4.0'
     );
 }
+add_action('wp_enqueue_scripts', 'theme_assets');
 /**
  * Disable the admin bar for users with roles lower than or equal to 'subscriber'.
  */

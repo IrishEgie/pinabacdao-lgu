@@ -1,21 +1,21 @@
-// tailwind.config.js
+// tailwind.config.js - Production Optimized
 module.exports = {
   content: [
+    // Be more specific to improve purging
     './*.php',
-    './**/*.php',
-    './assets/js/**/*.js',
-    './wp-content/themes/pinabacdao-lgu/**/*.php'
+    './template-parts/**/*.php',
+    './includes/**/*.php',
+    // JavaScript files
+    './src/**/*.js',
+    './build/*.js', // Include built files
+    // Avoid scanning unnecessary files
+    '!./node_modules',
+    '!./build/static'
   ],
   theme: {
     extend: {
       colors: {
-        // Include default Tailwind colors
-        ...require('tailwindcss/colors'),
-        
-        fontFamily: {
-          sans: ['"Open Sans"', "Arial", "sans-serif"],
-        },
-
+        // Keep your existing color configuration
         // PRIMARY: Facebook Blue (Main Brand Color)
         primary: {
           DEFAULT: "#1877f2",
@@ -46,7 +46,6 @@ module.exports = {
           800: "#854d0e",
           900: "#713f12",
           950: "#422006",
-
         },
 
         // TERTIARY: Filipino Flag Yellow/Gold (Peace & Noble Ideals)
@@ -65,7 +64,7 @@ module.exports = {
           950: "#450a0a",
         },
 
-        // ALTERNATE: Filipino Flag Blue (Peace & Truth) - Lighter variant
+        // ALTERNATE: Filipino Flag Blue (Peace & Truth)
         alternate: {
           DEFAULT: "#0038a8",
           50: "#eff6ff",
@@ -103,46 +102,31 @@ module.exports = {
         "primary-bg": "#ffffff",
         "secondary-bg": "#f9fafb",
 
-        // Accent Colors with Filipino theme
-        "accent-1": "rgba(24, 119, 242, 0.1)",  // Facebook blue tint
-        "accent-2": "rgba(206, 17, 38, 0.1)",   // Red tint
-        "accent-3": "rgba(252, 209, 22, 0.1)",  // Yellow/Gold tint
-        "accent-4": "rgba(0, 56, 168, 0.1)",    // Deep blue tint
-
-        // Semantic Colors aligned with Filipino flag theme
-        priority: {
-          high: "#ce1126",     // Flag Red for urgent/high priority
-          medium: "#fcd116",   // Flag Yellow for medium priority
-          low: "#1877f2",     // Facebook Blue for low priority
-        },
+        // Semantic Colors
+        success: "#16a34a",
+        error: "#ce1126",
+        warning: "#fcd116",
+        info: "#1877f2",
         
-        // Extended Semantic Colors
-        success: "#16a34a",   // Clean green for success states
-        error: "#ce1126",     // Flag red for errors
-        warning: "#fcd116",   // Flag yellow for warnings
-        info: "#1877f2",      // Facebook blue for info
-        
-        // Special LGU Colors
+        // LGU Colors
         government: {
-          DEFAULT: "#0038a8",  // Official government blue
+          DEFAULT: "#0038a8",
           light: "#3b82f6",
           dark: "#1e3a8a",
         },
         
         heritage: {
-          DEFAULT: "#8b5a2b",  // Brown representing Filipino heritage
+          DEFAULT: "#8b5a2b",
           light: "#d2691e",
           dark: "#654321",
         },
       },
 
-      // Enhanced selection styling
-      selection: {
-        backgroundColor: '#1877f2',
-        color: '#ffffff',
+      fontFamily: {
+        sans: ['"Open Sans"', "Arial", "sans-serif"],
       },
 
-      // Smooth animations
+      // Animations
       animation: {
         'fade-in': 'fadeIn 0.4s ease-out',
         'slide-up': 'slideUp 0.3s ease-out',
@@ -160,19 +144,7 @@ module.exports = {
         },
       },
 
-      // Enhanced transitions
-      transitionProperty: {
-        'all-smooth': 'all',
-        'colors-smooth': 'color, background-color, border-color, text-decoration-color, fill, stroke',
-        'transform-smooth': 'transform, opacity',
-      },
-
-      transitionDuration: {
-        '250': '250ms',
-        '350': '350ms',
-      },
-
-      // Box shadows with Filipino flag colors
+      // Box shadows
       boxShadow: {
         'primary': '0 4px 14px 0 rgba(24, 119, 242, 0.15)',
         'secondary': '0 4px 14px 0 rgba(206, 17, 38, 0.15)',
@@ -183,7 +155,7 @@ module.exports = {
         'strong': '0 8px 24px 0 rgba(0, 0, 0, 0.15)',
       },
 
-      // Gradient backgrounds
+      // Gradients
       backgroundImage: {
         'flag-gradient': 'linear-gradient(135deg, #1877f2 0%, #0038a8 50%, #ce1126 100%)',
         'hero-gradient': 'linear-gradient(135deg, #1877f2 0%, #fcd116 100%)',
@@ -191,29 +163,24 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Add useful plugins for production
+    // Uncomment if you install them:
+    // require('@tailwindcss/typography'),
+    // require('@tailwindcss/forms'),
+    // require('@tailwindcss/aspect-ratio'),
+  ],
+  
+  // Production optimizations
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  
+  // Disable unused features to reduce bundle size
+  corePlugins: {
+    // Enable all by default, disable only if you're sure you don't need them
+    // container: false,
+    // accessibility: false,
+  },
 };
-
-/* 
-COLOR PALETTE REFERENCE:
-========================
-
-Primary Colors (Main Usage):
-- primary-500: #1877f2 (Facebook Blue) - Main brand color, buttons, links
-- secondary-500: #ce1126 (Flag Red) - Important actions, alerts, CTAs  
-- tertiary-500: #fcd116 (Flag Yellow) - Highlights, accents, success states
-- alternate-500: #0038a8 (Deep Flag Blue) - Headers, official elements
-
-Usage Guidelines:
-- Use primary (Facebook blue) for main navigation, primary buttons, and links
-- Use secondary (red) sparingly for important actions and alerts
-- Use tertiary (yellow/gold) for highlights, badges, and positive feedback
-- Use alternate (deep blue) for official government sections
-- Maintain good contrast ratios for accessibility
-
-Filipino Flag Symbolism:
-- Blue: Peace, truth, and justice
-- Red: Patriotism and valor  
-- Yellow: Wealth and sovereignty
-- White: Equality and fraternity (represented in our neutral colors)
-*/

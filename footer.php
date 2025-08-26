@@ -146,11 +146,11 @@
             <?php
             echo get_theme_mod(
                 'footer_copyright_text',
-                '© ' . date('Y') . ' ' . get_theme_mod('footer_municipality_name', 'Municipality') . '. All rights reserved.'
+                'Â© ' . date('Y') . ' ' . get_theme_mod('footer_municipality_name', 'Municipality') . '. All rights reserved.'
             );
-            
-wp_footer();
             ?>
         </div>
     </div>
 </footer>
+</main> <!-- Close the main tag opened in header.php -->
+<?php wp_footer(); ?> <!-- Move wp_footer() outside footer and after closing main -->
