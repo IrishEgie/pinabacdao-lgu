@@ -45,7 +45,7 @@ get_header();
                                         <!-- Title and Position -->
                                         <div class="flex justify-between items-start mb-6">
                                             <div class="flex-1">
-                                                <h1 class="text-3xl font-bold text-gray-800 mb-2"><?php the_title(); ?></h1>
+                                                <h1 class="text-3xl font-bold text-gray-800 mb-2"><?php echo get_official_full_name();?></h1>
                                                 <p class="text-lg text-gray-600 leading-relaxed">
                                                     <?php
                                                     $position = get_field('position');
@@ -78,7 +78,7 @@ get_header();
                                                 </svg>
                                                 <div>
                                                     <div class="font-medium text-gray-800">Position</div>
-                                                    <div class="text-gray-600">
+                                                    <div class="text-gray-600 font-semibold">
                                                         <?php echo esc_html(get_field('position') ?: 'Not specified'); ?></div>
                                                 </div>
                                             </div>
@@ -96,7 +96,7 @@ get_header();
                                                 </svg>
                                                 <div>
                                                     <div class="font-medium text-gray-800">Office</div>
-                                                    <div class="text-gray-600">
+                                                    <div class="text-gray-600 font-semibold">
                                                         <?php echo esc_html(get_field('office_location') ?: 'Municipal Hall'); ?>
                                                     </div>
                                                 </div>
@@ -115,7 +115,7 @@ get_header();
                                                 </svg>
                                                 <div>
                                                     <div class="font-medium text-gray-800">Term</div>
-                                                    <div class="text-gray-600">
+                                                    <div class="text-gray-600 font-semibold">
                                                         <?php
                                                         $term_stat = get_field('term_stat');
                                                         $term_start = $term_stat['term_start'] ?? '';
@@ -132,6 +132,14 @@ get_header();
                                         </div>
                                     </div>
 
+                                    <!-- Committee Assignments -->
+                                    <?php if (get_field('committee_assignments')): ?>
+                                        <div class="container-primary mb-6 p-8 shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out">
+                                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Committee Assignments</h2>
+                                        <div class="content-area"><?php echo wpautop(get_field('committee_assignments')); ?></div>
+                                    </div>  
+                                    <?php endif; ?>
+                                    <div></div>
                                     <!-- Featured Image with Biography Section -->
                                     <div
                                         class="container-primary shadow-sm hover:shadow-lg transition-shadow duration-300 ease-in-out">

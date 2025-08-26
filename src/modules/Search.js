@@ -58,7 +58,7 @@ export default class Search {
 
   // Add new method to get default content
   getDefaultContent() {
-    this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+    this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div></div>';
     this.isSpinnerVisible = true;
     
     fetch(`${wpvars.home}/wp-json/custom/v1/search/default`)
@@ -92,7 +92,7 @@ export default class Search {
       
       if (this.searchInput.value) {
         if (!this.isSpinnerVisible) {
-          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div></div>';
           this.isSpinnerVisible = true;
         }
         this.currentPage = 1;
@@ -125,12 +125,12 @@ export default class Search {
           <!-- Search Header -->
           <div class="flex justify-between items-center mb-8 bg-gray-100 p-4 rounded-lg">
             <div class="flex items-center w-full">
-              <svg class="search-overlay__icon w-8 h-8 mr-4 text-[#2e7a56]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg class="search-overlay__icon w-8 h-8 mr-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
               </svg>
               <input type="text" id="search-term" class="search-term flex-grow bg-transparent border-none focus:outline-none text-gray-800 text-xl placeholder-gray-400" placeholder="What are you looking for?" autocomplete="off">
             </div>
-            <button class="search-overlay__close text-3xl text-[#2e7a56] hover:text-[#1e5a3e] transition-colors">
+            <button class="search-overlay__close text-3xl text-primary hover:text-[#1e5a3e] transition-colors">
               &times;
             </button>
           </div>
@@ -140,13 +140,13 @@ export default class Search {
           
           <!-- Pagination -->
           <div id="search-pagination" class="mt-8 flex justify-center items-center hidden">
-            <button id="prev-page" class="px-4 py-2 bg-[#2e7a56] text-white rounded-l-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <button id="prev-page" class="px-4 py-2 bg-primary text-white rounded-l-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
               Previous
             </button>
             <span class="px-4 py-2 bg-gray-100">
               Page <span id="current-page">1</span> of <span id="total-pages">1</span>
             </span>
-            <button id="next-page" class="px-4 py-2 bg-[#2e7a56] text-white rounded-r-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+            <button id="next-page" class="px-4 py-2 bg-primary text-white rounded-r-md hover:bg-[#1e5a3e] disabled:opacity-50 disabled:cursor-not-allowed" disabled>
               Next
             </button>
           </div>
@@ -189,7 +189,7 @@ export default class Search {
       
       if (this.searchInput.value) {
         if (!this.isSpinnerVisible) {
-          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#2e7a56]"></div></div>';
+          this.resultsDiv.innerHTML = '<div class="flex justify-center py-8"><div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div></div>';
           this.isSpinnerVisible = true;
         }
         this.currentPage = 1; // Reset to first page on new search
@@ -248,7 +248,7 @@ displayResults() {
         <!-- Left Column - Site Search -->
         <div class="advanced-search__column">
           <section id="siteSearch" class="advanced-search__section">
-            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Site Search</h2>
+            <h2 class="advanced-search__heading text-2xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Site Search</h2>
             <ul class="advanced-search__list space-y-3">
     `;
 
@@ -258,7 +258,7 @@ displayResults() {
         html += `
           <li class="advanced-search__list-item">
             <a href="${item.link}" class="advanced-search__list-link group block p-3 hover:bg-gray-50 rounded-lg transition-colors">
-              <h3 class="advanced-search__list-title text-lg font-medium text-gray-900 group-hover:text-[#2e7a56]">${item.title}</h3>
+              <h3 class="advanced-search__list-title text-lg font-medium text-gray-900 group-hover:text-primary">${item.title}</h3>
               <div class="advanced-search__list-subtitle text-gray-600 text-sm mt-1 line-clamp-2">${item.excerpt}</div>
               <div class="advanced-search__list-meta text-xs text-gray-500 mt-1">${item.post_type}</div>
             </a>
@@ -281,7 +281,7 @@ displayResults() {
         <!-- Middle Column - News -->
         <div class="advanced-search__column">
           <section id="newsroom" class="advanced-search__section">
-            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Newsroom</h2>
+            <h2 class="advanced-search__heading text-2xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Newsroom</h2>
             <div class="space-y-4">
     `;
 
@@ -298,7 +298,7 @@ displayResults() {
                        alt="${item.title}">
                 </figure>
               ` : ''}
-              <h3 class="advanced-search__news-title text-lg font-medium text-gray-900 group-hover:text-[#2e7a56] mb-1">${item.title}</h3>
+              <h3 class="advanced-search__news-title text-lg font-medium text-gray-900 group-hover:text-primary mb-1">${item.title}</h3>
               <div class="advanced-search__news-excerpt text-gray-600 text-sm line-clamp-2">${item.excerpt}</div>
             </a>
           </article>
@@ -320,7 +320,7 @@ displayResults() {
         <!-- Right Column - Documents -->
         <div class="advanced-search__column">
           <section id="documents" class="advanced-search__section">
-            <h2 class="advanced-search__heading text-2xl font-semibold text-[#2e7a56] mb-4 pb-2 border-b border-gray-200">Documents</h2>
+            <h2 class="advanced-search__heading text-2xl font-semibold text-primary mb-4 pb-2 border-b border-gray-200">Documents</h2>
             <ul class="advanced-search__list space-y-3">
     `;
 
@@ -352,7 +352,7 @@ if (this.currentResults.documents?.length) {
              class="block p-4 group">
             <div class="flex justify-between items-start">
               <div class="flex-1">
-                <h4 class="text-lg font-medium text-gray-900 group-hover:text-[#2e7a56] mb-1">${item.title}</h4>
+                <h4 class="text-lg font-medium text-gray-900 group-hover:text-primary mb-1">${item.title}</h4>
                 <div class="flex items-center gap-3 text-sm">
                   <span class="text-gray-500">${item.date}</span>
                   <span class="text-gray-400">•</span>
@@ -360,7 +360,7 @@ if (this.currentResults.documents?.length) {
                 </div>
               </div>
               <div class="ml-4 flex-shrink-0">
-                <svg class="w-5 h-5 text-gray-400 group-hover:text-[#2e7a56]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
               </div>

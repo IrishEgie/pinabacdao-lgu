@@ -39,6 +39,7 @@ function theme_setup() {
     require get_theme_file_path( '/includes/functions/doc-filter.php' );
     require get_theme_file_path( '/includes/functions/carousel-function.php' );
     require get_theme_file_path( '/includes/functions/search-ep.php' );
+    require get_theme_file_path( '/includes/functions/get_official_full_name.php' );
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';

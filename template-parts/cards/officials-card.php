@@ -5,25 +5,6 @@
  * Updated version with reduced padding and spacing for more compact display
  */
 
-if (!function_exists('get_official_full_name')) {
-    function get_official_full_name($post_id)
-    {
-        $name = get_field('official_name', $post_id);
-        if (!$name)
-            return get_the_title($post_id);
-
-        $full_name = $name['first_name'] . ' ' . $name['last_name'];
-        if (!empty($name['middle_name'])) {
-            $full_name = $name['first_name'] . ' ' . $name['middle_name'] . ' ' . $name['last_name'];
-        }
-        if (!empty($name['extension'])) {
-            $full_name .= ' ' . $name['extension'];
-        }
-
-        return $full_name;
-    }
-}
-
 if (!function_exists('officialCard')) {
     /**
      * Display a compact official card with thumbnail
