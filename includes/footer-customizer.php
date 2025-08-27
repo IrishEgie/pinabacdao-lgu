@@ -46,17 +46,30 @@ function footer_customizer_settings($wp_customize) {
         ]);
     }
 
-    // Agency Links
-    $agencies = ['dict', 'dilg', 'dbm'];
-    foreach ($agencies as $agency) {
-        $wp_customize->add_setting('footer_' . $agency . '_url', [
+    // Government Agency Links - Updated to include both label and URL
+    $agency_defaults = [
+        1 => ['label' => 'DICT', 'url' => ''],
+        2 => ['label' => 'DILG', 'url' => ''],
+        3 => ['label' => 'DBM', 'url' => '']
+    ];
+
+    for ($i = 1; $i <= 3; $i++) {
+        // Agency Label Setting
+        $wp_customize->add_setting('footer_agency_' . $i . '_label', [
+            'default' => $agency_defaults[$i]['label'],
+            'sanitize_callback' => 'sanitize_text_field'
+        ]);
+        
+        // Agency URL Setting
+        $wp_customize->add_setting('footer_agency_' . $i . '_url', [
+            'default' => $agency_defaults[$i]['url'],
             'sanitize_callback' => 'esc_url_raw'
         ]);
     }
 
     // Copyright Text
     $wp_customize->add_setting('footer_copyright_text', [
-        'default' => '© 2024 Municipality of Pinabacdao. All rights reserved.',
+        'default' => '© ' . date('Y') . ' Municipality of Pinabacdao. All rights reserved.',
         'sanitize_callback' => 'sanitize_text_field'
     ]);
 
@@ -127,13 +140,24 @@ function footer_customizer_settings($wp_customize) {
         ]);
     }
 
-    // Agency Link Controls
-    foreach ($agencies as $agency) {
-        $wp_customize->add_control('footer_' . $agency . '_url_control', [
-            'label' => strtoupper($agency) . ' URL',
+    // Government Agency Link Controls - Updated
+    for ($i = 1; $i <= 3; $i++) {
+        // Agency Label Control
+        $wp_customize->add_control('footer_agency_' . $i . '_label_control', [
+            'label' => __('Government Link ' . $i . ' Label', 'text_domain'),
             'section' => 'footer_settings',
-            'settings' => 'footer_' . $agency . '_url',
-            'type' => 'url'
+            'settings' => 'footer_agency_' . $i . '_label',
+            'type' => 'text',
+            'description' => __('Enter the display text for government link ' . $i, 'text_domain')
+        ]);
+        
+        // Agency URL Control
+        $wp_customize->add_control('footer_agency_' . $i . '_url_control', [
+            'label' => __('Government Link ' . $i . ' URL', 'text_domain'),
+            'section' => 'footer_settings',
+            'settings' => 'footer_agency_' . $i . '_url',
+            'type' => 'url',
+            'description' => __('Enter the URL for government link ' . $i, 'text_domain')
         ]);
     }
 

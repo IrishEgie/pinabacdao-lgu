@@ -125,22 +125,23 @@
                 <h3 class="text-sm font-bold text-primary-text mb-2">Government Links</h3>
                 <div class="flex flex-wrap justify-start md:justify-end gap-4">
                     <?php
-                    $agencies = ['dict', 'dilg', 'dbm'];
-                    foreach ($agencies as $agency):
-                        if ($url = get_theme_mod('footer_' . $agency . '_url')):
+                    for ($i = 1; $i <= 3; $i++):
+                        $agency_label = get_theme_mod('footer_agency_' . $i . '_label');
+                        $agency_url = get_theme_mod('footer_agency_' . $i . '_url');
+                        
+                        if ($agency_label && $agency_url):
                             ?>
-                            <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
+                            <a href="<?php echo esc_url($agency_url); ?>" target="_blank" rel="noopener noreferrer"
                                 class="text-primary hover:underline">
-                                <?php echo strtoupper($agency); ?>
+                                <?php echo esc_html($agency_label); ?>
                             </a>
                             <?php
                         endif;
-                    endforeach;
+                    endfor;
                     ?>
                 </div>
             </div>
         </div>
-
         <!-- COPYRIGHT SECTION -->
         <div class="py-4 border-t border-gray-200 text-center text-xs text-gray-500">
             <?php
