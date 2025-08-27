@@ -33,7 +33,7 @@
             </div>
 
             <!-- NAVIGATION LINKS SECTION - Changed to items-start -->
-            <div class="flex flex-col gap-12 sm:flex-row sm:gap-16 sm:items-start">
+            <div class="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-8 sm:items-start">
                 <?php for ($i = 1; $i <= 4; $i++): ?>
                     <div class="text-left"> <!-- Added text-left -->
                         <?php
@@ -67,8 +67,8 @@
         </div>
 
         <!-- CONTACT AND SOCIAL MEDIA SECTION -->
-        <div class="py-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- CONTACT INFORMATION COLUMN - LEFT ALIGNED -->
+        <div class="py-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-4">
+            <!-- CONTACT INFORMATION COLUMN -->
             <div class="text-left">
                 <h3 class="text-sm font-bold text-primary-text mb-2">Contact Us</h3>
                 <ul class="space-y-1 text-sm">
@@ -100,10 +100,10 @@
                 </ul>
             </div>
 
-            <!-- Social Media - CENTER ALIGNED -->
-            <div class="text-center">
+            <!-- Social Media - LEFT ALIGNED ON MOBILE, CENTER ON DESKTOP -->
+            <div class="text-left md:text-center">
                 <h3 class="text-sm font-bold text-primary-text mb-2">Follow Us</h3>
-                <div class="flex justify-center gap-4">
+                <div class="flex justify-start md:justify-center gap-4">
                     <?php
                     $socials = ['facebook', 'twitter', 'youtube', 'instagram'];
                     foreach ($socials as $social):
@@ -120,10 +120,10 @@
                 </div>
             </div>
 
-            <!-- GOVERNMENT AGENCY LINKS COLUMN - RIGHT ALIGNED -->
-            <div class="text-right">
+            <!-- GOVERNMENT AGENCY LINKS COLUMN - LEFT ALIGNED ON MOBILE, RIGHT ON DESKTOP -->
+            <div class="text-left md:text-right">
                 <h3 class="text-sm font-bold text-primary-text mb-2">Government Links</h3>
-                <div class="flex flex-wrap justify-end gap-4">
+                <div class="flex flex-wrap justify-start md:justify-end gap-4">
                     <?php
                     $agencies = ['dict', 'dilg', 'dbm'];
                     foreach ($agencies as $agency):
