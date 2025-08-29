@@ -16,7 +16,7 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
   <div class="grid gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="min-h-screen bg-gray-50">
       <!-- Quick Actions -->
-      <div class="py-12">
+      <section class="py-12">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold text-gray-800 mb-4">Quick Actions</h2>
           <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
@@ -56,27 +56,29 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
           'mt_class' => 'mt-12'
         ]);
         ?>
-      </div>
+      </section>
 
       <!-- Services Section -->
-      <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
-        <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
-      </div>
-      <?php
-      // Set limit for homepage display
-      $services_limit = 6; // Show only 6 services on homepage
-      include get_template_directory() . '/template-parts/sections/services-section.php';
-      ?>
+      <section>
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4">Our Services</h2>
+          <p class="text-lg text-gray-600">Comprehensive government services for our community</p>
+        </div>
+        <?php
+        // Set limit for homepage display
+        $services_limit = 6; // Show only 6 services on homepage
+        include get_template_directory() . '/template-parts/sections/services-section.php';
+        ?>
 
-      <!-- View All -->
-      <div class="text-center my-12">
-        <a href="<?php echo esc_url(home_url('/services')); ?>"
-          class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
-          View All Services
-          <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
-        </a>
-      </div>
+        <!-- View All -->
+        <div class="text-center my-12">
+          <a href="<?php echo esc_url(home_url('/services')); ?>"
+            class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
+            View All Services
+            <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
+          </a>
+        </div>
+      </section>
 
       <!-- News & Announcements -->
       <section id="news">
@@ -154,18 +156,16 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
             }
             ?>
           </div>
+          
+          <div class="text-center my-12">
+            <a href="/government"
+              class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
+              View Local Government
+              <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
+            </a>
+          </div>
         </div>
       </section>
-
-      <div class="text-center my-12">
-        <a href="/government"
-          class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-500 text-white font-medium rounded-md transition-colors duration-300">
-          View Local Government
-          <?php echo get_service_icon_svg('arrow-right', 'ml-2 text-white w-5 h-5'); ?>
-        </a>
-
-      </div>
-
 
       <!-- Transparency Section -->
       <section id="transparency" class="py-16 bg-gray-50">
@@ -235,10 +235,8 @@ require_once get_template_directory() . '/template-parts/cards/news-card.php';
           </div>
         </div>
       </section>
-
     </div>
   </div>
-
 </main>
 
 <!-- Emergency Contacts -->

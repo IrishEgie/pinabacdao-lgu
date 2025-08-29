@@ -105,13 +105,21 @@
                 <h3 class="text-sm font-bold text-primary-text mb-2">Follow Us</h3>
                 <div class="flex justify-start md:justify-center gap-4">
                     <?php
-                    $socials = ['facebook', 'twitter', 'youtube', 'instagram'];
-                    foreach ($socials as $social):
+                    $socials = [
+                        'facebook' => 'Facebook',
+                        'twitter' => 'Twitter', 
+                        'youtube' => 'YouTube',
+                        'instagram' => 'Instagram'
+                    ];
+                    
+                    foreach ($socials as $social => $name):
                         if ($url = get_theme_mod('footer_' . $social . '_url')):
                             ?>
                             <a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"
-                                class="text-gray-600 hover:text-primary transition-colors text-lg">
+                                class="text-gray-600 hover:text-primary transition-colors text-lg"
+                                aria-label="Follow us on <?php echo esc_attr($name); ?>">
                                 <i class="<?php echo esc_attr(get_social_icon_class($social)); ?>"></i>
+                                <span class="sr-only"><?php echo esc_html($name); ?></span>
                             </a>
                             <?php
                         endif;
