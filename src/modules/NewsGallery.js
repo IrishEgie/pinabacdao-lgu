@@ -1,8 +1,6 @@
 /**
  * News Gallery Module
- * Instagram-style gallery with touch/swipe support
- * 
- * Location: src/modules/NewsGallery.js
+ * Instagram-style gallery with touch/swipe support, Looping, and Lightbox
  */
 
 export class NewsGallery {
@@ -25,145 +23,72 @@ export class NewsGallery {
         this.startPos = 0;
         this.currentTranslate = 0;
         this.prevTranslate = 0;
+
+        // Lightbox state
+        this.lightboxOpen = false;
+        this.lightboxEl = null;
         
-        // Only initialize if we have multiple slides
-        if (this.totalSlides > 1) {
+        if (this.totalSlides > 0) {
             this.init();
         }
     }
 
     init() {
         this.attachEventListeners();
-        this.updateGallery(0, false); // Initialize without animation
+        this.updateGallery(0, false); // Initialize
     }
 
     attachEventListeners() {
-        // Navigation buttons
-        if (this.prevBtn) {
-            this.prevBtn.addEventListener('click', () => this.prev());
-        }
-        
-        if (this.nextBtn) {
-            this.nextBtn.addEventListener('click', () => this.next());
-        }
+        // Navigation buttons (Main Gallery)
+        if (this.prevBtn) this.prevBtn.addEventListener('click', (e) => { e.stopPropagation(); this.prev(); });
+        if (this.nextBtn) this.nextBtn.addEventListener('click', (e) => { e.stopPropagation(); this.next(); });
 
         // Dot indicators
         this.dots.forEach((dot, index) => {
-            dot.addEventListener('click', () => this.goToSlide(index));
+            dot.addEventListener('click', (e) => { e.stopPropagation(); this.goToSlide(index); });
+        });
+
+        // Click to Open Lightbox
+        this.slides.forEach((slide, index) => {
+            slide.addEventListener('click', () => this.openLightbox(index));
+            slide.style.cursor = 'zoom-in'; // UX hint
         });
 
         // Keyboard navigation
-        this.container.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') this.prev();
-            if (e.key === 'ArrowRight') this.next();
+        document.addEventListener('keydown', (e) => {
+            if (this.lightboxOpen) {
+                if (e.key === 'ArrowLeft') this.prev();
+                if (e.key === 'ArrowRight') this.next();
+                if (e.key === 'Escape') this.closeLightbox();
+            } else {
+                // Only control main gallery if focused or generally viewing
+                if (e.key === 'ArrowLeft') this.prev();
+                if (e.key === 'ArrowRight') this.next();
+            }
         });
 
-        // Touch events for swipe
+        // Touch events (Main Gallery)
         this.imagesWrapper.addEventListener('touchstart', (e) => this.touchStart(e), { passive: true });
         this.imagesWrapper.addEventListener('touchmove', (e) => this.touchMove(e), { passive: true });
         this.imagesWrapper.addEventListener('touchend', () => this.touchEnd());
-
-        // Mouse events for desktop drag
-        this.imagesWrapper.addEventListener('mousedown', (e) => this.dragStart(e));
-        this.imagesWrapper.addEventListener('mousemove', (e) => this.dragMove(e));
-        this.imagesWrapper.addEventListener('mouseup', () => this.dragEnd());
-        this.imagesWrapper.addEventListener('mouseleave', () => this.dragEnd());
-
-        // Prevent context menu on long press
-        this.imagesWrapper.addEventListener('contextmenu', (e) => {
-            if (this.isDragging) e.preventDefault();
-        });
-
-        // Show/hide arrows on hover (desktop only)
-        if (window.innerWidth > 768) {
-            this.container.addEventListener('mouseenter', () => {
-                if (this.prevBtn) this.prevBtn.style.opacity = '1';
-                if (this.nextBtn) this.nextBtn.style.opacity = '1';
-            });
-            
-            this.container.addEventListener('mouseleave', () => {
-                if (this.prevBtn) this.prevBtn.style.opacity = '0';
-                if (this.nextBtn) this.nextBtn.style.opacity = '0';
-            });
-        }
     }
 
-    // Touch handlers
-    touchStart(e) {
-        this.touchStartX = e.touches[0].clientX;
-        this.isDragging = true;
-        this.startPos = e.touches[0].clientX;
-        this.imagesWrapper.style.transition = 'none';
-    }
+    // --- Navigation Logic with Looping ---
 
-    touchMove(e) {
-        if (!this.isDragging) return;
-        
-        const currentPosition = e.touches[0].clientX;
-        this.currentTranslate = this.prevTranslate + currentPosition - this.startPos;
-        this.imagesWrapper.style.transform = `translateX(${this.currentTranslate}px)`;
-    }
-
-    touchEnd() {
-        this.touchEndX = this.currentTranslate;
-        const movedBy = this.currentTranslate - this.prevTranslate;
-        
-        // Swipe threshold: 50px
-        if (movedBy < -50 && this.currentIndex < this.totalSlides - 1) {
-            this.next();
-        } else if (movedBy > 50 && this.currentIndex > 0) {
-            this.prev();
-        } else {
-            this.goToSlide(this.currentIndex);
-        }
-        
-        this.isDragging = false;
-    }
-
-    // Mouse drag handlers (desktop)
-    dragStart(e) {
-        this.isDragging = true;
-        this.startPos = e.clientX;
-        this.imagesWrapper.style.cursor = 'grabbing';
-        this.imagesWrapper.style.transition = 'none';
-    }
-
-    dragMove(e) {
-        if (!this.isDragging) return;
-        
-        e.preventDefault();
-        const currentPosition = e.clientX;
-        this.currentTranslate = this.prevTranslate + currentPosition - this.startPos;
-        this.imagesWrapper.style.transform = `translateX(${this.currentTranslate}px)`;
-    }
-
-    dragEnd() {
-        if (!this.isDragging) return;
-        
-        const movedBy = this.currentTranslate - this.prevTranslate;
-        
-        // Drag threshold: 100px
-        if (movedBy < -100 && this.currentIndex < this.totalSlides - 1) {
-            this.next();
-        } else if (movedBy > 100 && this.currentIndex > 0) {
-            this.prev();
-        } else {
-            this.goToSlide(this.currentIndex);
-        }
-        
-        this.isDragging = false;
-        this.imagesWrapper.style.cursor = 'grab';
-    }
-
-    // Navigation methods
     prev() {
-        if (this.currentIndex > 0) {
+        if (this.currentIndex === 0) {
+            // Loop to end
+            this.goToSlide(this.totalSlides - 1);
+        } else {
             this.goToSlide(this.currentIndex - 1);
         }
     }
 
     next() {
-        if (this.currentIndex < this.totalSlides - 1) {
+        if (this.currentIndex === this.totalSlides - 1) {
+            // Loop to start
+            this.goToSlide(0);
+        } else {
             this.goToSlide(this.currentIndex + 1);
         }
     }
@@ -171,20 +96,23 @@ export class NewsGallery {
     goToSlide(index) {
         this.currentIndex = index;
         this.updateGallery(index, true);
+        
+        // Update Lightbox if open
+        if (this.lightboxOpen) {
+            this.updateLightboxContent(index);
+        }
     }
 
     updateGallery(index, animate = true) {
         const slideWidth = this.slides[0].offsetWidth;
         const translateValue = -slideWidth * index;
         
-        // Enable/disable transition
         if (animate) {
             this.imagesWrapper.style.transition = 'transform 300ms ease-out';
         } else {
             this.imagesWrapper.style.transition = 'none';
         }
         
-        // Update transform
         this.imagesWrapper.style.transform = `translateX(${translateValue}px)`;
         this.prevTranslate = translateValue;
         this.currentTranslate = translateValue;
@@ -204,17 +132,116 @@ export class NewsGallery {
                 dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
             }
         });
+    }
+
+    // --- Touch Logic ---
+    touchStart(e) {
+        this.touchStartX = e.touches[0].clientX;
+        this.isDragging = true;
+        this.startPos = e.touches[0].clientX;
+        this.imagesWrapper.style.transition = 'none';
+    }
+
+    touchMove(e) {
+        if (!this.isDragging) return;
+        const currentPosition = e.touches[0].clientX;
+        this.currentTranslate = this.prevTranslate + currentPosition - this.startPos;
+        this.imagesWrapper.style.transform = `translateX(${this.currentTranslate}px)`;
+    }
+
+    touchEnd() {
+        this.touchEndX = this.currentTranslate;
+        const movedBy = this.currentTranslate - this.prevTranslate;
         
-        // Update button states
-        if (this.prevBtn) {
-            this.prevBtn.disabled = index === 0;
-            this.prevBtn.style.opacity = index === 0 ? '0.5' : '';
-        }
+        if (movedBy < -50) this.next();
+        else if (movedBy > 50) this.prev();
+        else this.goToSlide(this.currentIndex);
         
-        if (this.nextBtn) {
-            this.nextBtn.disabled = index === this.totalSlides - 1;
-            this.nextBtn.style.opacity = index === this.totalSlides - 1 ? '0.5' : '';
-        }
+        this.isDragging = false;
+    }
+
+    // --- Lightbox Logic ---
+
+    createLightboxDOM() {
+        const div = document.createElement('div');
+        div.className = 'fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center opacity-0 transition-opacity duration-300';
+        div.id = 'news-lightbox';
+        
+        div.innerHTML = `
+            <button class="absolute top-4 right-4 text-white/70 hover:text-white p-2 z-50" id="lb-close">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            
+            <button class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 hidden md:block z-50" id="lb-prev">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            
+            <button class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-2 hidden md:block z-50" id="lb-next">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+
+            <div class="relative w-full h-full max-w-7xl mx-auto flex flex-col items-center justify-center p-4">
+                <div class="relative max-h-[85vh] w-auto">
+                    <img id="lb-img" src="" class="max-h-[80vh] max-w-full object-contain shadow-2xl rounded-sm" alt="">
+                </div>
+                <div id="lb-caption" class="mt-4 text-white/90 text-center text-sm md:text-base font-light max-w-2xl"></div>
+            </div>
+        `;
+
+        document.body.appendChild(div);
+        
+        // Lightbox Listeners
+        div.querySelector('#lb-close').addEventListener('click', () => this.closeLightbox());
+        div.querySelector('#lb-prev').addEventListener('click', (e) => { e.stopPropagation(); this.prev(); });
+        div.querySelector('#lb-next').addEventListener('click', (e) => { e.stopPropagation(); this.next(); });
+        div.addEventListener('click', (e) => {
+            if (e.target === div) this.closeLightbox();
+        });
+
+        return div;
+    }
+
+    openLightbox(index) {
+        this.lightboxEl = document.getElementById('news-lightbox') || this.createLightboxDOM();
+        this.lightboxOpen = true;
+        
+        // Prevent body scroll
+        document.body.style.overflow = 'hidden';
+        
+        this.updateLightboxContent(index);
+        
+        // Show with fade
+        requestAnimationFrame(() => {
+            this.lightboxEl.classList.remove('opacity-0');
+        });
+    }
+
+    closeLightbox() {
+        if (!this.lightboxEl) return;
+        
+        this.lightboxEl.classList.add('opacity-0');
+        document.body.style.overflow = '';
+        this.lightboxOpen = false;
+        
+        setTimeout(() => {
+            if (this.lightboxEl) this.lightboxEl.remove();
+        }, 300);
+    }
+
+    updateLightboxContent(index) {
+        const currentSlide = this.slides[index];
+        const img = currentSlide.querySelector('img');
+        const captionDiv = currentSlide.querySelector('.bg-gray-800\\/90'); // The caption div in your template
+        const captionText = captionDiv ? captionDiv.textContent.trim() : '';
+
+        const lbImg = this.lightboxEl.querySelector('#lb-img');
+        const lbCap = this.lightboxEl.querySelector('#lb-caption');
+
+        // Use full size URL if available in data attribute, otherwise current src
+        // Note: Your PHP template currently puts the 'large' size in src. 
+        // Ideally, add data-full-url to your PHP for better quality, but src works for now.
+        lbImg.src = img.src; 
+        lbCap.textContent = captionText;
     }
 }
 

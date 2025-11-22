@@ -42,6 +42,7 @@ function theme_setup() {
     require get_theme_file_path( '/includes/functions/search-ep.php' );
     require get_theme_file_path( '/includes/functions/get_official_full_name.php' );
     require_once get_template_directory() . '/includes/functions/custom-gallery-metabox.php';
+    require_once get_template_directory() . '/includes/functions/news-def-ft-image.php';
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';
