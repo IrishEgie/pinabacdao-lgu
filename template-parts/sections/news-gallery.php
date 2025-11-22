@@ -1,23 +1,19 @@
 <?php
 /**
  * News Gallery Component
- * Instagram-style image gallery with swipe support
- * Supports: Featured Image, ACF Gallery, Gutenberg Gallery Blocks
- * * Location: template-parts/sections/news-gallery.php
+ * 21:9 Ultra-Wide "Cinema" Aspect Ratio
+ * Location: template-parts/sections/news-gallery.php
  */
 
 $post_id = get_the_ID();
 $images = [];
 
-// METHOD 0: Custom Meta Box (The "Hard Way")
+// METHOD 0: Custom Meta Box
 $custom_gallery_ids = get_post_meta($post_id, '_news_gallery_ids', true);
-
 if (!empty($custom_gallery_ids)) {
     $id_array = explode(',', $custom_gallery_ids);
-    
     foreach ($id_array as $img_id) {
         if (empty($img_id)) continue;
-        
         $images[] = [
             'id' => $img_id,
             'url' => wp_get_attachment_image_url($img_id, 'large'),
@@ -28,10 +24,9 @@ if (!empty($custom_gallery_ids)) {
     }
 }
 
-// METHOD 1: ACF Gallery (Fallback)
+// METHOD 1: ACF Gallery
 if (empty($images) && function_exists('get_field')) {
     $acf_gallery = get_field('news_gallery_images', $post_id);
-    
     if ($acf_gallery && is_array($acf_gallery)) {
         foreach ($acf_gallery as $image) {
             $images[] = [
@@ -45,7 +40,7 @@ if (empty($images) && function_exists('get_field')) {
     }
 }
 
-// METHOD 2: Featured Image (Fallback)
+// METHOD 2: Featured Image
 if (empty($images) && has_post_thumbnail($post_id)) {
     $featured_id = get_post_thumbnail_id($post_id);
     $images[] = [
@@ -57,11 +52,10 @@ if (empty($images) && has_post_thumbnail($post_id)) {
     ];
 }
 
-// METHOD 3: Gutenberg Blocks (Last Resort)
+// METHOD 3: Gutenberg Blocks
 if (empty($images)) {
     $post_content = get_post_field('post_content', $post_id);
     $blocks = parse_blocks($post_content);
-
     foreach ($blocks as $block) {
         if ($block['blockName'] === 'core/gallery' && !empty($block['innerBlocks'])) {
             foreach ($block['innerBlocks'] as $inner_block) {
@@ -80,7 +74,7 @@ if (empty($images)) {
     }
 }
 
-// Remove duplicate images
+// Deduplicate
 $unique_images = [];
 $seen_ids = [];
 foreach ($images as $image) {
@@ -96,53 +90,40 @@ if (!empty($images)) :
     $show_controls = $total_images > 1;
 ?>
 
-<!-- Added 'group' class for hover states -->
-<div class="news-gallery-container group relative rounded-xl overflow-hidden shadow-2xl mb-8 bg-gray-900" data-news-gallery>
+<!-- Main Container: Black bg, rounded -->
+<div class="news-gallery-container group relative rounded-lg overflow-hidden shadow-lg mb-8 bg-black border border-gray-800" data-news-gallery>
     
-    <!-- Gallery Wrapper: Added Aspect Ratios for Mobile (4/3) vs Desktop (16/9) -->
-    <div class="relative w-full aspect-[4/3] md:aspect-[16/9] lg:h-[600px] lg:aspect-auto bg-gray-900">
+    <!-- 
+        ASPECT RATIO UPDATE: 4:3
+        This creates a wide, cinematic strip that doesn't push content down too far.
+        Used aspect-[4/3] utility (supported in JIT mode).
+    -->
+    <div class="relative w-full aspect-[4/3] bg-black">
         
-        <!-- Image Counter -->
+        <!-- On-Page Counter (Top Right) -->
         <?php if ($show_controls) : ?>
-        <div class="absolute top-4 right-4 z-20 bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-md border border-white/10 shadow-lg">
+        <div class="absolute top-4 right-4 z-30 bg-black/60 text-white/90 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">
             <span class="gallery-counter">
                 <span class="current-slide">1</span> / <span class="total-slides"><?php echo $total_images; ?></span>
             </span>
         </div>
         <?php endif; ?>
 
-        <!-- Images Container -->
+        <!-- Images Wrapper -->
         <div class="gallery-images-wrapper relative w-full h-full overflow-hidden">
             <div class="gallery-images flex h-full transition-transform duration-300 ease-out" style="transform: translateX(0%);">
                 <?php foreach ($images as $index => $image) : ?>
-                    <!-- Slide: Added h-full and relative positioning -->
-                    <div class="gallery-slide min-w-full h-full flex-shrink-0 relative flex items-center justify-center overflow-hidden" data-slide="<?php echo $index; ?>">
-                        
-                        <!-- 1. BLURRED BACKGROUND (The "Dark/Intense" Effect) -->
-                        <div class="absolute inset-0 z-0 overflow-hidden">
-                            <img 
-                                src="<?php echo esc_url($image['url']); ?>" 
-                                class="w-full h-full object-cover blur-2xl opacity-40 scale-110"
-                                alt=""
-                                aria-hidden="true"
-                            >
-                            <!-- Dark overlay to ensure content pops -->
-                            <div class="absolute inset-0 bg-gray-900/50"></div>
-                        </div>
-
-                        <!-- 2. MAIN IMAGE -->
+                    <div class="gallery-slide min-w-full h-full flex-shrink-0 relative flex items-center justify-center bg-black" data-slide="<?php echo $index; ?>">
                         <img 
                             src="<?php echo esc_url($image['url']); ?>" 
                             data-full-url="<?php echo esc_url($image['full']); ?>"
                             alt="<?php echo esc_attr($image['alt'] ?: get_the_title()); ?>"
-                            class="relative z-10 w-full h-full object-contain shadow-xl transition-transform duration-500"
+                            class="relative z-10 max-w-full max-h-full w-auto h-auto object-contain select-none"
                             loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
                         />
-
-                        <!-- Caption -->
                         <?php if (!empty($image['caption'])) : ?>
-                            <div class="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent pt-12 pb-4 px-4">
-                                <p class="text-white text-sm md:text-base text-center font-medium drop-shadow-md">
+                            <div class="absolute bottom-0 left-0 right-0 z-20 bg-gradient-to-t from-black via-black/80 to-transparent pt-12 pb-4 px-6 pointer-events-none">
+                                <p class="text-white/90 text-sm text-center font-light">
                                     <?php echo esc_html($image['caption']); ?>
                                 </p>
                             </div>
@@ -152,36 +133,38 @@ if (!empty($images)) :
             </div>
         </div>
 
-        <!-- Navigation Arrows (Fixed for Mobile) -->
+        <!-- Navigation Arrows (On Page) -->
         <?php if ($show_controls) : ?>
         <button 
-            class="gallery-prev absolute left-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/80 text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/10 
-            opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-x-0 md:-translate-x-4 md:group-hover:translate-x-0"
+            class="gallery-prev absolute left-0 top-0 bottom-0 z-20 w-12 flex items-center justify-center 
+            bg-transparent hover:bg-white/5 transition-colors group/nav outline-none
+            opacity-0 group-hover:opacity-100 focus:opacity-100"
             aria-label="Previous image"
         >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
+            <span class="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </span>
         </button>
         
         <button 
-            class="gallery-next absolute right-2 top-1/2 -translate-y-1/2 z-20 bg-black/40 hover:bg-black/80 text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/10 
-            opacity-100 md:opacity-0 md:group-hover:opacity-100 translate-x-0 md:translate-x-4 md:group-hover:translate-x-0"
+            class="gallery-next absolute right-0 top-0 bottom-0 z-20 w-12 flex items-center justify-center 
+            bg-transparent hover:bg-white/5 transition-colors group/nav outline-none
+            opacity-0 group-hover:opacity-100 focus:opacity-100"
             aria-label="Next image"
         >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-            </svg>
+            <span class="w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </span>
         </button>
         <?php endif; ?>
     </div>
 
-    <!-- Dot Indicators (Updated Colors for Dark Theme) -->
+    <!-- Dots (On Page) -->
     <?php if ($show_controls) : ?>
-    <div class="gallery-dots flex items-center justify-center gap-2 py-3 bg-gray-900 border-t border-gray-800">
+    <div class="gallery-dots flex items-center justify-center gap-1.5 py-2 bg-black border-t border-white/10">
         <?php foreach ($images as $index => $image) : ?>
             <button 
-                class="gallery-dot w-2 h-2 rounded-full transition-all duration-200 <?php echo $index === 0 ? 'bg-primary-500 w-8' : 'bg-gray-600 hover:bg-gray-400'; ?>"
+                class="gallery-dot w-1.5 h-1.5 rounded-full transition-all duration-300 <?php echo $index === 0 ? 'bg-white w-4' : 'bg-gray-600 hover:bg-gray-400'; ?>"
                 data-slide="<?php echo $index; ?>"
                 aria-label="Go to image <?php echo $index + 1; ?>"
             ></button>
