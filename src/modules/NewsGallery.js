@@ -1,6 +1,7 @@
 /**
  * News Gallery Module
  * Instagram-style gallery with touch/swipe support, Looping, and Lightbox
+ * Location: src/modules/NewsGallery.js
  */
 
 export class NewsGallery {
@@ -126,10 +127,10 @@ export class NewsGallery {
         this.dots.forEach((dot, i) => {
             if (i === index) {
                 dot.classList.add('bg-primary-600', 'w-8');
-                dot.classList.remove('bg-gray-300', 'hover:bg-gray-400');
+                dot.classList.remove('bg-gray-600', 'hover:bg-gray-400');
             } else {
                 dot.classList.remove('bg-primary-600', 'w-8');
-                dot.classList.add('bg-gray-300', 'hover:bg-gray-400');
+                dot.classList.add('bg-gray-600', 'hover:bg-gray-400');
             }
         });
     }
@@ -230,17 +231,16 @@ export class NewsGallery {
 
     updateLightboxContent(index) {
         const currentSlide = this.slides[index];
-        const img = currentSlide.querySelector('img');
-        const captionDiv = currentSlide.querySelector('.bg-gray-800\\/90'); // The caption div in your template
+        const img = currentSlide.querySelector('img.relative'); // Select the main image, not the background blur
+        const captionDiv = currentSlide.querySelector('.absolute.bottom-0'); 
         const captionText = captionDiv ? captionDiv.textContent.trim() : '';
 
         const lbImg = this.lightboxEl.querySelector('#lb-img');
         const lbCap = this.lightboxEl.querySelector('#lb-caption');
 
-        // Use full size URL if available in data attribute, otherwise current src
-        // Note: Your PHP template currently puts the 'large' size in src. 
-        // Ideally, add data-full-url to your PHP for better quality, but src works for now.
-        lbImg.src = img.src; 
+        // Prefer high-res full URL
+        const fullUrl = img.getAttribute('data-full-url') || img.src;
+        lbImg.src = fullUrl;
         lbCap.textContent = captionText;
     }
 }
