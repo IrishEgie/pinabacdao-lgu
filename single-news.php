@@ -87,11 +87,12 @@ get_header();
                                 </div>
                             </div>
                             <!-- Featured Image -->
-                            <?php if (has_post_thumbnail()): ?>
+                            <?php /* if (has_post_thumbnail()): ?>
                                 <div class="rounded-lg overflow-hidden shadow-md mb-6">
                                     <?php the_post_thumbnail('large', ['class' => 'w-full h-auto object-cover']); ?>
                                 </div>
-                            <?php endif; ?>
+                            <?php endif; */ ?>
+                            <?php get_template_part('template-parts/sections/news-gallery'); ?>
                         </div>
 
 

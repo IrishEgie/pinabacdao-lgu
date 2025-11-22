@@ -32,6 +32,7 @@ function theme_setup() {
     require_once get_template_directory() . '/template-parts/sections/pagination.php';
     require_once get_template_directory() . '/template-parts/sections/quick-access.php';
     require_once get_template_directory() . '/template-parts/sections/need-help.php';
+    require_once get_template_directory() . '/template-parts/sections/news-gallery.php';
     // Load components functionality
     require_once get_template_directory() . '/includes/breadcrumbs.php';
     require_once get_template_directory() . '/includes/breadcrumbs-template.php';
@@ -40,6 +41,7 @@ function theme_setup() {
     require get_theme_file_path( '/includes/functions/carousel-function.php' );
     require get_theme_file_path( '/includes/functions/search-ep.php' );
     require get_theme_file_path( '/includes/functions/get_official_full_name.php' );
+    require_once get_template_directory() . '/includes/functions/custom-gallery-metabox.php';
     // Load custom post types
     require_once get_template_directory() . '/includes/post-types/services.php';
     require_once get_template_directory() . '/includes/post-types/departments.php';
@@ -202,3 +204,9 @@ function control_admin_bar_display() {
     return array_intersect($allowed_roles, $user->roles) ? true : false;
 }
 add_filter('show_admin_bar', 'control_admin_bar_display');
+
+// Enable gallery support for news posts
+function enable_news_gallery_support() {
+    add_post_type_support('news', 'editor'); // Ensures Gutenberg is available
+}
+add_action('init', 'enable_news_gallery_support');

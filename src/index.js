@@ -3,6 +3,7 @@ import { HeaderNavigation } from './modules/HeaderNav';
 import { ContactForm } from './modules/ContactForm';
 import { Accordion } from './modules/Accordion';
 import Search from './modules/Search.js';
+import { NewsGallery } from './modules/NewsGallery'; // Add this line
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all tab navigations on the page
@@ -31,4 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize search functionality
     new Search();
+
+    document.querySelectorAll('[data-news-gallery]').forEach(gallery => {
+        new NewsGallery(gallery);
+    });
 });
